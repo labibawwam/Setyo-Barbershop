@@ -28,11 +28,36 @@
         input[type="time"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
         @keyframes slideQuick { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
         .toast-animate { animation: slideQuick 0.3s ease forwards; }
+
+        /* Responsive Sidebar Logic */
+        @media (max-width: 1023px) {
+            #sidebar-nav {
+                transform: translateX(-100%);
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(5, 5, 5, 0.98);
+                z-index: 150;
+                padding: 2rem;
+                transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            #sidebar-nav.active { transform: translateX(0); }
+        }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased overflow-x-hidden">
 
-    <div id="notification-container" class="fixed top-8 right-8 z-[200] space-y-4 w-full max-w-[350px]">
+    <div class="lg:hidden fixed top-0 left-0 w-full p-6 flex justify-between items-center z-[200] bg-[#050505]/80 backdrop-blur-md border-b border-white/5">
+        <h1 class="text-xl font-black text-white italic">SETYO<span class="text-indigo-500">.</span></h1>
+        <button id="mobile-toggle" class="w-12 h-12 flex flex-col justify-center items-center gap-1.5 focus:outline-none bg-indigo-600/10 rounded-2xl border border-indigo-500/20">
+            <span class="w-6 h-[2px] bg-white transition-all duration-300" id="bar-1"></span>
+            <span class="w-6 h-[2px] bg-white transition-all duration-300" id="bar-2"></span>
+        </button>
+    </div>
+
+    <div id="notification-container" class="fixed top-24 lg:top-8 right-8 z-[250] space-y-4 w-full max-w-[350px] px-6 lg:px-0">
         @if(session('success') || session('error'))
             <div class="toast-item toast-animate glass border-{{ session('success') ? 'green' : 'red' }}-500/30 p-5 rounded-3xl flex items-center gap-4 shadow-2xl">
                 <div class="bg-{{ session('success') ? 'green' : 'red' }}-500 p-2 rounded-2xl text-white">
@@ -44,50 +69,61 @@
     </div>
 
     <div class="min-h-screen flex flex-col lg:flex-row">
-        <aside class="lg:w-[360px] lg:h-screen lg:fixed left-0 top-0 p-12 flex flex-col justify-between border-r border-white/5 bg-black/40 backdrop-blur-2xl z-20">
-            <div>
-                <a href="/" class="block mb-16">
-                    <h1 class="text-3xl font-black text-white tracking-tighter italic">SETYO<span class="text-indigo-500">.</span></h1>
-                    <p class="text-[9px] text-indigo-400/60 tracking-[0.5em] uppercase font-bold mt-2">Elite Grooming Co.</p>
-                </a>
-                <nav class="space-y-10 relative">
-                    <div id="line-progress" class="absolute left-[15px] top-2 w-[2px] h-0 bg-indigo-500 transition-all duration-1000"></div>
-                    <div class="flex items-center gap-8 group cursor-pointer nav-link" id="nav-1" onclick="showStep(1)">
-                        <div class="w-8 h-8 rounded-2xl border border-white/10 flex items-center justify-center text-[11px] font-black z-10 bg-[#050505]" id="dot-1">01</div>
-                        <span class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500" id="txt-1">Barber</span>
+        <aside id="sidebar-nav" class="lg:w-[360px] lg:h-screen lg:fixed left-0 top-0 p-8 lg:p-12 border-r border-white/5 bg-black/40 backdrop-blur-2xl z-20">
+            <div class="h-full flex flex-col justify-between">
+                <div class="mt-20 lg:mt-0">
+                    <div class="hidden lg:block mb-16">
+                        <h1 class="text-3xl font-black text-white tracking-tighter italic">SETYO<span class="text-indigo-500">.</span></h1>
+                        <p class="text-[9px] text-indigo-400/60 tracking-[0.5em] uppercase font-bold mt-2">Elite Grooming Co.</p>
                     </div>
-                    <div class="flex items-center gap-8 group cursor-pointer nav-link" id="nav-2" onclick="showStep(2)">
-                        <div class="w-8 h-8 rounded-2xl border border-white/10 flex items-center justify-center text-[11px] font-black z-10 bg-[#050505]" id="dot-2">02</div>
-                        <span class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500" id="txt-2">Treatments</span>
+                    
+                    <nav class="space-y-8 lg:space-y-10 relative">
+                        <div id="line-progress" class="hidden lg:block absolute left-[15px] top-2 w-[2px] h-0 bg-indigo-500 transition-all duration-1000"></div>
+                        <div class="flex items-center gap-8 group cursor-pointer nav-link" onclick="mobileClose(); showStep(1)">
+                            <div class="w-10 h-10 lg:w-8 lg:h-8 rounded-2xl border border-white/10 flex items-center justify-center text-[11px] font-black z-10 bg-[#050505] text-slate-500 transition-all" id="dot-1">01</div>
+                            <span class="text-xs lg:text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 transition-all" id="txt-1">Barber Artist</span>
+                        </div>
+                        <div class="flex items-center gap-8 group cursor-pointer nav-link" onclick="mobileClose(); showStep(2)">
+                            <div class="w-10 h-10 lg:w-8 lg:h-8 rounded-2xl border border-white/10 flex items-center justify-center text-[11px] font-black z-10 bg-[#050505] text-slate-500 transition-all" id="dot-2">02</div>
+                            <span class="text-xs lg:text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 transition-all" id="txt-2">Elite Treatments</span>
+                        </div>
+                        <div class="flex items-center gap-8 group cursor-pointer nav-link" onclick="mobileClose(); showStep(3)">
+                            <div class="w-10 h-10 lg:w-8 lg:h-8 rounded-2xl border border-white/10 flex items-center justify-center text-[11px] font-black z-10 bg-[#050505] text-slate-500 transition-all" id="dot-3">03</div>
+                            <span class="text-xs lg:text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 transition-all" id="txt-3">Schedule Slot</span>
+                        </div>
+                    </nav>
+
+                    <div class="mt-12 lg:mt-20 space-y-4">
+                        <button onclick="mobileClose(); showStep(4)" id="nav-4" class="nav-link w-full flex items-center justify-between p-6 lg:p-5 rounded-[2rem] bg-white/[0.03] border border-white/5 hover:border-indigo-500/50 transition-all group">
+                            <span class="text-[11px] font-black uppercase tracking-widest text-slate-400 group-hover:text-white transition-colors">Client Profile</span>
+                            <svg class="w-5 h-5 text-slate-600 group-hover:text-indigo-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-width="2"/></svg>
+                        </button>
+                        <button onclick="mobileClose(); showStep(5)" id="nav-5" class="nav-link w-full flex items-center justify-between p-6 lg:p-5 rounded-[2rem] bg-white/[0.03] border border-white/5 hover:border-indigo-500/50 transition-all group">
+                            <span class="text-[11px] font-black uppercase tracking-widest text-slate-400 group-hover:text-white transition-colors">Booking Records</span>
+                            <svg class="w-5 h-5 text-slate-600 group-hover:text-indigo-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-width="2"/></svg>
+                        </button>
                     </div>
-                    <div class="flex items-center gap-8 group cursor-pointer nav-link" id="nav-3" onclick="showStep(3)">
-                        <div class="w-8 h-8 rounded-2xl border border-white/10 flex items-center justify-center text-[11px] font-black z-10 bg-[#050505]" id="dot-3">03</div>
-                        <span class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500" id="txt-3">Schedule</span>
-                    </div>
-                </nav>
-                <div class="mt-20 space-y-4">
-                    <button onclick="showStep(4)" id="nav-4" class="nav-link w-full flex items-center justify-between p-5 rounded-3xl bg-white/[0.03] border border-white/5 hover:border-indigo-500/50 transition-all">
-                        <span class="text-[11px] font-black uppercase tracking-widest text-slate-400">Profile</span>
-                        <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-width="2"/></svg>
-                    </button>
-                    <button onclick="showStep(5)" id="nav-5" class="nav-link w-full flex items-center justify-between p-5 rounded-3xl bg-white/[0.03] border border-white/5 hover:border-indigo-500/50 transition-all">
-                        <span class="text-[11px] font-black uppercase tracking-widest text-slate-400">My Bookings</span>
-                        <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-width="2"/></svg>
-                    </button>
+                </div>
+                
+                <div class="pb-10 lg:pb-0">
+                    <p class="text-[8px] text-slate-600 uppercase tracking-[0.4em] font-black text-center lg:text-left">© 2025 Setyo Barbershop</p>
                 </div>
             </div>
         </aside>
 
-        <main class="flex-grow lg:ml-[360px] min-h-screen p-8 lg:p-16 flex items-center justify-center">
+        <main class="flex-grow lg:ml-[360px] min-h-screen p-6 lg:p-16 mt-24 lg:mt-0 flex items-center justify-center">
             <div class="w-full max-w-5xl">
                 <form action="{{ route('booking.store') }}" method="POST" id="bookingForm">
                     @csrf
+                    
                     <div id="step-1" class="step-content active">
-                        <div class="text-center mb-16"><h2 class="text-5xl lg:text-7xl font-bold text-white tracking-tighter italic">Define Your <br><span class="gold-gradient font-serif">master artist</span></h2></div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="text-center mb-10 lg:mb-16">
+                            <h2 class="text-4xl lg:text-7xl font-bold text-white tracking-tighter italic leading-none">Define Your <br><span class="gold-gradient font-serif">master artist</span></h2>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                             @foreach($kapsters as $k)
                             <div onclick="selectKapster(this, '{{ $k->id }}', '{{ $k->nama }}')" class="kapster-item group glass rounded-[3rem] p-8 transition-all duration-500 cursor-pointer flex flex-col items-center">
-                                <img src="{{ asset('storage/' . $k->photo) }}" class="w-32 h-32 rounded-full object-cover border-4 border-white/5 mb-6" onerror="this.src='https://ui-avatars.com/api/?name={{$k->nama}}&background=111&color=fff'">
+                                <img src="{{ asset('storage/' . $k->photo) }}" class="w-32 h-32 rounded-full object-cover border-4 border-white/5 mb-6 group-hover:border-indigo-500/50 transition-all" onerror="this.src='https://ui-avatars.com/api/?name={{$k->nama}}&background=111&color=fff'">
                                 <h4 class="text-xl font-bold text-white tracking-tight">{{ $k->nama }}</h4>
                                 <p class="text-[10px] text-indigo-400 font-black uppercase tracking-[0.2em] mt-2">Senior Barber</p>
                             </div>
@@ -99,7 +135,7 @@
                     <div id="step-2" class="step-content">
                         <div class="flex flex-col lg:flex-row justify-between items-center mb-12 gap-8">
                             <h2 class="text-5xl lg:text-7xl font-bold text-white tracking-tighter italic text-center lg:text-left">Elite <br><span class="gold-gradient font-serif">treatments</span></h2>
-                            <div class="glass px-10 py-5 rounded-[2rem] border-indigo-500/20 text-center">
+                            <div class="glass px-10 py-5 rounded-[2rem] border-indigo-500/20 text-center w-full lg:w-auto">
                                 <p class="text-[10px] text-slate-500 uppercase font-black mb-1">Estimates</p>
                                 <p id="total-price-display" class="text-3xl font-black text-white italic">Rp 0</p>
                             </div>
@@ -116,14 +152,14 @@
                             </div>
                             @endforeach
                         </div>
-                        <button type="button" id="btn-next-step-2" onclick="showStep(3)" class="w-full mt-10 py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs tracking-[0.3em] disabled:opacity-30 transition-all" disabled>Set Schedule</button>
+                        <button type="button" id="btn-next-step-2" onclick="showStep(3)" class="w-full mt-10 py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs tracking-[0.3em] disabled:opacity-30 transition-all shadow-xl shadow-indigo-600/20" disabled>Set Schedule</button>
                     </div>
 
                     <div id="step-3" class="step-content">
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                            <div class="glass p-10 rounded-[3rem]">
+                            <div class="glass p-8 lg:p-10 rounded-[3rem] overflow-hidden">
                                 <h3 class="text-2xl font-bold text-white mb-8 tracking-tight italic">Pick Your <span class="text-amber-500">Date</span></h3>
-                                <div id="flatpickr-inline" class="flex justify-center"></div>
+                                <div id="flatpickr-inline" class="flex justify-center scale-90 sm:scale-100 origin-center"></div>
                                 <input type="text" name="tgl_booking" id="tgl_booking" class="hidden" required>
                             </div>
                             <div class="flex flex-col gap-8">
@@ -137,12 +173,12 @@
                     </div>
 
                     <div id="step-6" class="step-content items-center">
-                        <div class="w-full max-w-xl glass rounded-[4rem] overflow-hidden border-white/10">
+                        <div class="w-full max-w-xl glass rounded-[4rem] overflow-hidden border-white/10 shadow-2xl">
                             <div class="p-12 text-center bg-indigo-600/10">
                                 <h3 class="text-amber-500 font-black uppercase text-[10px] tracking-[0.5em] mb-2">Final Confirmation</h3>
                                 <h2 class="text-4xl font-serif text-white italic leading-none">Elite Reservation</h2>
                             </div>
-                            <div class="p-12 space-y-8 text-sm">
+                            <div class="p-10 lg:p-12 space-y-8 text-sm">
                                 <div class="flex justify-between border-b border-white/5 pb-6"><span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Artist</span><span id="rev-artist" class="text-white font-bold"></span></div>
                                 <div class="flex justify-between border-b border-white/5 pb-6"><span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Schedule</span><span id="rev-datetime" class="text-white font-bold tracking-tight"></span></div>
                                 <div><span class="text-[10px] uppercase font-bold text-slate-500 block mb-4 tracking-widest">Treatments</span><ul id="rev-services" class="grid grid-cols-1 gap-3 italic text-slate-300"></ul></div>
@@ -154,59 +190,34 @@
                 </form>
 
                 <div id="step-4" class="step-content">
-    <div class="glass p-12 rounded-[4rem] w-full max-w-2xl mx-auto relative overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 via-amber-500 to-indigo-500"></div>
-        
-        <div class="text-center mb-10">
-            <h2 class="text-4xl font-bold text-white tracking-tighter italic">Edit <span class="gold-gradient font-serif">profile</span></h2>
-            <p class="text-[10px] text-slate-500 uppercase tracking-[0.3em] mt-2 font-black">Identity Master Control</p>
-        </div>
-
-        <form action="{{ route('profile.update') }}" method="POST" class="space-y-8">
-            @csrf
-            @method('PATCH')
-
-            <div class="w-24 h-24 rounded-[2rem] bg-indigo-600/20 mx-auto mb-10 flex items-center justify-center text-4xl text-white italic font-black border border-white/10 shadow-2xl">
-                {{ substr(Auth::user()->name, 0, 1) }}
-            </div>
-
-            <div class="space-y-6">
-                <div class="group">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-indigo-400/80 ml-4 group-focus-within:text-indigo-400 transition-colors">Full Name</label>
-                    <input type="text" name="name" value="{{ old('name', Auth::user()->name) }}" 
-                        class="w-full mt-2 bg-white/[0.03] border border-white/10 rounded-3xl px-8 py-5 text-sm text-white focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all duration-300" required>
+                    <div class="glass p-12 rounded-[4rem] w-full max-w-2xl mx-auto relative overflow-hidden shadow-2xl">
+                        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 via-amber-500 to-indigo-500"></div>
+                        <div class="text-center mb-10">
+                            <h2 class="text-4xl font-bold text-white tracking-tighter italic leading-none">Edit <span class="gold-gradient font-serif">profile</span></h2>
+                        </div>
+                        <form action="{{ route('profile.update') }}" method="POST" class="space-y-8">
+                            @csrf @method('PATCH')
+                            <div class="w-24 h-24 rounded-[2rem] bg-indigo-600/20 mx-auto mb-10 flex items-center justify-center text-4xl text-white italic font-black border border-white/10 shadow-2xl">{{ substr(Auth::user()->name, 0, 1) }}</div>
+                            <div class="space-y-6 text-left">
+                                <div>
+                                    <label class="text-[10px] font-black uppercase tracking-widest text-indigo-400 ml-4">Full Name</label>
+                                    <input type="text" name="name" value="{{ old('name', Auth::user()->name) }}" class="w-full mt-2 bg-white/[0.03] border border-white/10 rounded-3xl px-8 py-5 text-sm text-white focus:border-indigo-500 transition-all outline-none" required>
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-black uppercase tracking-widest text-indigo-400 ml-4">Email Address</label>
+                                    <input type="email" name="email" value="{{ old('email', Auth::user()->email) }}" class="w-full mt-2 bg-white/[0.03] border border-white/10 rounded-3xl px-8 py-5 text-sm text-white focus:border-indigo-500 transition-all outline-none" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full mt-8 py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs tracking-[0.3em] hover:bg-indigo-500 transition-all shadow-xl shadow-indigo-500/20">Update Identity</button>
+                        </form>
+                    </div>
                 </div>
-
-                <div class="group">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-indigo-400/80 ml-4 group-focus-within:text-indigo-400 transition-colors">Email Address</label>
-                    <input type="email" name="email" value="{{ old('email', Auth::user()->email) }}" 
-                        class="w-full mt-2 bg-white/[0.03] border border-white/10 rounded-3xl px-8 py-5 text-sm text-white focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all duration-300" required>
-                </div>
-            </div>
-
-            <div class="flex flex-col gap-4 mt-12">
-                <button type="submit" class="w-full py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs tracking-[0.3em] hover:bg-indigo-500 active:scale-95 transition-all shadow-xl shadow-indigo-500/20">
-                    Update Identity
-                </button>
-            </div>
-        </form>
-
-        <div class="mt-8 pt-8 border-t border-white/5">
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="w-full py-4 text-red-500/50 hover:text-red-500 text-[10px] font-black uppercase tracking-[0.4em] transition-all">
-                    Secure Sign Out
-                </button>
-            </form>
-        </div>
-    </div>
-</div>
 
                 <div id="step-5" class="step-content">
-                    <h2 class="text-5xl lg:text-7xl font-bold text-white tracking-tighter italic mb-12">My <span class="gold-gradient font-serif lowercase">appointments</span></h2>
+                    <h2 class="text-4xl lg:text-7xl font-bold text-white tracking-tighter italic mb-12 text-center lg:text-left leading-none">My <span class="gold-gradient font-serif lowercase">appointments</span></h2>
                     <div class="grid grid-cols-1 gap-6 max-h-[60vh] overflow-y-auto pr-4 custom-scrollbar">
                         @forelse($myBookings as $booking)
-                        <div class="glass p-8 rounded-[3rem] border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 group transition-all">
+                        <div class="glass p-8 rounded-[3rem] border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
                             <div class="flex items-center gap-8 w-full">
                                 <div class="w-20 h-20 shrink-0 rounded-[2rem] bg-indigo-500/10 border border-indigo-500/20 flex flex-col items-center justify-center text-indigo-400">
                                     <span class="text-[11px] font-black uppercase">{{ \Carbon\Carbon::parse($booking->tgl_booking)->format('M') }}</span>
@@ -214,29 +225,24 @@
                                 </div>
                                 <div class="flex-grow min-w-0">
                                     <h4 class="text-xl font-bold text-white truncate tracking-tight">{{ $booking->kapster->nama }}</h4>
-                                    <span class="px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border 
+                                    <span class="inline-block px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border mt-1
                                         @if($booking->status == 'confirmed') border-green-500/20 bg-green-500/10 text-green-500
                                         @elseif($booking->status == 'cancelled') border-red-500/20 bg-red-500/10 text-red-500
                                         @else border-amber-500/20 bg-amber-500/10 text-amber-500 @endif">{{ $booking->status }}</span>
-                                    <p class="text-[11px] font-mono text-slate-500 uppercase mt-2 italic">{{ substr($booking->jam_mulai, 0, 5) }} — {{ substr($booking->jam_selesai, 0, 5) }}</p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-4 w-full md:w-auto justify-end">
-    <button type="button" onclick="openDetailModal('{{ $booking->id }}')" class="px-8 py-3.5 rounded-2xl bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest text-white hover:bg-white/10 transition-all">Details</button>
-    
-    @if($booking->status != 'cancelled' && $booking->status != 'completed')
-    <form action="{{ route('booking.cancel', $booking->id) }}" method="POST" onsubmit="return confirm('Securely cancel this elite booking?')">
-        @csrf 
-        @method('PATCH')
-        <button type="submit" class="w-12 h-12 rounded-2xl bg-red-500/10 text-red-500 border border-red-500/20 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all active:scale-90 shadow-lg shadow-red-500/5">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-    </form>
-    @endif
-</div>
+                                <button type="button" onclick="openDetailModal('{{ $booking->id }}')" class="px-8 py-3.5 rounded-2xl bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest text-white hover:bg-white/10 transition-all">Details</button>
+                                @if($booking->status != 'cancelled' && $booking->status != 'completed')
+                                <form action="{{ route('booking.cancel', $booking->id) }}" method="POST" onsubmit="return confirm('Securely cancel this elite booking?')">
+                                    @csrf @method('PATCH')
+                                    <button type="submit" class="w-12 h-12 rounded-2xl bg-red-500/10 text-red-500 border border-red-500/20 flex items-center justify-center hover:bg-red-500 transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12"/></svg></button>
+                                </form>
+                                @endif
+                            </div>
                         </div>
                         @empty
-                        <div class="text-center py-32 glass rounded-[4rem] border-dashed border-white/10 opacity-40 italic font-serif text-3xl">No elite grooming sessions.</div>
+                        <div class="text-center py-32 glass rounded-[4rem] border-dashed border-white/10 opacity-40 italic font-serif text-3xl">No elite sessions found.</div>
                         @endforelse
                     </div>
                 </div>
@@ -244,20 +250,49 @@
         </main>
     </div>
 
-    <div id="modal-detail" class="fixed inset-0 z-[150] hidden items-center justify-center p-8 backdrop-blur-3xl bg-black/90">
-        <div class="w-full max-w-xl glass border-white/10 rounded-[4rem] p-12 shadow-2xl relative">
-            <h2 class="text-4xl font-bold text-white mb-10 tracking-tight italic">Detail <span class="font-serif gold-gradient">booking</span></h2>
+    <div id="modal-detail" class="fixed inset-0 z-[300] hidden items-center justify-center p-6 lg:p-8 backdrop-blur-3xl bg-black/90">
+        <div class="w-full max-w-xl glass border-white/10 rounded-[3rem] lg:rounded-[4rem] p-10 lg:p-12 shadow-2xl relative">
+            <h2 class="text-4xl font-bold text-white mb-10 tracking-tight italic leading-none">Detail <span class="font-serif gold-gradient">booking</span></h2>
             <div class="space-y-8">
                 <div class="flex justify-between border-b border-white/5 pb-5"><span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Artist</span><span id="det-artist" class="text-white font-bold"></span></div>
-                <div class="flex justify-between border-b border-white/5 pb-5"><span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Schedule</span><span id="det-schedule" class="text-white font-bold"></span></div>
+                <div class="flex justify-between border-b border-white/5 pb-5"><span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Schedule</span><span id="det-schedule" class="text-white font-bold tracking-tight"></span></div>
                 <div class="border-t border-white/5 pt-4"><ul id="det-services" class="space-y-3 text-white italic text-sm"></ul></div>
-                <div class="border-t border-white/5 pt-8 flex justify-between items-center"><span class="text-indigo-400 font-black uppercase text-[12px]">Total Paid</span><span id="det-total" class="text-3xl font-black text-white italic"></span></div>
+                <div class="border-t border-white/5 pt-8 flex justify-between items-center"><span class="text-indigo-400 font-black uppercase text-[12px]">Total Paid</span><span id="det-total" class="text-3xl font-black text-white italic tracking-tight"></span></div>
             </div>
-            <button onclick="closeDetailModal()" class="w-full mt-12 py-5 bg-white text-black rounded-[2rem] font-black uppercase text-[10px] tracking-widest hover:bg-indigo-600 transition-all">Close Ticket</button>
+            <button onclick="closeDetailModal()" class="w-full mt-12 py-5 bg-white text-black rounded-[2rem] font-black uppercase text-[10px] tracking-widest hover:bg-indigo-600 hover:text-white transition-all shadow-xl">Close Ticket</button>
         </div>
     </div>
 
     <script>
+        // --- RESPONSIVE LOGIC ---
+        const btnToggle = document.getElementById('mobile-toggle');
+        const sidebarNav = document.getElementById('sidebar-nav');
+        const bar1 = document.getElementById('bar-1');
+        const bar2 = document.getElementById('bar-2');
+
+        btnToggle.addEventListener('click', () => {
+            const isActive = sidebarNav.classList.toggle('active');
+            if (isActive) {
+                // Change to "X"
+                bar1.style.transform = "rotate(45deg) translateY(5px)";
+                bar2.style.transform = "rotate(-45deg) translateY(-5px)";
+                document.body.style.overflow = "hidden";
+            } else {
+                // Change back to Hamburger
+                bar1.style.transform = "rotate(0) translateY(0)";
+                bar2.style.transform = "rotate(0) translateY(0)";
+                document.body.style.overflow = "auto";
+            }
+        });
+
+        function mobileClose() {
+            sidebarNav.classList.remove('active');
+            bar1.style.transform = "rotate(0) translateY(0)";
+            bar2.style.transform = "rotate(0) translateY(0)";
+            document.body.style.overflow = "auto";
+        }
+
+        // --- BOOKING LOGIC (Seperti Kode Anda) ---
         let selectedServiceIds = [];
         let selectedServiceNames = [];
         let totalPrice = 0;
@@ -280,19 +315,30 @@
         }
 
         function updateSidebarUI(step) {
-            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('border-indigo-500/50', 'bg-indigo-500/5'));
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('border-indigo-500/50', 'bg-indigo-500/5');
+            });
+            
             const line = document.getElementById('line-progress');
             if(step <= 3) {
-                line.style.height = step === 1 ? '0%' : step === 2 ? '50%' : '100%';
+                if(line) line.style.height = step === 1 ? '0%' : step === 2 ? '50%' : '100%';
                 for(let i=1; i<=3; i++) {
                     const dot = document.getElementById('dot-'+i);
                     const txt = document.getElementById('txt-'+i);
-                    if(i <= step) { dot.classList.add('bg-indigo-600', 'border-indigo-600', 'text-white'); txt.classList.add('text-white'); }
-                    else { dot.classList.remove('bg-indigo-600', 'border-indigo-600', 'text-white'); txt.classList.remove('text-white'); }
+                    if(dot && txt) {
+                        if(i <= step) {
+                            dot.classList.add('bg-indigo-600', 'border-indigo-600', 'text-white');
+                            dot.classList.remove('text-slate-500');
+                            txt.classList.add('text-white');
+                            txt.classList.remove('text-slate-500');
+                        } else {
+                            dot.classList.remove('bg-indigo-600', 'border-indigo-600', 'text-white');
+                            dot.classList.add('text-slate-500');
+                            txt.classList.remove('text-white');
+                            txt.classList.add('text-slate-500');
+                        }
+                    }
                 }
-            } else {
-                const activeNav = document.getElementById('nav-' + step);
-                if(activeNav) activeNav.classList.add('border-indigo-500/50', 'bg-indigo-500/5');
             }
         }
 
@@ -327,7 +373,7 @@
             const time = document.getElementById('jam_mulai').value;
             document.getElementById('rev-datetime').innerText = date ? `${formatDate(date)} at ${time}` : "Schedule not set";
             document.getElementById('rev-total').innerText = 'Rp ' + totalPrice.toLocaleString('id-ID');
-            document.getElementById('rev-services').innerHTML = selectedServiceNames.map(n => `<li class="flex items-center gap-3"><div class="w-1 h-1 bg-amber-500 rounded-full"></div> ${n}</li>`).join('');
+            document.getElementById('rev-services').innerHTML = selectedServiceNames.map(n => `<li class="flex items-center gap-3 text-xs"><div class="w-1 h-1 bg-amber-500 rounded-full shadow-[0_0_5px_rgba(251,191,36,0.5)]"></div> ${n}</li>`).join('');
         }
 
         function openDetailModal(id) {
@@ -336,7 +382,7 @@
             document.getElementById('det-artist').innerText = booking.kapster.nama;
             document.getElementById('det-schedule').innerText = `${formatDate(booking.tgl_booking)} at ${booking.jam_mulai.substring(0,5)}`;
             document.getElementById('det-total').innerText = 'Rp ' + parseInt(booking.total_harga).toLocaleString('id-ID');
-            document.getElementById('det-services').innerHTML = booking.services.map(s => `<li class="flex items-center gap-3"><div class="w-1.5 h-1.5 bg-indigo-500 rounded-full"></div> ${s.nama_service}</li>`).join('');
+            document.getElementById('det-services').innerHTML = booking.services.map(s => `<li class="flex items-center gap-3"><div class="w-1.5 h-1.5 bg-indigo-500 rounded-full shadow-[0_0_5px_rgba(99,102,241,0.5)]"></div> ${s.nama_service}</li>`).join('');
             document.getElementById('modal-detail').classList.remove('hidden');
             document.getElementById('modal-detail').classList.add('flex');
         }
@@ -346,20 +392,13 @@
             document.getElementById('modal-detail').classList.remove('flex');
         }
 
-        // Script untuk menghilangkan toast otomatis
-        window.addEventListener('load', () => {
-            const toast = document.querySelector('.toast-item');
-            if(toast) {
-                setTimeout(() => {
-                    toast.style.transition = 'all 0.5s ease';
-                    toast.style.opacity = '0';
-                    toast.style.transform = 'translateY(-20px)';
-                    setTimeout(() => toast.remove(), 500);
-                }, 4000);
-            }
+        flatpickr("#tgl_booking", { 
+            inline: true, 
+            minDate: "today", 
+            dateFormat: "Y-m-d", 
+            appendTo: document.getElementById('flatpickr-inline'), 
+            onChange: (sd, ds) => document.getElementById('tgl_booking').value = ds 
         });
-
-        flatpickr("#tgl_booking", { inline: true, minDate: "today", dateFormat: "Y-m-d", appendTo: document.getElementById('flatpickr-inline'), onChange: (sd, ds) => document.getElementById('tgl_booking').value = ds });
     </script>
 </body>
 </html>
