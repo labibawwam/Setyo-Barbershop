@@ -32,7 +32,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/booking/store', [CustomerBookingController::class, 'store'])->name('booking.store');
     // Route khusus pembatalan customer
    // Tambahkan atau ubah rute yang sudah ada
-Route::patch('/bookings/{id}/cancel', [CustomerBookingController::class, 'destroy'])->name('booking.cancel');
+// Ganti 'destroy' menjadi 'cancel'
+Route::patch('/bookings/{id}/cancel', [CustomerBookingController::class, 'cancel'])->name('booking.cancel');
 });
 
 // --- Profile Routes ---
