@@ -10,14 +10,37 @@ use Carbon\Carbon;
 
 class BookingController extends Controller
 {
-    public function index()
-    {
-        $bookings = Booking::with(['user', 'kapster', 'services'])
-            ->latest()
-            ->get();
+   public function index(Request $request)
+{
+    $query = Booking::with(['user', 'kapster', 'services']);
 
-        return view('admin.bookings.index', compact('bookings'));
+    // 1. Pencarian
+    if ($request->filled('search')) {
+        $query->whereHas('user', function($q) use ($request) {
+            $q->where('name', 'like', '%' . $request->search . '%')
+              ->orWhere('email', 'like', '%' . $request->search . '%');
+        });
     }
+
+    // 2. Filter Status
+    if ($request->filled('status')) {
+        $query->where('status', $request->status);
+    }
+
+    // 3. Filter Range Tanggal
+    if ($request->filled('start_date')) {
+        $query->whereDate('tgl_booking', '>=', $request->start_date);
+    }
+
+    if ($request->filled('end_date')) {
+        $query->whereDate('tgl_booking', '<=', $request->end_date);
+    }
+
+    // Ambil data terbaru berdasarkan jadwal booking
+    $bookings = $query->orderBy('tgl_booking', 'desc')->get();
+
+    return view('admin.bookings.index', compact('bookings'));
+}
 
     public function create()
     {
@@ -28,6 +51,11 @@ class BookingController extends Controller
         return view('admin.bookings.create', compact('users', 'kapsters', 'services'));
     }
 
+    public function show($id)
+{
+    $booking = Booking::with(['user', 'kapster', 'services'])->findOrFail($id);
+    return view('admin.bookings.show', compact('booking'));
+}
     public function store(Request $request)
     {
         $request->validate([
@@ -102,7 +130,7 @@ class BookingController extends Controller
             'service_ids' => 'required|array',
             'tgl_booking' => 'required|date',
             'jam_mulai' => 'required',
-            'status' => 'required|in:pending,confirmed,completed,cancelled'
+            'status' => 'required|in:confirmed,completed,cancelled'
         ]);
 
         return DB::transaction(function () use ($request, $booking) {

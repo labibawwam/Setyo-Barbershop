@@ -393,7 +393,7 @@
             <div class="h-[1px] w-20 bg-gradient-to-r from-transparent via-indigo-500 to-transparent mb-8"></div>
             
             <p class="text-gray-400 max-w-md leading-relaxed text-sm mb-12">
-                Elevating your grooming experience with professional touch and timeless style. Since 2024.
+                Elevating your grooming experience with professional touch and timeless style. Since 2017.
             </p>
 
             <div class="flex justify-center space-x-8 mb-16">
