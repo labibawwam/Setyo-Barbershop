@@ -8,23 +8,41 @@
             <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-600/5 blur-[120px] pointer-events-none"></div>
             <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-600/5 blur-[120px] pointer-events-none"></div>
 
-            <div class="flex-none px-8 py-10 lg:px-12 z-20 border-b border-white/[0.03] bg-[#050505]/40 backdrop-blur-md">
-                <div class="flex justify-between items-center max-w-7xl mx-auto">
-                    <div>
-                        <h2 class="text-3xl md:text-4xl font-black text-white tracking-tighter flex items-center gap-3">
-                            Account <span class="text-indigo-500 italic font-serif text-2xl md:text-3xl font-normal lowercase tracking-normal">settings</span>
-                        </h2>
-                        <p class="text-[9px] font-bold uppercase tracking-[0.3em] text-slate-500 mt-1 flex items-center gap-2">
-                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
-                            Elite Member Control Panel
-                        </p>
-                    </div>
-                    <div class="hidden md:block text-right">
-                        <p class="text-[10px] font-black text-white uppercase tracking-widest">{{ Auth::user()->name }}</p>
-                        <p class="text-[9px] text-slate-600 uppercase italic">Authorized Access</p>
-                    </div>
-                </div>
+           <div class="flex-none px-6 md:px-12 py-10 lg:py-12 z-20 border-b border-white/[0.03] bg-[#050505]/40 backdrop-blur-md">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center max-w-7xl mx-auto gap-6">
+        
+        <div class="space-y-4 w-full md:w-auto">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-black text-white tracking-tighter flex items-center gap-3">
+                    Account <span class="text-indigo-500 italic font-serif text-2xl md:text-3xl font-normal lowercase tracking-normal">settings</span>
+                </h2>
+                <p class="text-[9px] font-bold uppercase tracking-[0.3em] text-slate-500 mt-2 flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
+                    Elite Member Control Panel
+                </p>
             </div>
+
+            <a href="{{ route('dashboard') }}" 
+               class="inline-flex items-center gap-2 px-4 py-2 bg-white/[0.03] border border-white/10 rounded-xl font-bold text-[10px] text-slate-400 uppercase tracking-widest hover:bg-white/5 hover:text-white hover:border-indigo-500/50 transition-all duration-300 group">
+                <svg class="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
+                </svg>
+                {{ __('Return to Hub') }}
+            </a>
+        </div>
+
+        <div class="flex md:flex-col items-center md:items-end gap-4 md:gap-1 w-full md:w-auto border-t border-white/5 md:border-none pt-6 md:pt-0">
+            <div class="md:text-right flex-1 md:flex-none">
+                <p class="text-[10px] font-black text-white uppercase tracking-widest leading-none">{{ Auth::user()->name }}</p>
+                <p class="text-[8px] text-slate-600 uppercase italic tracking-tighter mt-1">Authorized Node Access</p>
+            </div>
+            <div class="w-8 h-8 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                <div class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
 
             <div class="flex-1 overflow-y-auto custom-scroll relative z-10 px-8 lg:px-12 py-12">
                 <div class="max-w-7xl mx-auto">

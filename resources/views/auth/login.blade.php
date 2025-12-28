@@ -109,7 +109,7 @@
                 </div>
             </div>
             <div class="mt-14 reveal">
-                <span class="px-6 py-2 bg-blue-500/10 rounded-full border border-blue-500/20 text-[10px] text-blue-300 font-bold tracking-widest backdrop-blur-md">EST. 2024</span>
+                <span class="px-6 py-2 bg-blue-500/10 rounded-full border border-blue-500/20 text-[10px] text-blue-300 font-bold tracking-widest backdrop-blur-md">EST. 2017</span>
             </div>
         </div>
 

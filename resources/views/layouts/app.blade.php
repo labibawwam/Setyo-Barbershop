@@ -13,7 +13,6 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <style>
-            /* Mencegah scroll pada body utama */
             body, html {
                 height: 100%;
                 overflow: hidden; 
@@ -21,42 +20,20 @@
                 font-family: 'Inter', sans-serif;
             }
 
-            /* Custom scrollbar untuk area konten */
-            .custom-scroll::-webkit-scrollbar {
-                width: 5px;
+            .custom-scroll::-webkit-scrollbar { width: 4px; }
+            .custom-scroll::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); }
+            .custom-scroll::-webkit-scrollbar-thumb { 
+                background: rgba(99, 102, 241, 0.2); 
+                border-radius: 10px; 
             }
-            .custom-scroll::-webkit-scrollbar-track {
-                background: rgba(255, 255, 255, 0.02);
-            }
-            .custom-scroll::-webkit-scrollbar-thumb {
-                background: rgba(99, 102, 241, 0.2);
-                border-radius: 10px;
-            }
-            .custom-scroll::-webkit-scrollbar-thumb:hover {
-                background: rgba(99, 102, 241, 0.5);
-            }
+            .custom-scroll::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.5); }
         </style>
     </head>
-    <body class="antialiased h-full">
-        <div class="flex flex-col h-full">
+    <body class="antialiased h-full text-slate-300">
+        <div x-data="{ isSidebarOpen: true }" class="flex h-full overflow-hidden">
             
-            <div class="flex-none">
-                @include('layouts.navigation')
-            </div>
+            {{ $slot }}
 
-            @isset($header)
-                <header class="flex-none bg-[#050505] border-b border-white/[0.05]">
-                    <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
-
-            <main class="flex-1 relative overflow-hidden flex">
-                <div class="flex flex-1 h-full overflow-hidden">
-                    {{ $slot }}
-                </div>
-            </main>
         </div>
     </body>
 </html>

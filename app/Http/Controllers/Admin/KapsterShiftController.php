@@ -10,12 +10,18 @@ use Illuminate\Http\Request;
 class KapsterShiftController extends Controller
 {
     // Tampilkan semua jadwal
-    public function index()
-    {
-        // Mengambil data kapster beserta shiftnya agar rapi di view
-        $kapsters = Kapster::with('shifts')->get();
-        return view('admin.kapster_shifts.index', compact('kapsters'));
-    }
+    public function index(Request $request)
+{
+    $search = $request->input('search');
+
+    $kapsters = Kapster::with(['shifts'])
+        ->when($search, function($query) use ($search) {
+            $query->where('nama', 'like', '%' . $search . '%');
+        })
+        ->get();
+
+    return view('admin.kapster_shifts.index', compact('kapsters'));
+}
 
     // Form tambah shift
     public function create()
