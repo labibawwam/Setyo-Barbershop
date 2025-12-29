@@ -165,24 +165,19 @@
             </h2>
         </div>
 
-        <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-20">
-            @foreach ($categories as $index => $category)
-            <button onclick="filterCategory('{{ $category->id }}', this)" 
-                class="category-tab group flex flex-col items-center gap-3 transition-all duration-500 {{ $index == 0 ? 'active-tab' : 'opacity-50 hover:opacity-100' }}">
-                
-                @if($category->gambar_kategori)
-                <div class="w-16 h-16 md:w-20 md:h-20 rounded-2xl overflow-hidden border border-white/10 group-[.active-tab]:border-indigo-500 group-[.active-tab]:ring-4 group-[.active-tab]:ring-indigo-500/20 transition-all">
-                    <img src="{{ asset('storage/' . $category->gambar_kategori) }}" class="w-full h-full object-cover">
-                </div>
-                @endif
-                
-                <span class="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-white group-[.active-tab]:text-indigo-400">
-                    {{ $category->nama_kategori }}
-                </span>
-                <div class="h-1 w-0 bg-indigo-500 rounded-full transition-all duration-500 group-[.active-tab]:w-full"></div>
-            </button>
-            @endforeach
-        </div>
+       <div class="flex flex-wrap justify-center gap-6 md:gap-12 mb-20">
+    @foreach ($categories as $index => $category)
+    <button onclick="filterCategory('{{ $category->id }}', this)" 
+        class="category-tab group flex flex-col items-center gap-2 transition-all duration-500 {{ $index == 0 ? 'active-tab' : 'opacity-40 hover:opacity-100' }}">
+        
+        <span class="text-[11px] md:text-xs font-black uppercase tracking-[0.3em] text-white group-[.active-tab]:text-indigo-400 transition-colors duration-300">
+            {{ $category->nama_kategori }}
+        </span>
+
+        <div class="h-[2px] w-0 bg-indigo-500 rounded-full transition-all duration-500 group-[.active-tab]:w-full shadow-[0_0_10px_rgba(99,102,241,0.8)]"></div>
+    </button>
+    @endforeach
+</div>
 
         <div id="services-container">
             @foreach ($categories as $index => $category)
