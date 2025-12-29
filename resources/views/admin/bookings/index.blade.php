@@ -153,14 +153,7 @@
                 </div>
             </div>
 
-            <div class="flex-none px-6 md:px-8 py-5 border-t border-white/[0.05] bg-[#050505]/80 backdrop-blur-md">
-                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-black uppercase tracking-widest text-slate-500">
-                    <p class="hidden sm:block">Pipeline Revenue: <span class="text-indigo-400 italic font-serif text-sm font-normal normal-case tracking-normal ml-2">Rp {{ number_format($bookings->where('status', 'completed')->sum('total_harga')) }}</span></p>
-                    <div class="flex items-center gap-4 ml-auto sm:ml-0">
-                        <span class="px-3 py-1 rounded bg-white/5 border border-white/10 uppercase tracking-tighter">{{ $bookings->count() }} Results Found</span>
-                    </div>
-                </div>
-            </div>
+
         </main>
     </div>
 

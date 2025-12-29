@@ -108,14 +108,7 @@
                 </div>
             </div>
 
-            <div class="flex-none px-6 md:px-8 py-5 border-t border-white/[0.05] bg-[#050505]/80 backdrop-blur-md">
-                <div class="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-slate-500">
-                    <p class="hidden sm:block">Configuration: <span class="text-indigo-400 italic font-serif text-sm font-normal normal-case tracking-normal ml-2">{{ $kapsters->sum(fn($k) => $k->shifts->count()) }} Total Units</span></p>
-                    <div class="flex items-center gap-4 ml-auto sm:ml-0">
-                        <span class="w-8 h-8 flex items-center justify-center rounded-lg bg-indigo-600 text-white font-mono shadow-[0_0_15px_rgba(99,102,241,0.3)]">01</span>
-                    </div>
-                </div>
-            </div>
+
         </main>
     </div>
 

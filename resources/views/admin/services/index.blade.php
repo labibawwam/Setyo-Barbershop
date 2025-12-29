@@ -127,21 +127,7 @@
                 </div>
             </div>
 
-            <div class="flex-none px-6 md:px-8 py-5 md:py-6 lg:px-12 border-t border-white/[0.05] bg-[#050505]/80 backdrop-blur-md">
-                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
-                    <p class="text-center sm:text-left truncate">
-                        Catalog Index: <span class="text-indigo-400 italic font-serif text-sm font-normal normal-case tracking-normal ml-2">{{ $services->count() }} Active Identifiers</span>
-                    </p>
-                    
-                    <div class="flex items-center gap-6">
-                        <button class="hover:text-white transition-colors">Prev</button>
-                        <div class="flex items-center gap-1.5 font-mono">
-                            <span class="w-8 h-8 flex items-center justify-center rounded-lg bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]">01</span>
-                        </div>
-                        <button class="text-indigo-400 hover:text-indigo-300 transition-colors">Next</button>
-                    </div>
-                </div>
-            </div>
+            
         </main>
     </div>
 
