@@ -5,7 +5,7 @@ export default defineConfig({
     server: {
         host: '0.0.0.0', // Mengizinkan akses dari semua perangkat di jaringan
         hmr: {
-            host: '192.168.1.175', // Ganti dengan IP laptop Anda
+            host: '192.168.0.111', // Ganti dengan IP laptop Anda
         },
     },
     plugins: [

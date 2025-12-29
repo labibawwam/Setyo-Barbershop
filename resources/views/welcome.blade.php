@@ -33,11 +33,11 @@
     <x-navbar />
 
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <img src="https://headcurve.com/wp-content/uploads/2018/12/Barbershop-interior-design-dec8-00013.jpg"
-                 class="w-full h-full object-cover opacity-20 scale-105 motion-safe:animate-[pulse_8s_ease-in-out_infinite]">
-            <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-[#050505]"></div>
-        </div>
+      <div class="absolute inset-0 z-0">
+    <img src="{{ asset('gambar/mainbg.jpeg') }}"
+         class="w-full h-full object-cover opacity-20 scale-105 motion-safe:animate-[pulse_8s_ease-in-out_infinite]">
+    <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-[#050505]"></div>
+</div>
 
         <div class="relative z-10 max-w-5xl px-6 text-center">
             <span class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-[0.2em] uppercase bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 rounded-full">
@@ -70,36 +70,53 @@
                 </p>
                 <div class="h-[1px] w-full bg-gradient-to-r from-transparent via-indigo-500 to-transparent mb-5"></div>
             </div>
-            
             <h2 class="font-display text-4xl md:text-6xl font-bold text-white leading-tight tracking-tight">
                 Master <span class="text-indigo-500 italic font-serif font-light">Groomers</span>
             </h2>
         </div>
 
-        <div class="relative w-full overflow-hidden group/container">
+        <div class="relative w-full overflow-hidden group/container" style="mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);">
             <div class="flex gap-5 loop-track group-hover/container:pause-animation">
-                @foreach (array_merge($kapsters->toArray(), $kapsters->toArray()) as $index => $kps)
+                
+                @foreach ($kapsters as $kps)
                 <div class="flex-none w-[200px] md:w-[240px]">
                     <div class="group relative overflow-hidden rounded-[2.5rem] aspect-[4/5] border border-white/10 bg-white/[0.02] transition-all duration-700 hover:border-indigo-500/40 hover:-translate-y-2 shadow-2xl">
-                        
-                        <img src="{{ asset('storage/' . ($kps['photo'] ?? $kps->photo)) }}"
-                             class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                             alt="{{ $kps['nama'] ?? $kps->nama }}">
-                        
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent opacity-90 transition-opacity group-hover:opacity-80"></div>
-
-                        <div class="absolute bottom-8 left-0 right-0 px-6 text-center transform transition-all duration-500 group-hover:translate-y-[-5px]">
-                            <p class="text-indigo-500 font-black uppercase tracking-[0.3em] text-[8px] mb-2">
-                                Professional Artist
-                            </p>
-                            <h3 class="text-xl font-bold text-white tracking-tight leading-none group-hover:text-indigo-400 transition-colors">
-                                {{ $kps['nama'] ?? $kps->nama }}
-                            </h3>
-                            <div class="w-0 h-[1.5px] bg-indigo-500 mx-auto mt-3 transition-all duration-500 group-hover:w-12"></div>
+                        <img src="{{ asset('storage/' . ($kps->photo)) }}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="{{ $kps->nama }}">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent opacity-90"></div>
+                        <div class="absolute bottom-8 left-0 right-0 px-6 text-center">
+                            <p class="text-indigo-500 font-black uppercase tracking-[0.3em] text-[8px] mb-2">Professional Artist</p>
+                            <h3 class="text-xl font-bold text-white tracking-tight leading-none group-hover:text-indigo-400">{{ $kps->nama }}</h3>
                         </div>
                     </div>
                 </div>
                 @endforeach
+
+                @foreach ($kapsters as $kps)
+                <div class="flex-none w-[200px] md:w-[240px]" aria-hidden="true">
+                    <div class="group relative overflow-hidden rounded-[2.5rem] aspect-[4/5] border border-white/10 bg-white/[0.02] transition-all duration-700 hover:border-indigo-500/40 hover:-translate-y-2 shadow-2xl">
+                        <img src="{{ asset('storage/' . ($kps->photo)) }}" class="w-full h-full object-cover" alt="{{ $kps->nama }}">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent opacity-90"></div>
+                        <div class="absolute bottom-8 left-0 right-0 px-6 text-center">
+                            <p class="text-indigo-500 font-black uppercase tracking-[0.3em] text-[8px] mb-2">Professional Artist</p>
+                            <h3 class="text-xl font-bold text-white tracking-tight leading-none">{{ $kps->nama }}</h3>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+
+                @foreach ($kapsters as $kps)
+                <div class="flex-none w-[200px] md:w-[240px]" aria-hidden="true">
+                    <div class="group relative overflow-hidden rounded-[2.5rem] aspect-[4/5] border border-white/10 bg-white/[0.02] transition-all duration-700 hover:border-indigo-500/40 hover:-translate-y-2 shadow-2xl">
+                        <img src="{{ asset('storage/' . ($kps->photo)) }}" class="w-full h-full object-cover" alt="{{ $kps->nama }}">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent opacity-90"></div>
+                        <div class="absolute bottom-8 left-0 right-0 px-6 text-center">
+                            <p class="text-indigo-500 font-black uppercase tracking-[0.3em] text-[8px] mb-2">Professional Artist</p>
+                            <h3 class="text-xl font-bold text-white tracking-tight leading-none">{{ $kps->nama }}</h3>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+
             </div>
         </div>
     </div>
@@ -107,21 +124,27 @@
     <style>
         .loop-track {
             display: flex;
-            width: fit-content;
-            animation: scroll 35s linear infinite;
+            width: max-content; 
+            /* Kecepatan 30 detik untuk kelancaran visual dengan 3 set */
+            animation: scroll-triple 30s linear infinite;
         }
 
         .pause-animation {
             animation-play-state: paused;
         }
 
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-50% - 10px)); }
+        @keyframes scroll-triple {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                /* Bergerak tepat 1/3 dari total lebar track karena ada 3 set data */
+                transform: translateX(-33.3333%);
+            }
         }
 
         @media (max-width: 768px) {
-            .loop-track { animation: scroll 20s linear infinite; }
+            .loop-track { animation: scroll-triple 15s linear infinite; }
         }
     </style>
 </section>
@@ -246,10 +269,12 @@
     <section id="about" class="py-32 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div class="relative">
-                <div class="absolute -top-10 -left-10 w-64 h-64 bg-indigo-600/10 rounded-full blur-3xl"></div>
-                <img src="https://www.masterseo.id/wp-content/uploads/2020/02/barbershop-medan-840x450.jpg"
-                     class="relative z-10 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.5)] grayscale-[0.5] hover:grayscale-0 transition-all duration-700">
-            </div>
+    <div class="absolute -top-10 -left-10 w-64 h-64 bg-indigo-600/10 rounded-full blur-3xl"></div>
+    
+    <img src="{{ asset('gambar/bg1.jpeg') }}" 
+         alt="Background Barbershop"
+         class="relative z-10 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.5)] grayscale-[0.5] hover:grayscale-0 transition-all duration-700 object-cover">
+</div>
 
             <div>
                 <h4 class="text-indigo-500 font-bold tracking-[0.3em] uppercase text-sm mb-4">Legacy & Quality</h4>
@@ -261,7 +286,7 @@
                 <div class="grid grid-cols-2 gap-6">
                     <div class="flex items-start space-x-3">
                         <span class="text-indigo-500 font-bold">01.</span>
-                        <span class="text-gray-200 font-medium">Kapster Berlisensi</span>
+                        <span class="text-gray-200 font-medium">Kapster Berpengalaman</span>
                     </div>
                     <div class="flex items-start space-x-3">
                         <span class="text-indigo-500 font-bold">02.</span>
@@ -269,7 +294,7 @@
                     </div>
                     <div class="flex items-start space-x-3">
                         <span class="text-indigo-500 font-bold">03.</span>
-                        <span class="text-gray-200 font-medium">Produk Premium</span>
+                        <span class="text-gray-200 font-medium">Layanan Profesional</span>
                     </div>
                     <div class="flex items-start space-x-3">
                         <span class="text-indigo-500 font-bold">04.</span>
