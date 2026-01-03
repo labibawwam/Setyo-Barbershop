@@ -14,14 +14,14 @@ use Carbon\Carbon;
 class CustomerBookingController extends Controller
 {
     /**
-     * Menampilkan form booking
+     * Menampilkan form booking dengan data pendukung
      */
     public function create()
     {
         $kapsters = Kapster::all();
         $services = Service::all();
         
-        // Mengambil semua booking confirmed untuk pengecekan jadwal di frontend
+        // Ambil jadwal yang sudah terisi agar user tidak memilih jam yang sama
         $allBookings = Booking::whereIn('status', ['confirmed', 'pending'])
             ->select('kapster_id', 'tgl_booking', 'jam_mulai', 'jam_selesai')
             ->get();
@@ -31,12 +31,11 @@ class CustomerBookingController extends Controller
             ->latest()
             ->get();
 
-        // Pastikan nama view sesuai dengan folder Anda (tadi tertulis create, pastikan file ada)
         return view('customer.bookings.create', compact('kapsters', 'services', 'myBookings', 'allBookings'));
     }
 
     /**
-     * Menyimpan data booking baru
+     * Menyimpan data booking dengan validasi keamanan extra
      */
     public function store(Request $request)
     {
@@ -50,37 +49,60 @@ class CustomerBookingController extends Controller
 
         try {
             return DB::transaction(function () use ($request) {
-                // 1. Hitung Total Durasi & Harga berdasarkan database (keamanan extra)
+                // 1. Inisialisasi Waktu & Lead Time (Min. 1 jam dari sekarang)
+                $jamMulaiReq = Carbon::parse($request->tgl_booking . ' ' . $request->jam_mulai);
+                
+                if ($jamMulaiReq->lt(Carbon::now()->addHour())) {
+                    return back()->withInput()->with('error', "Booking minimal dilakukan 1 jam sebelum jadwal kedatangan.");
+                }
+
+                // 2. Cek apakah user sudah punya terlalu banyak booking aktif (Mencegah Spam)
+                $userActiveBookings = Booking::where('user_id', Auth::id())
+                    ->whereIn('status', ['confirmed', 'pending'])
+                    ->count();
+                if ($userActiveBookings >= 2) {
+                    return back()->withInput()->with('error', "Anda memiliki 2 agenda aktif. Selesaikan atau batalkan salah satu sebelum membuat janji baru.");
+                }
+
+                // 3. LOGIKA BARU: Cek apakah USER sudah memiliki booking lain di jam yang sama (meskipun kapster beda)
                 $services = Service::whereIn('id', $request->service_ids)->get();
                 $totalDurasi = $services->sum('durasi');
                 $totalHarga = $services->sum('harga');
-                
-                $jamMulaiReq = Carbon::parse($request->tgl_booking . ' ' . $request->jam_mulai);
-                $jamSelesaiReq = $jamMulaiReq->copy()->addMinutes($totalDurasi);
+                $bufferTime = 10; 
+                $jamSelesaiReq = $jamMulaiReq->copy()->addMinutes($totalDurasi + $bufferTime);
 
-                // 2. CEK SHIFT KAPSTER (Hari kerja & Jam operasional)
+                $isUserSibuk = Booking::where('user_id', Auth::id())
+                    ->where('tgl_booking', $request->tgl_booking)
+                    ->whereIn('status', ['confirmed', 'pending'])
+                    ->where(function ($q) use ($jamMulaiReq, $jamSelesaiReq) {
+                        $q->where('jam_mulai', '<', $jamSelesaiReq->toTimeString())
+                          ->where('jam_selesai', '>', $jamMulaiReq->toTimeString());
+                    })
+                    ->exists();
+
+                if ($isUserSibuk) {
+                    return back()->withInput()->with('error', "Gagal! Anda sudah memiliki jadwal booking lain di waktu yang bersamaan.");
+                }
+
+                // 4. Cek Shift Kapster (Hari kerja & Jam operasional)
                 $hariInput = $jamMulaiReq->translatedFormat('l'); 
                 $shift = KapsterShift::where('kapster_id', $request->kapster_id)
                     ->where('hari', $hariInput)
                     ->first();
 
                 if (!$shift || $shift->is_libur) {
-                    return back()->withInput()->with('error', "Maaf, Kapster sedang LIBUR pada hari $hariInput.");
+                    return back()->withInput()->with('error', "Maaf, Artist sedang LIBUR pada hari $hariInput.");
                 }
 
                 $shiftMulai = Carbon::parse($request->tgl_booking . ' ' . $shift->jam_mulai);
                 $shiftSelesai = Carbon::parse($request->tgl_booking . ' ' . $shift->jam_selesai);
 
                 if ($jamMulaiReq->lt($shiftMulai) || $jamSelesaiReq->gt($shiftSelesai)) {
-                    return back()->withInput()->with('error', "Di luar jam kerja artist. Jam operasional: " . 
-                        $shiftMulai->format('H:i') . " - " . $shiftSelesai->format('H:i'));
+                    return back()->withInput()->with('error', "Di luar jam kerja artist ($hariInput: " . 
+                        $shiftMulai->format('H:i') . " - " . $shiftSelesai->format('H:i') . ")");
                 }
 
-                // 3. CEK BENTROK JADWAL (Overlap Logic)
-                /* Logika Overlap yang Benar: 
-                   (Mulai_Baru < Selesai_Lama) DAN (Selesai_Baru > Mulai_Lama)
-                */
-                
+                // 5. Cek Bentrok Jadwal Kapster (Overlap Logic) dengan Row Level Locking
                 $isBentrok = Booking::where('kapster_id', $request->kapster_id)
                     ->where('tgl_booking', $request->tgl_booking)
                     ->whereIn('status', ['confirmed', 'pending'])
@@ -88,21 +110,14 @@ class CustomerBookingController extends Controller
                         $q->where('jam_mulai', '<', $jamSelesaiReq->toTimeString())
                           ->where('jam_selesai', '>', $jamMulaiReq->toTimeString());
                     })
-                    ->lockForUpdate() // Mencegah race condition
+                    ->lockForUpdate()
                     ->exists();
 
                 if ($isBentrok) {
-                    $lastBooking = Booking::where('kapster_id', $request->kapster_id)
-                        ->where('tgl_booking', $request->tgl_booking)
-                        ->whereIn('status', ['confirmed', 'pending'])
-                        ->orderBy('jam_selesai', 'desc')
-                        ->first();
-
-                    $rekomendasi = $lastBooking ? Carbon::parse($lastBooking->jam_selesai)->format('H:i') : "jam lain";
-                    return back()->withInput()->with('error', "Slot waktu sudah terisi. Rekomendasi waktu kosong setelah jam $rekomendasi.");
+                    return back()->withInput()->with('error', "Slot waktu tersebut baru saja terisi. Silakan pilih jam lain.");
                 }
 
-                // 4. SIMPAN DATA KE DATABASE
+                // 6. Simpan Booking
                 $booking = Booking::create([
                     'user_id'     => Auth::id(),
                     'kapster_id'  => $request->kapster_id,
@@ -113,18 +128,17 @@ class CustomerBookingController extends Controller
                     'status'      => 'confirmed' 
                 ]);
 
-                // Pasang layanan ke tabel pivot
                 $booking->services()->attach($request->service_ids);
 
-                return redirect()->route('booking.create')->with('success', 'Booking berhasil dikonfirmasi!');
+                return redirect()->route('booking.create')->with('success', 'Booking berhasil dikonfirmasi! Sampai jumpa di Setyo Barbershop.');
             });
         } catch (\Exception $e) {
-            return back()->withInput()->with('error', 'Terjadi kesalahan sistem. Silakan coba beberapa saat lagi.');
+            return back()->withInput()->with('error', 'Terjadi gangguan sistem. Silakan coba lagi.');
         }
     }
 
     /**
-     * Membatalkan booking
+     * Batalkan booking dengan kebijakan waktu (Min. 2 jam sebelum mulai)
      */
     public function cancel($id)
     {
@@ -132,13 +146,18 @@ class CustomerBookingController extends Controller
             ->where('user_id', Auth::id())
             ->firstOrFail();
 
-        // Validasi status sebelum cancel
         if (in_array($booking->status, ['completed', 'cancelled'])) {
-            return back()->with('error', 'Pesanan sudah selesai atau sudah dibatalkan sebelumnya.');
+            return back()->with('error', 'Agenda ini sudah selesai atau telah dibatalkan.');
+        }
+
+        // Kebijakan Pembatalan: Maksimal 2 jam sebelum mulai
+        $jadwalMulai = Carbon::parse($booking->tgl_booking . ' ' . $booking->jam_mulai);
+        if (Carbon::now()->gt($jadwalMulai->subHours(2))) {
+            return back()->with('error', 'Pembatalan hanya dapat dilakukan maksimal 2 jam sebelum jadwal dimulai.');
         }
 
         $booking->update(['status' => 'cancelled']);
 
-        return back()->with('success', 'Jadwal booking Anda telah berhasil dibatalkan.');
+        return back()->with('success', 'Agenda Anda telah berhasil dibatalkan.');
     }
 }
