@@ -38,6 +38,7 @@
             }
             #sidebar-nav.active { transform: translateX(0); }
         }
+        input[type="time"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
     </style>
 </head>
 <body class="antialiased overflow-x-hidden">
@@ -148,25 +149,40 @@
                     </div>
 
                     <div id="step-3" class="step-content">
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-                            <div class="glass p-6 lg:p-10 rounded-[3rem] text-center lg:text-left">
-                                <h3 class="text-2xl font-bold text-white mb-8 tracking-tight italic text-center">Pick Your <span class="text-amber-500">Date</span></h3>
-                                <div id="flatpickr-inline" class="flex justify-center scale-90 sm:scale-100 origin-center"></div>
-                                <input type="text" name="tgl_booking" id="tgl_booking" class="hidden" required>
-                            </div>
-                            <div class="flex flex-col gap-8">
-                                <div class="glass p-8 lg:p-10 rounded-[3rem] text-center">
-                                    <p class="text-[11px] text-indigo-400 font-black uppercase tracking-[0.3em] mb-6">Arrival Time</p>
-                                    <input type="time" name="jam_mulai" id="jam_mulai" class="w-full bg-transparent border-none text-5xl lg:text-7xl font-black text-white text-center focus:ring-0 appearance-none" required>
-                                </div>
-                                <div id="booked-slots-container" class="glass p-8 rounded-[3rem] hidden">
-                                    <p class="text-[10px] text-red-400 font-black uppercase tracking-[0.3em] mb-4 text-center">Occupied Slots</p>
-                                    <div id="booked-slots-list" class="grid grid-cols-2 gap-3"></div>
-                                </div>
-                                <button type="button" onclick="showStep(6)" class="w-full py-7 bg-white text-black rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-600 hover:text-white transition-all shadow-2xl">Summary Details</button>
-                            </div>
-                        </div>
-                    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+        
+        <div class="glass p-8 lg:p-10 rounded-[3rem] flex flex-col justify-center">
+            <h3 class="text-2xl font-bold text-white mb-8 tracking-tight italic text-center">
+                Pick Your <span class="text-amber-500">Date</span>
+            </h3>
+            <div id="flatpickr-inline" class="flex justify-center scale-95 sm:scale-100 origin-center"></div>
+            <input type="text" name="tgl_booking" id="tgl_booking" class="hidden" required>
+        </div>
+
+        <div class="flex flex-col gap-6 lg:gap-8">
+            <div class="glass p-8 lg:p-10 rounded-[3rem] text-center flex flex-col justify-center min-h-[300px]">
+    <p class="text-[11px] text-indigo-400 font-black uppercase tracking-[0.3em] mb-6">Arrival Time</p>
+    
+    <div class="relative w-full overflow-hidden px-2">
+        <input type="time" name="jam_mulai" id="jam_mulai" 
+               onclick="this.showPicker()"
+               class="w-full bg-transparent border-none text-5xl lg:text-6xl font-black text-white text-center focus:ring-0 appearance-none cursor-pointer tracking-tighter" 
+               required>
+    </div>
+    
+    <p class="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-4">Tap numbers to set</p>
+</div>
+            <div id="booked-slots-container" class="glass p-6 rounded-[2.5rem] hidden">
+                <p class="text-[10px] text-red-400 font-black uppercase tracking-[0.3em] mb-4 text-center">Occupied Slots</p>
+                <div id="booked-slots-list" class="grid grid-cols-2 gap-3"></div>
+            </div>
+
+            <button type="button" onclick="showStep(6)" class="w-full py-7 bg-white text-black rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-600 hover:text-white transition-all shadow-2xl active:scale-95">
+                Summary Details
+            </button>
+        </div>
+    </div>
+</div>
 
                     <div id="step-6" class="step-content items-center">
                         <div class="w-full max-w-xl glass rounded-[4rem] overflow-hidden border-white/10 shadow-2xl text-left">
