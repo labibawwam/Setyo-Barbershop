@@ -209,15 +209,15 @@
                         </div>
                         <form action="{{ route('profile.update') }}" method="POST" class="space-y-6 md:space-y-8 text-left">
                             @csrf @method('PATCH')
-                            <div class="w-24 h-24 rounded-[2rem] bg-indigo-600/20 mx-auto mb-10 flex items-center justify-center text-4xl text-white italic font-black border border-white/10 shadow-2xl">{{ substr(Auth::user()->name, 0, 1) }}</div>
+                            <div class="w-24 h-24 rounded-[2rem] bg-indigo-600/20 mx-auto mb-10 flex items-center justify-center text-4xl text-white italic font-black border border-white/10 shadow-2xl">{{ substr(optional(Auth::user())->name ?? '', 0, 1) }}</div>
                             <div class="space-y-6">
                                 <div>
                                     <label class="text-[10px] font-black uppercase tracking-widest text-indigo-400 ml-4">Full Name</label>
-                                    <input type="text" name="name" value="{{ Auth::user()->name }}" class="w-full mt-2 bg-white/[0.03] border border-white/10 rounded-3xl px-8 py-4 md:py-5 text-sm text-white focus:border-indigo-500 transition-all outline-none" required>
+                                    <input type="text" name="name" value="{{ optional(Auth::user())->name ?? '' }}" class="w-full mt-2 bg-white/[0.03] border border-white/10 rounded-3xl px-8 py-4 md:py-5 text-sm text-white focus:border-indigo-500 transition-all outline-none" required>
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black uppercase tracking-widest text-indigo-400 ml-4">Email Address</label>
-                                    <input type="email" name="email" value="{{ Auth::user()->email }}" class="w-full mt-2 bg-white/[0.03] border border-white/10 rounded-3xl px-8 py-4 md:py-5 text-sm text-white focus:border-indigo-500 transition-all outline-none" required>
+                                    <input type="email" name="email" value="{{ optional(Auth::user())->email ?? '' }}" class="w-full mt-2 bg-white/[0.03] border border-white/10 rounded-3xl px-8 py-4 md:py-5 text-sm text-white focus:border-indigo-500 transition-all outline-none" required>
                                 </div>
                             </div>
                             <button type="submit" class="w-full mt-8 py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-500 transition-all shadow-xl">Update Identity</button>
@@ -283,9 +283,9 @@
     </div>
 
     <script>
-        // Data dari Laravel Controller
-        const allBookings = @json($allBookings); 
-        const myBookingsData = @json($myBookings);
+        // Data dari Laravel Controller (safely default to empty arrays)
+        const allBookings = @json($allBookings ?? []);
+        const myBookingsData = @json($myBookings ?? []);
         
         // AUTO-HIDE TOAST LOGIC (3 detik)
         document.addEventListener('DOMContentLoaded', function() {
@@ -298,27 +298,29 @@
             }
         });
 
-        // Navigation & Sidebar Logic
+        // Navigation & Sidebar Logic (safe guards)
         const btnToggle = document.getElementById('mobile-toggle');
         const sidebarNav = document.getElementById('sidebar-nav');
         const bar1 = document.getElementById('bar-1');
         const bar2 = document.getElementById('bar-2');
 
-        btnToggle.addEventListener('click', () => {
-            const isActive = sidebarNav.classList.toggle('active');
-            if (isActive) {
-                bar1.style.transform = "rotate(45deg) translateY(6px)";
-                bar2.style.transform = "rotate(-45deg) translateY(-6px)";
-                document.body.style.overflow = "hidden";
-            } else {
-                mobileClose();
-            }
-        });
+        if (btnToggle && sidebarNav && bar1 && bar2) {
+            btnToggle.addEventListener('click', () => {
+                const isActive = sidebarNav.classList.toggle('active');
+                if (isActive) {
+                    bar1.style.transform = "rotate(45deg) translateY(6px)";
+                    bar2.style.transform = "rotate(-45deg) translateY(-6px)";
+                    document.body.style.overflow = "hidden";
+                } else {
+                    mobileClose();
+                }
+            });
+        }
 
         function mobileClose() {
-            sidebarNav.classList.remove('active');
-            bar1.style.transform = "rotate(0) translateY(0)";
-            bar2.style.transform = "rotate(0) translateY(0)";
+            if (typeof sidebarNav !== 'undefined' && sidebarNav) sidebarNav.classList.remove('active');
+            if (typeof bar1 !== 'undefined' && bar1) bar1.style.transform = "rotate(0) translateY(0)";
+            if (typeof bar2 !== 'undefined' && bar2) bar2.style.transform = "rotate(0) translateY(0)";
             document.body.style.overflow = "auto";
         }
 
