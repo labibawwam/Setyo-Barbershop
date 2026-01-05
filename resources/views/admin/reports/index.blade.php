@@ -9,7 +9,7 @@
 
     <div class="flex h-screen w-screen overflow-hidden bg-[#050505] font-sans text-slate-300 text-[13px]">
         
-        <x-sidebar />
+        <x-sidebar >
 
         <main class="flex-1 flex flex-col min-w-0 bg-[#050505] relative overflow-y-auto custom-scroll">
             <div class="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-indigo-600/5 blur-[80px] md:blur-[120px] pointer-events-none"></div>
@@ -143,6 +143,7 @@
                 </div>
             </div>
         </main>
+            </x-sidebar>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

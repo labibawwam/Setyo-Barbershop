@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="flex h-screen overflow-hidden bg-[#050505] font-sans text-slate-300">
         
-        <x-sidebar />
+        <x-sidebar >
 
         <main class="flex-1 flex flex-col min-w-0 bg-[#050505] relative">
             <div class="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-indigo-600/5 blur-[80px] md:blur-[120px] pointer-events-none"></div>
@@ -103,9 +103,8 @@
                     </table>
                 </div>
             </div>
-
-        
         </main>
+            </x-sidebar>
     </div>
 
     <style>

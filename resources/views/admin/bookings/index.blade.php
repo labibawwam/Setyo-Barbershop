@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="flex h-screen w-screen overflow-hidden bg-[#050505] font-sans text-slate-300">
         
-        <x-sidebar />
+        <x-sidebar >
 
         <main class="flex-1 flex flex-col min-w-0 bg-[#050505] relative overflow-y-auto md:overflow-hidden custom-scroll">
             
@@ -155,6 +155,7 @@
 
         </main>
     </div>
+    </x-sidebar>
 
     <style>
         body, html { overflow: hidden !important; height: 100vh; width: 100vw; background-color: #050505; }
