@@ -1,4 +1,12 @@
 <x-app-layout>
+    @php
+        // Inisialisasi default jika variabel tidak terdefinisi dari controller
+        $month = $month ?? date('n');
+        $year = $year ?? date('Y');
+        $totalRevenue = $totalRevenue ?? 0;
+        $totalBookings = $totalBookings ?? 0;
+    @endphp
+
     <div class="flex h-screen w-screen overflow-hidden bg-[#050505] font-sans text-slate-300 text-[13px]">
         
         <x-sidebar />
@@ -10,12 +18,9 @@
                 
                 <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-8 mb-10 md:mb-12">
                     <div class="flex items-center gap-4 min-w-0">
-                        <button @click="isSidebarOpen = true" class="md:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-indigo-400 active:scale-95 transition-all">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
-                        </button>
                         <div class="min-w-0">
                             <h1 class="text-2xl md:text-4xl font-black text-white tracking-tighter uppercase truncate">
-                                Operating <span class="text-indigo-500 italic font-serif lowercase tracking-normal">analytics</span>
+                                 <span class="text-indigo-500 italic font-serif lowercase tracking-normal">analytics</span>
                             </h1>
                             <p class="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.3em] text-slate-500 mt-1 md:mt-2 flex items-center gap-2">
                                 <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
@@ -29,19 +34,25 @@
                             <div class="relative flex-1 group">
                                 <select name="month" class="w-full appearance-none bg-transparent border-none text-[11px] text-white focus:ring-0 cursor-pointer uppercase font-black tracking-widest pl-4 pr-10 py-2 relative z-10">
                                     @for($m=1; $m<=12; $m++)
-                                        <option value="{{ $m }}" {{ $month == $m ? 'selected' : '' }} class="bg-[#0b0b0b]">{{ date('F', mktime(0, 0, 0, $m, 1)) }}</option>
+                                        <option value="{{ $m }}" @selected($month == $m) class="bg-[#0b0b0b]">
+                                            {{ date('F', mktime(0, 0, 0, $m, 1)) }}
+                                        </option>
                                     @endfor
                                 </select>
-                                <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-white/20 group-hover:text-indigo-400 transition-colors"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M19 9l-7 7-7-7"/></svg></div>
+                                <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-white/20 group-hover:text-indigo-400 transition-colors">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M19 9l-7 7-7-7"/></svg>
+                                </div>
                             </div>
                             <div class="relative flex-1 group">
                                 <select name="year" class="w-full appearance-none bg-transparent border-none text-[11px] text-white focus:ring-0 cursor-pointer uppercase font-black tracking-widest pl-4 pr-10 py-2 relative z-10">
                                     @php $currentYear = date('Y'); @endphp
                                     @for($y = $currentYear; $y >= $currentYear - 5; $y--)
-                                        <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }} class="bg-[#0b0b0b]">{{ $y }}</option>
+                                        <option value="{{ $y }}" @selected($year == $y) class="bg-[#0b0b0b]">{{ $y }}</option>
                                     @endfor
                                 </select>
-                                <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-white/20 group-hover:text-indigo-400 transition-colors"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M19 9l-7 7-7-7"/></svg></div>
+                                <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-white/20 group-hover:text-indigo-400 transition-colors">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M19 9l-7 7-7-7"/></svg>
+                                </div>
                             </div>
                         </div>
                         <button type="submit" class="sm:px-6 py-2.5 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-indigo-500 transition-all shadow-lg active:scale-95">Sync Data</button>
@@ -80,11 +91,11 @@
                             <span class="hidden xs:block text-[8px] font-black text-indigo-400 bg-indigo-500/10 px-4 py-1.5 rounded-full border border-indigo-500/20 uppercase italic">Efficiency</span>
                         </div>
                         <div class="space-y-5">
-                            @forelse($kapsterPerformance as $kapster)
+                            @forelse($kapsterPerformance ?? [] as $kapster)
                             <div class="flex items-center justify-between group">
                                 <div class="flex items-center gap-3 md:gap-4">
                                     <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-gradient-to-br from-indigo-600/20 to-purple-600/20 border border-white/5 flex items-center justify-center font-black text-indigo-400 transition-all group-hover:scale-105">
-                                        {{ substr($kapster->nama, 0, 1) }}
+                                        {{ substr($kapster->nama ?? '?', 0, 1) }}
                                     </div>
                                     <div class="min-w-0">
                                         <p class="text-xs md:text-sm font-black text-white group-hover:text-indigo-300 transition-colors uppercase tracking-tighter truncate">{{ $kapster->nama }}</p>
@@ -104,15 +115,18 @@
                     <div class="glass p-6 md:p-8 lg:p-10 rounded-[2rem] md:rounded-[3rem] border border-white/5">
                         <h3 class="text-[10px] md:text-xs font-black text-white uppercase tracking-widest mb-8 opacity-50">Demand Breakdown</h3>
                         <div class="space-y-6 md:y-8">
-                            @forelse($popularServices as $service)
+                            @forelse($popularServices ?? [] as $service)
                             <div class="group">
                                 <div class="flex justify-between items-end mb-2.5">
                                     <span class="text-[10px] md:text-xs font-black text-slate-300 uppercase tracking-wider group-hover:text-white transition-colors truncate pr-4">{{ $service->nama_service }}</span>
                                     <span class="text-[9px] font-mono text-indigo-400 font-bold shrink-0">{{ $service->bookings_count }} Orders</span>
                                 </div>
                                 <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                                    @php
+                                        $percentage = ($totalBookings > 0) ? ($service->bookings_count / $totalBookings) * 100 : 0;
+                                    @endphp
                                     <div class="h-full bg-gradient-to-r from-indigo-600 via-indigo-400 to-purple-500 shadow-[0_0_15px_rgba(99,102,241,0.4)] transition-all duration-1000" 
-                                         style="width: {{ $totalBookings > 0 ? ($service->bookings_count / $totalBookings) * 100 : 0 }}%"></div>
+                                         style="width: {{ $percentage }}%"></div>
                                 </div>
                             </div>
                             @empty
@@ -136,6 +150,7 @@
         Chart.defaults.color = '#64748b';
         Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
 
+        // Main Line Chart
         const ctxMain = document.getElementById('mainChart').getContext('2d');
         new Chart(ctxMain, {
             type: 'line',
@@ -143,7 +158,12 @@
                 labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
                 datasets: [{
                     label: 'Revenue',
-                    data: [{{ $totalRevenue * 0.2 }}, {{ $totalRevenue * 0.4 }}, {{ $totalRevenue * 0.15 }}, {{ $totalRevenue * 0.25 }}],
+                    data: [
+                        {{ $totalRevenue * 0.2 }}, 
+                        {{ $totalRevenue * 0.4 }}, 
+                        {{ $totalRevenue * 0.15 }}, 
+                        {{ $totalRevenue * 0.25 }}
+                    ],
                     borderColor: '#6366f1',
                     borderWidth: 3,
                     pointBackgroundColor: '#fff',
@@ -170,13 +190,14 @@
             }
         });
 
+        // Status Doughnut Chart
         const ctxStatus = document.getElementById('statusChart').getContext('2d');
         new Chart(ctxStatus, {
             type: 'doughnut',
             data: {
-                labels: {!! json_encode($statusBreakdown->pluck('status')) !!},
+                labels: @json($statusBreakdown->pluck('status') ?? []),
                 datasets: [{
-                    data: {!! json_encode($statusBreakdown->pluck('total')) !!},
+                    data: @json($statusBreakdown->pluck('total') ?? []),
                     backgroundColor: ['#22c55e', '#6366f1', '#fbbf24', '#ef4444', '#64748b'],
                     borderWidth: 0,
                     hoverOffset: 15
@@ -200,10 +221,7 @@
         .custom-scroll::-webkit-scrollbar { width: 3px; }
         .custom-scroll::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.2); border-radius: 10px; }
         .glass { background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
-        
-        /* Mobile Touch Optimizations */
         button, select { -webkit-tap-highlight-color: transparent; }
-        
         main { animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(15px); }

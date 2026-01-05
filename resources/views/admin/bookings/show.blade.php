@@ -16,9 +16,7 @@
                             Back to Registry
                         </a>
                         
-                        <button @click="isSidebarOpen = true" class="md:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-indigo-400 active:scale-95 transition-all">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
-                        </button>
+                       
                     </div>
 
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-b border-white/[0.05] pb-10">

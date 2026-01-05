@@ -10,7 +10,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-        @vite('resources/css/app.css')
+        @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/hamburger.js'])
 
         <style>
             body, html {
@@ -35,5 +35,26 @@
             {{ $slot }}
 
         </div>
+
+    <!-- load Alpine and init store -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.store('sidebar', {
+            isOpen: window.innerWidth >= 768,
+            toggle() { this.isOpen = !this.isOpen },
+            open() { this.isOpen = true },
+            close() { this.isOpen = false },
+        });
+
+        window.addEventListener('resize', () => {
+            Alpine.store('sidebar').isOpen = window.innerWidth >= 768;
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') Alpine.store('sidebar').isOpen = false;
+        });
+    });
+    </script>
     </body>
 </html>

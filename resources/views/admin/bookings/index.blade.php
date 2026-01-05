@@ -12,17 +12,17 @@
                     
                     <div class="flex items-center justify-between gap-4">
                         <div class="flex items-center gap-4 min-w-0">
-                            <button @click="isSidebarOpen = true" class="md:hidden p-2.5 rounded-xl bg-white/5 border border-white/10 text-indigo-400 active:scale-95 transition-all">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
-                            </button>
+                            
                             <div class="min-w-0">
                                 <h1 class="text-2xl md:text-3xl font-black text-white tracking-tight truncate uppercase">
-                                    Incoming <span class="text-indigo-500 italic font-serif font-normal lowercase tracking-normal">reservations</span>
+                                    <span class="text-indigo-500 italic font-serif font-normal lowercase tracking-normal">reservations</span>
                                 </h1>
                             </div>
                         </div>
                         
-                        <a href="{{ route('admin.bookings.create') }}" 
+                        
+                    </div>
+                    <a href="{{ route('admin.bookings.create') }}" 
                            class="shrink-0 group relative px-6 md:px-8 py-3 bg-white text-black rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all hover:bg-indigo-600 hover:text-white active:scale-95 overflow-hidden shadow-xl text-center">
                             <div class="absolute inset-0 bg-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                             <span class="relative z-10 flex items-center justify-center gap-2">
@@ -30,7 +30,6 @@
                                 <span class="hidden sm:inline">Add New Booking</span>
                             </span>
                         </a>
-                    </div>
 
                     <form action="{{ route('admin.bookings.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 items-end">
                         <div class="group">

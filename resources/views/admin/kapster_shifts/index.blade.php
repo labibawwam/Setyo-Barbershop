@@ -9,9 +9,7 @@
             <div class="flex-none px-6 md:px-8 py-6 lg:px-10 border-b border-white/[0.05] bg-[#050505]/50 backdrop-blur-sm z-10">
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                     <div class="flex items-center gap-4 min-w-0">
-                        <button @click="isSidebarOpen = true" class="md:hidden p-2.5 rounded-xl bg-white/5 border border-white/10 text-indigo-400 active:scale-95 transition-all">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
-                        </button>
+                        
                         <div class="min-w-0">
                             <h1 class="text-2xl md:text-3xl font-black text-white tracking-tight flex items-center gap-3">
                                 Work <span class="text-indigo-500 italic font-serif text-xl md:text-2xl font-normal lowercase tracking-normal">shifts</span>
