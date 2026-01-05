@@ -12,5 +12,11 @@
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
+  },
+  "resources/js/hamburger.js": {
+    "file": "assets/hamburger-BqFoWyfu.js",
+    "name": "hamburger",
+    "src": "resources/js/hamburger.js",
+    "isEntry": true
   }
 }
