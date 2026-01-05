@@ -31,9 +31,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/booking/create', [CustomerBookingController::class, 'create'])->name('booking.create');
     Route::post('/booking/store', [CustomerBookingController::class, 'store'])->name('booking.store');
     // Route khusus pembatalan customer
-   // Tambahkan atau ubah rute yang sudah ada
-// Ganti 'destroy' menjadi 'cancel'
-Route::patch('/bookings/{id}/cancel', [CustomerBookingController::class, 'cancel'])->name('booking.cancel');
+    // Tambahkan atau ubah rute yang sudah ada
+    // Ganti 'destroy' menjadi 'cancel'
+    Route::patch('/bookings/{id}/cancel', [CustomerBookingController::class, 'cancel'])->name('booking.cancel');
 });
 
 // --- Profile Routes ---
@@ -50,22 +50,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Admin Group (Role: Admin)
     Route::middleware(['auth', 'role:admin']) // Pastikan ada 'auth' agar aman
-    ->prefix('admin')
-    ->name('admin.')
-    ->group(function () {
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-        
-        Route::resource('users', AdminUserController::class);
-        Route::resource('kapsters', KapsterController::class);
-        Route::resource('services', ServiceController::class);
-        Route::resource('kapster_shifts', KapsterShiftController::class);
-        Route::resource('bookings', AdminBookingController::class); 
-        
-        // Perbaikan penulisan di sini:
-        Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
-        // Atau jika ingin menggunakan resource:
-        // Route::resource('reports', ReportController::class);
-    });
+        ->prefix('admin')
+        ->name('admin.')
+        ->group(function () {
+            Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+            Route::resource('users', AdminUserController::class);
+            Route::resource('kapsters', KapsterController::class);
+            Route::resource('services', ServiceController::class);
+            Route::resource('kapster_shifts', KapsterShiftController::class);
+            Route::resource('bookings', AdminBookingController::class);
+
+            // Perbaikan penulisan di sini:
+            Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+            // Atau jika ingin menggunakan resource:
+            // Route::resource('reports', ReportController::class);
+        });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
