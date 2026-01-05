@@ -2,7 +2,9 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <!-- Ensure responsive viewport and compiled Tailwind CSS are loaded -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ asset('css/tailwind.css') }}" rel="stylesheet">
     <title>Setyo Barbershop - Elite Grooming Experience</title>
     @vite(['resources/css/app.css','resources/js/app.js'])
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
