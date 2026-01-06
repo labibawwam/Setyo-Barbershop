@@ -17,22 +17,24 @@ class CustomerBookingController extends Controller
      * Menampilkan form booking dengan data pendukung
      */
     public function create()
-    {
-        $kapsters = Kapster::all();
-        $services = Service::all();
-        
-        // Ambil jadwal yang sudah terisi agar user tidak memilih jam yang sama
-        $allBookings = Booking::whereIn('status', ['confirmed', 'pending'])
-            ->select('kapster_id', 'tgl_booking', 'jam_mulai', 'jam_selesai')
-            ->get();
+{
+    // Tambahkan with('shifts') agar data jadwal kerja ikut terbawa
+    $kapsters = Kapster::with('shifts')->get(); 
+    
+    $services = Service::all();
+    
+    // Ambil jadwal yang sudah terisi agar user tidak memilih jam yang sama
+    $allBookings = Booking::whereIn('status', ['confirmed', 'pending'])
+        ->select('kapster_id', 'tgl_booking', 'jam_mulai', 'jam_selesai')
+        ->get();
 
-        $myBookings = Booking::where('user_id', Auth::id())
-            ->with(['kapster', 'services'])
-            ->latest()
-            ->get();
+    $myBookings = Booking::where('user_id', Auth::id())
+        ->with(['kapster', 'services'])
+        ->latest()
+        ->get();
 
-        return view('customer.bookings.create', compact('kapsters', 'services', 'myBookings', 'allBookings'));
-    }
+    return view('customer.bookings.create', compact('kapsters', 'services', 'myBookings', 'allBookings'));
+}
 
     /**
      * Menyimpan data booking dengan validasi keamanan extra

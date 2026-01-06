@@ -22,10 +22,7 @@
                             </div>
                         </div>
 
-                        <div class="hidden sm:flex items-center gap-3 px-5 py-2.5 rounded-2xl bg-white border border-slate-200 shadow-sm">
-                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                            <span class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">System Active</span>
-                        </div>
+                       
                     </div>
                 </div>
 
@@ -71,7 +68,7 @@
                             <div class="flex items-center gap-4">
                                 <p>© {{ date('Y') }} Setyo Barbershop</p>
                                 <span class="w-[1px] h-3 bg-slate-200 hidden md:block"></span>
-                                <p class="text-indigo-500/60 italic font-bold">V.2.1.0 GOLD</p>
+                                <p class="text-indigo-500/60 italic font-bold">V.2.1.0 WHITE</p>
                             </div>
                         </div>
                     </div>

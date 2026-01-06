@@ -194,17 +194,74 @@
                         <div class="text-center mb-10 lg:mb-16">
                             <h2 class="text-4xl lg:text-7xl font-bold text-white tracking-tighter italic leading-none">Define Your <br><span class="gold-gradient font-serif">master artist</span></h2>
                         </div>
+
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                             @foreach($kapsters as $k)
-                            <div onclick="selectKapster(this, '{{ $k->id }}', '{{ $k->nama }}')" class="kapster-item group glass rounded-[3rem] p-8 transition-all duration-500 cursor-pointer flex flex-col items-center">
-                                <img src="{{ asset('storage/' . $k->photo) }}" class="w-32 h-32 rounded-full object-cover border-4 border-white/5 mb-6 group-hover:border-indigo-500/50 transition-all" onerror="this.src='https://ui-avatars.com/api/?name={{$k->nama}}&background=111&color=fff'">
+                            <div onclick="selectKapster(this, '{{ $k->id }}', '{{ $k->nama }}')" class="kapster-item group glass rounded-[3rem] p-8 transition-all duration-500 cursor-pointer flex flex-col items-center hover:bg-white/[0.05]">
+
+                                <div class="relative mb-6">
+                                    <img src="{{ asset('storage/' . $k->photo) }}" class="w-32 h-32 rounded-full object-cover border-4 border-white/5 group-hover:border-indigo-500/50 transition-all shadow-2xl" onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($k->nama) }}&background=111&color=fff'">
+                                    <div class="absolute bottom-2 right-2 w-4 h-4 bg-emerald-500 border-4 border-[#050505] rounded-full"></div>
+                                </div>
+
                                 <h4 class="text-xl font-bold text-white tracking-tight">{{ $k->nama }}</h4>
-                                <p class="text-[10px] text-indigo-400 font-black uppercase tracking-[0.2em] mt-2">Senior Barber</p>
+                                <p class="text-[9px] text-indigo-400 font-black uppercase tracking-[0.2em] mt-1 mb-6">Professional Barber</p>
+
+                                <div class="w-full pt-5 border-t border-white/5 space-y-3">
+                                    <p class="text-[8px] text-slate-500 uppercase font-black tracking-[0.3em] text-center">Weekly Schedule</p>
+
+                                    <div class="flex flex-wrap justify-center gap-2">
+                                        @php
+                                        // Definisikan urutan hari kustom
+                                        $urutanHari = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+
+                                        // Urutkan koleksi shifts berdasarkan urutanHari
+                                        $sortedShifts = $k->shifts->sortBy(function($shift) use ($urutanHari) {
+                                        return array_search($shift->hari, $urutanHari);
+                                        });
+                                        @endphp
+
+                                        @forelse($sortedShifts as $shift)
+                                        @if($shift->is_libur)
+                                        <div class="px-3 py-1.5 rounded-xl bg-red-500/10 border border-red-500/20 text-[9px] text-red-400 font-bold">
+                                            <span class="opacity-60">{{ substr($shift->hari, 0, 3) }}:</span> LIBUR
+                                        </div>
+                                        @else
+                                        <div class="px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/10 text-[9px] text-slate-300 font-bold">
+                                            <span class="text-indigo-400 mr-1">{{ substr($shift->hari, 0, 3) }}:</span>
+                                            {{ \Carbon\Carbon::parse($shift->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($shift->jam_selesai)->format('H:i') }}
+                                        </div>
+                                        @endif
+                                        @empty
+                                        <div class="text-[10px] text-slate-600 italic tracking-widest">No schedule set</div>
+                                        @endforelse
+                                    </div>
+                                </div>
                             </div>
                             @endforeach
                         </div>
                         <input type="hidden" name="kapster_id" id="input_kapster" required>
                     </div>
+
+                    <style>
+                        .gold-gradient {
+                            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fcf6ba, #aa771c);
+                            -webkit-background-clip: text;
+                            -webkit-text-fill-color: transparent;
+                        }
+
+                        .glass {
+                            background: rgba(255, 255, 255, 0.02);
+                            backdrop-filter: blur(10px);
+                            border: 1px solid rgba(255, 255, 255, 0.05);
+                        }
+
+                        .kapster-item.selected {
+                            background: rgba(79, 70, 229, 0.1) !important;
+                            border-color: rgba(79, 70, 229, 0.5) !important;
+                            transform: translateY(-5px);
+                        }
+                    </style>
 
                     <div id="step-2" class="step-content">
                         <div class="flex flex-col lg:flex-row justify-between items-center mb-12 gap-8">

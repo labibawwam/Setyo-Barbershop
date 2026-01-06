@@ -124,7 +124,7 @@
 
             <div class="mt-auto p-4 bg-slate-50/50 shrink-0 border-t border-slate-100">
                 <div x-show="!isCollapsed || isMobileOpen" class="py-2 rounded-lg bg-white border border-slate-200 text-center shadow-sm">
-                    <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-tight">GOLD EDITION V.2.1</p>
+                    <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-tight">WHITE EDITION V.2.1</p>
                 </div>
             </div>
         </div>
