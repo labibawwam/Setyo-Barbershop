@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <!-- Ensure responsive viewport and compiled Tailwind CSS are loaded -->
@@ -12,37 +13,109 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Instrument+Serif:italic&display=swap');
-        :root { --primary: #6366f1; --accent: #fbbf24; --bg: #050505; }
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: #cbd5e1;
-            background-image: radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
-                              radial-gradient(circle at 100% 100%, rgba(251, 191, 36, 0.02) 0%, transparent 50%);
+
+        :root {
+            --primary: #6366f1;
+            --accent: #fbbf24;
+            --bg: #050505;
         }
-        .font-serif { font-family: 'Instrument Serif', serif; }
-        .step-content { display: none; width: 100%; flex-direction: column; }
-        .step-content.active { display: flex; animation: slideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
-        .item-selected { border-color: var(--primary) !important; background: rgba(99, 102, 241, 0.12) !important; box-shadow: 0 0 20px rgba(99, 102, 241, 0.2); transform: translateY(-2px); }
-        .gold-gradient { background: linear-gradient(to right, #fbbf24, #d97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.3); border-radius: 20px; }
-        
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: #cbd5e1;
+            background-image: radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(251, 191, 36, 0.02) 0%, transparent 50%);
+        }
+
+        .font-serif {
+            font-family: 'Instrument Serif', serif;
+        }
+
+        .step-content {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+        }
+
+        .step-content.active {
+            display: flex;
+            animation: slideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .item-selected {
+            border-color: var(--primary) !important;
+            background: rgba(99, 102, 241, 0.12) !important;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .gold-gradient {
+            background: linear-gradient(to right, #fbbf24, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.3);
+            border-radius: 20px;
+        }
+
         /* Animasi Keluar untuk Notifikasi */
-        .toast-fade-out { opacity: 0; transform: translateY(-20px); transition: all 0.5s ease; }
+        .toast-fade-out {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.5s ease;
+        }
 
         @media (max-width: 1023px) {
             #sidebar-nav {
                 transform: translateX(-100%);
-                position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-                background: rgba(5, 5, 5, 0.98); z-index: 150;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(5, 5, 5, 0.98);
+                z-index: 150;
                 transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             }
-            #sidebar-nav.active { transform: translateX(0); }
+
+            #sidebar-nav.active {
+                transform: translateX(0);
+            }
         }
-        input[type="time"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
+
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
     </style>
 </head>
+
 <body class="antialiased overflow-x-hidden">
 
     <div class="lg:hidden fixed top-0 left-0 w-full p-6 flex justify-between items-center z-[200] bg-[#050505]/80 backdrop-blur-md border-b border-white/5">
@@ -57,12 +130,14 @@
 
     <div id="notification-container" class="fixed top-24 lg:top-8 right-0 lg:right-8 z-[250] space-y-4 w-full lg:max-w-[350px] px-6 lg:px-0">
         @if(session('success') || session('error'))
-            <div id="auto-toast" class="toast-item glass border-{{ session('success') ? 'green' : 'red' }}-500/30 p-5 rounded-3xl flex items-center gap-4 shadow-2xl animate-bounce">
-                <div class="bg-{{ session('success') ? 'green' : 'red' }}-500 p-2 rounded-xl text-white">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="{{ session('success') ? 'M5 13l4 4L19 7' : 'M6 18L18 6M6 6l12 12' }}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                <p class="text-sm text-white font-bold">{{ session('success') ?? session('error') }}</p>
+        <div id="auto-toast" class="toast-item glass border-{{ session('success') ? 'green' : 'red' }}-500/30 p-5 rounded-3xl flex items-center gap-4 shadow-2xl animate-bounce">
+            <div class="bg-{{ session('success') ? 'green' : 'red' }}-500 p-2 rounded-xl text-white">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="{{ session('success') ? 'M5 13l4 4L19 7' : 'M6 18L18 6M6 6l12 12' }}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
             </div>
+            <p class="text-sm text-white font-bold">{{ session('success') ?? session('error') }}</p>
+        </div>
         @endif
     </div>
 
@@ -76,7 +151,7 @@
                         </a>
                         <p class="text-[9px] text-indigo-400/60 tracking-[0.5em] uppercase font-bold mt-2">Elite Grooming Co.</p>
                     </div>
-                    
+
                     <nav class="space-y-8 lg:space-y-10 relative">
                         <div id="line-progress" class="hidden lg:block absolute left-[15px] top-2 w-[2px] h-0 bg-indigo-500 transition-all duration-1000"></div>
                         <div class="flex items-center gap-8 group cursor-pointer nav-link" onclick="mobileClose(); showStep(1)">
@@ -96,11 +171,15 @@
                     <div class="mt-12 lg:mt-20 space-y-4">
                         <button onclick="mobileClose(); showStep(4)" class="w-full flex items-center justify-between p-6 lg:p-5 rounded-[2rem] bg-white/[0.03] border border-white/5 hover:border-indigo-500/50 transition-all group">
                             <span class="text-[11px] font-black uppercase tracking-widest text-slate-400 group-hover:text-white">Client Profile</span>
-                            <svg class="w-5 h-5 text-slate-600 group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-width="2"/></svg>
+                            <svg class="w-5 h-5 text-slate-600 group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-width="2" />
+                            </svg>
                         </button>
                         <button onclick="mobileClose(); showStep(5)" class="w-full flex items-center justify-between p-6 lg:p-5 rounded-[2rem] bg-white/[0.03] border border-white/5 hover:border-indigo-500/50 transition-all group">
                             <span class="text-[11px] font-black uppercase tracking-widest text-slate-400 group-hover:text-white">Booking Records</span>
-                            <svg class="w-5 h-5 text-slate-600 group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-width="2"/></svg>
+                            <svg class="w-5 h-5 text-slate-600 group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-width="2" />
+                            </svg>
                         </button>
                     </div>
                 </div>
@@ -143,7 +222,9 @@
                                     <p class="text-[10px] text-slate-500 font-bold uppercase mt-1">{{ $s->durasi }} Mins • Rp {{ number_format($s->harga, 0, ',', '.') }}</p>
                                 </div>
                                 <input type="checkbox" name="service_ids[]" value="{{ $s->id }}" class="hidden service-checkbox">
-                                <div class="tick-ui w-6 h-6 rounded-full border-2 border-white/10 flex items-center justify-center transition-all group-hover:border-indigo-500"><div class="w-2 h-2 bg-indigo-500 rounded-full scale-0 transition-transform"></div></div>
+                                <div class="tick-ui w-6 h-6 rounded-full border-2 border-white/10 flex items-center justify-center transition-all group-hover:border-indigo-500">
+                                    <div class="w-2 h-2 bg-indigo-500 rounded-full scale-0 transition-transform"></div>
+                                </div>
                             </div>
                             @endforeach
                         </div>
@@ -151,40 +232,40 @@
                     </div>
 
                     <div id="step-3" class="step-content">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-        
-        <div class="glass p-8 lg:p-10 rounded-[3rem] flex flex-col justify-center">
-            <h3 class="text-2xl font-bold text-white mb-8 tracking-tight italic text-center">
-                Pick Your <span class="text-amber-500">Date</span>
-            </h3>
-            <div id="flatpickr-inline" class="flex justify-center scale-95 sm:scale-100 origin-center"></div>
-            <input type="text" name="tgl_booking" id="tgl_booking" class="hidden" required>
-        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
 
-        <div class="flex flex-col gap-6 lg:gap-8">
-            <div class="glass p-8 lg:p-10 rounded-[3rem] text-center flex flex-col justify-center min-h-[300px]">
-    <p class="text-[11px] text-indigo-400 font-black uppercase tracking-[0.3em] mb-6">Arrival Time</p>
-    
-    <div class="relative w-full overflow-hidden px-2">
-        <input type="time" name="jam_mulai" id="jam_mulai" 
-               onclick="this.showPicker()"
-               class="w-full bg-transparent border-none text-5xl lg:text-6xl font-black text-white text-center focus:ring-0 appearance-none cursor-pointer tracking-tighter" 
-               required>
-    </div>
-    
-    <p class="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-4">Tap numbers to set</p>
-</div>
-            <div id="booked-slots-container" class="glass p-6 rounded-[2.5rem] hidden">
-                <p class="text-[10px] text-red-400 font-black uppercase tracking-[0.3em] mb-4 text-center">Occupied Slots</p>
-                <div id="booked-slots-list" class="grid grid-cols-2 gap-3"></div>
-            </div>
+                            <div class="glass p-8 lg:p-10 rounded-[3rem] flex flex-col justify-center">
+                                <h3 class="text-2xl font-bold text-white mb-8 tracking-tight italic text-center">
+                                    Pick Your <span class="text-amber-500">Date</span>
+                                </h3>
+                                <div id="flatpickr-inline" class="flex justify-center scale-95 sm:scale-100 origin-center"></div>
+                                <input type="text" name="tgl_booking" id="tgl_booking" class="hidden" required>
+                            </div>
 
-            <button type="button" onclick="showStep(6)" class="w-full py-7 bg-white text-black rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-600 hover:text-white transition-all shadow-2xl active:scale-95">
-                Summary Details
-            </button>
-        </div>
-    </div>
-</div>
+                            <div class="flex flex-col gap-6 lg:gap-8">
+                                <div class="glass p-8 lg:p-10 rounded-[3rem] text-center flex flex-col justify-center min-h-[300px]">
+                                    <p class="text-[11px] text-indigo-400 font-black uppercase tracking-[0.3em] mb-6">Arrival Time</p>
+
+                                    <div class="relative w-full overflow-hidden px-2">
+                                        <input type="time" name="jam_mulai" id="jam_mulai"
+                                            onclick="this.showPicker()"
+                                            class="w-full bg-transparent border-none text-5xl lg:text-6xl font-black text-white text-center focus:ring-0 appearance-none cursor-pointer tracking-tighter"
+                                            required>
+                                    </div>
+
+                                    <p class="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-4">Tap numbers to set</p>
+                                </div>
+                                <div id="booked-slots-container" class="glass p-6 rounded-[2.5rem] hidden">
+                                    <p class="text-[10px] text-red-400 font-black uppercase tracking-[0.3em] mb-4 text-center">Occupied Slots</p>
+                                    <div id="booked-slots-list" class="grid grid-cols-2 gap-3"></div>
+                                </div>
+
+                                <button type="button" onclick="showStep(6)" class="w-full py-7 bg-white text-black rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-600 hover:text-white transition-all shadow-2xl active:scale-95">
+                                    Summary Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
                     <div id="step-6" class="step-content items-center">
                         <div class="w-full max-w-xl glass rounded-[4rem] overflow-hidden border-white/10 shadow-2xl text-left">
@@ -192,13 +273,36 @@
                                 <h3 class="text-amber-500 font-black uppercase text-[10px] tracking-[0.5em] mb-2">Final Confirmation</h3>
                                 <h2 class="text-4xl font-serif text-white italic leading-none text-center">Elite Reservation</h2>
                             </div>
+
                             <div class="p-8 lg:p-12 space-y-8 text-sm">
-                                <div class="flex justify-between border-b border-white/5 pb-6 text-left"><span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Artist</span><span id="rev-artist" class="text-white font-bold"></span></div>
-                                <div class="flex justify-between border-b border-white/5 pb-6 text-left"><span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Schedule</span><span id="rev-datetime" class="text-white font-bold tracking-tight text-right ml-4"></span></div>
-                                <div><span class="text-[10px] uppercase font-bold text-slate-500 block mb-4 tracking-widest text-left">Treatments</span><ul id="rev-services" class="grid grid-cols-1 gap-3 italic text-slate-300"></ul></div>
-                                <div class="pt-8 border-t border-dashed border-white/20 flex justify-between items-center"><span class="text-[12px] uppercase font-black text-indigo-400">Payable</span><span id="rev-total" class="text-3xl font-black text-white italic"></span></div>
+                                <div id="incomplete-warning" class="hidden p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold text-center mb-6">
+                                    ⚠️ Mohon lengkapi pemilihan Artist, Treatment, dan Jadwal terlebih dahulu.
+                                </div>
+
+                                <div class="flex justify-between border-b border-white/5 pb-6 text-left">
+                                    <span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Artist</span>
+                                    <span id="rev-artist" class="text-white font-bold"></span>
+                                </div>
+                                <div class="flex justify-between border-b border-white/5 pb-6 text-left">
+                                    <span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Schedule</span>
+                                    <span id="rev-datetime" class="text-white font-bold tracking-tight text-right ml-4"></span>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] uppercase font-bold text-slate-500 block mb-4 tracking-widest text-left">Treatments</span>
+                                    <ul id="rev-services" class="grid grid-cols-1 gap-3 italic text-slate-300"></ul>
+                                </div>
+                                <div class="pt-8 border-t border-dashed border-white/20 flex justify-between items-center">
+                                    <span class="text-[12px] uppercase font-black text-indigo-400">Payable</span>
+                                    <span id="rev-total" class="text-3xl font-black text-white italic"></span>
+                                </div>
                             </div>
-                            <div class="px-8 lg:px-12 pb-12"><button type="submit" class="w-full py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-500 shadow-xl transition-all">Secure Booking Now</button></div>
+
+                            <div class="px-8 lg:px-12 pb-12">
+                                <button type="submit" id="btn-submit-booking" class="w-full py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-500 shadow-xl transition-all disabled:opacity-20 disabled:cursor-not-allowed">
+                                    Secure Booking Now
+                                </button>
+                                <p id="hint-text" class="text-[9px] text-center mt-4 text-slate-500 uppercase tracking-widest">Pastikan langkah 1-3 sudah terisi dengan benar</p>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -256,7 +360,9 @@
                                 @if($booking->status != 'cancelled' && $booking->status != 'completed')
                                 <form action="{{ route('booking.cancel', $booking->id) }}" method="POST" onsubmit="return confirm('Securely cancel this elite booking?')" class="md:flex-none">
                                     @csrf @method('PATCH')
-                                    <button type="submit" class="w-12 h-12 rounded-2xl bg-red-500/10 text-red-500 border border-red-500/20 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12"/></svg></button>
+                                    <button type="submit" class="w-12 h-12 rounded-2xl bg-red-500/10 text-red-500 border border-red-500/20 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                            <path d="M6 18L18 6M6 6l12 12" />
+                                        </svg></button>
                                 </form>
                                 @endif
                             </div>
@@ -277,7 +383,9 @@
             <div class="space-y-6 md:space-y-8">
                 <div class="flex justify-between border-b border-white/5 pb-5"><span class="text-[9px] md:text-[10px] uppercase font-bold text-slate-500 tracking-widest">Artist</span><span id="det-artist" class="text-white font-bold"></span></div>
                 <div class="flex justify-between border-b border-white/5 pb-5"><span class="text-[9px] md:text-[10px] uppercase font-bold text-slate-500 tracking-widest text-left">Schedule</span><span id="det-schedule" class="text-white font-bold tracking-tight text-right ml-4"></span></div>
-                <div class="border-t border-white/5 pt-4 text-left"><ul id="det-services" class="space-y-3 text-white italic text-xs md:text-sm text-left"></ul></div>
+                <div class="border-t border-white/5 pt-4 text-left">
+                    <ul id="det-services" class="space-y-3 text-white italic text-xs md:text-sm text-left"></ul>
+                </div>
                 <div class="border-t border-white/5 pt-6 md:pt-8 flex justify-between items-center"><span class="text-indigo-400 font-black uppercase text-[10px] md:text-[12px]">Total Paid</span><span id="det-total" class="text-2xl md:text-3xl font-black text-white italic tracking-tight"></span></div>
             </div>
             <button onclick="closeDetailModal()" class="w-full mt-10 md:mt-12 py-5 bg-white text-black rounded-[2rem] font-black uppercase text-[10px] tracking-widest hover:bg-indigo-600 hover:text-white transition-all shadow-xl">Close Ticket</button>
@@ -288,7 +396,7 @@
         // Data dari Laravel Controller (safely default to empty arrays)
         const allBookings = @json($allBookings ?? []);
         const myBookingsData = @json($myBookings ?? []);
-        
+
         // AUTO-HIDE TOAST LOGIC (3 detik)
         document.addEventListener('DOMContentLoaded', function() {
             const toast = document.getElementById('auto-toast');
@@ -328,38 +436,45 @@
 
         // Booking Workflow Logic
         let selectedServiceIds = [];
-        let selectedServiceNames = [];
+        let selectedServicesData = [];
         let totalPrice = 0;
         let selectedArtistName = "";
         let selectedKapsterId = null;
 
         function formatDate(dateString) {
-            if(!dateString) return "-";
-            const options = { day: 'numeric', month: 'short', year: 'numeric' };
+            if (!dateString) return "-";
+            const options = {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            };
             return new Date(dateString).toLocaleDateString('en-GB', options);
         }
 
         function showStep(step) {
             document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
             const target = document.getElementById('step-' + step);
-            if(target) target.classList.add('active');
+            if (target) target.classList.add('active');
             updateSidebarUI(step);
-            if(step === 6) updateReview();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (step === 6) updateReview();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }
 
         function updateSidebarUI(step) {
             document.querySelectorAll('.nav-link .w-10, .nav-link .w-8').forEach(dot => dot.classList.remove('bg-indigo-600', 'text-white'));
             document.querySelectorAll('.nav-link span').forEach(span => span.classList.remove('text-white'));
-            if(step <= 3) {
-                for(let i=1; i<=step; i++) {
-                    const dot = document.getElementById('dot-'+i);
-                    const txt = document.getElementById('txt-'+i);
-                    if(dot) dot.classList.add('bg-indigo-600', 'text-white');
-                    if(txt) txt.classList.add('text-white');
+            if (step <= 3) {
+                for (let i = 1; i <= step; i++) {
+                    const dot = document.getElementById('dot-' + i);
+                    const txt = document.getElementById('txt-' + i);
+                    if (dot) dot.classList.add('bg-indigo-600', 'text-white');
+                    if (txt) txt.classList.add('text-white');
                 }
                 const line = document.getElementById('line-progress');
-                if(line) line.style.height = step === 1 ? '0%' : step === 2 ? '50%' : '100%';
+                if (line) line.style.height = step === 1 ? '0%' : step === 2 ? '50%' : '100%';
             }
         }
 
@@ -376,14 +491,23 @@
             const checkbox = el.querySelector('.service-checkbox');
             const dot = el.querySelector('.tick-ui div');
             checkbox.checked = !checkbox.checked;
+
             if (checkbox.checked) {
-                selectedServiceIds.push(id); selectedServiceNames.push(name); totalPrice += harga;
-                el.classList.add('item-selected'); dot.classList.add('scale-100');
+                selectedServiceIds.push(id);
+                selectedServicesData.push({
+                    id: id,
+                    name: name,
+                    price: harga
+                }); // Simpan objek
+                totalPrice += harga;
+                el.classList.add('item-selected');
+                dot.classList.add('scale-100');
             } else {
                 selectedServiceIds = selectedServiceIds.filter(i => i !== id);
-                selectedServiceNames = selectedServiceNames.filter(n => n !== name);
+                selectedServicesData = selectedServicesData.filter(s => s.id !== id); // Filter berdasarkan id
                 totalPrice -= harga;
-                el.classList.remove('item-selected'); dot.classList.remove('scale-100');
+                el.classList.remove('item-selected');
+                dot.classList.remove('scale-100');
             }
             document.getElementById('total-price-display').innerText = 'Rp ' + totalPrice.toLocaleString('id-ID');
             document.getElementById('btn-next-step-2').disabled = selectedServiceIds.length === 0;
@@ -406,12 +530,40 @@
         }
 
         function updateReview() {
-            document.getElementById('rev-artist').innerText = selectedArtistName || "Not Selected";
+            const artist = selectedArtistName;
+            const services = selectedServicesData;
             const date = document.getElementById('tgl_booking').value;
             const time = document.getElementById('jam_mulai').value;
-            document.getElementById('rev-datetime').innerText = date ? `${formatDate(date)} at ${time}` : "Schedule not set";
+
+            // Update Text UI
+            document.getElementById('rev-artist').innerText = artist || "Belum dipilih";
+            document.getElementById('rev-datetime').innerText = date ? `${formatDate(date)} at ${time}` : "Jadwal belum diatur";
             document.getElementById('rev-total').innerText = 'Rp ' + totalPrice.toLocaleString('id-ID');
-            document.getElementById('rev-services').innerHTML = selectedServiceNames.map(n => `<li class="flex items-center gap-3 text-xs text-left"><div class="w-1 h-1 bg-amber-500 rounded-full shrink-0"></div> ${n}</li>`).join('');
+
+            // Tampilkan Nama + Harga per item
+            document.getElementById('rev-services').innerHTML = services.length > 0 ?
+                services.map(s => `
+            <li class="flex items-center justify-between text-xs text-left">
+                <div class="flex items-center gap-3">
+                    <div class="w-1 h-1 bg-amber-500 rounded-full shrink-0"></div> 
+                    <span>${s.name}</span>
+                </div>
+                <span class="text-slate-400 font-mono">Rp ${s.price.toLocaleString('id-ID')}</span>
+            </li>`).join('') :
+                `<li class="text-red-400">Belum ada treatment dipilih</li>`;
+
+            // Logika Validasi Tombol & Peringatan
+            const isComplete = artist && services.length > 0 && date && time;
+            const btnSubmit = document.getElementById('btn-submit-booking');
+            const warning = document.getElementById('incomplete-warning');
+
+            if (isComplete) {
+                btnSubmit.disabled = false;
+                if (warning) warning.classList.add('hidden');
+            } else {
+                btnSubmit.disabled = true;
+                if (warning) warning.classList.remove('hidden');
+            }
         }
 
         function openDetailModal(id) {
@@ -430,9 +582,11 @@
             document.getElementById('modal-detail').classList.remove('flex');
         }
 
-        flatpickr("#tgl_booking", { 
-            inline: true, minDate: "today", dateFormat: "Y-m-d", 
-            appendTo: document.getElementById('flatpickr-inline'), 
+        flatpickr("#tgl_booking", {
+            inline: true,
+            minDate: "today",
+            dateFormat: "Y-m-d",
+            appendTo: document.getElementById('flatpickr-inline'),
             onChange: (sd, ds) => {
                 document.getElementById('tgl_booking').value = ds;
                 updateBookedSlots(ds);
@@ -440,4 +594,5 @@
         });
     </script>
 </body>
+
 </html>

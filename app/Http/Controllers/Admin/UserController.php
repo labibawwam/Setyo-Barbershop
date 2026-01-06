@@ -21,26 +21,35 @@ class UserController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:6',
-            'role' => 'required|in:admin,customer',
-            'phone_number' => 'nullable|string|max:20',
-            'profile_picture' => 'nullable|image|max:2048'
-        ]);
+{
+    // 1. Validasi Data
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|string|min:6',
+        'role' => 'required|in:admin,customer', 
+        'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Tambahkan validasi file
+    ]);
 
-        if($request->hasFile('profile_picture')){
-            $data['profile_picture'] = $request->file('profile_picture')->store('profile_pictures','public');
-        }
+    // 2. Hash Password (dilakukan sebelum create)
+    $validatedData['password'] = Hash::make($validatedData['password']);
 
-        $data['password'] = Hash::make($data['password']);
-
-        User::create($data);
-
-        return redirect()->route('admin.users.index')->with('success','User berhasil ditambahkan');
+    // 3. Penanganan Upload File
+    if ($request->hasFile('profile_picture')) {
+        // Simpan file dan ambil path-nya
+        $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+        $validatedData['profile_picture'] = $path;
     }
+
+    // 4. Eksekusi Simpan ke Database
+    // Pastikan 'name', 'email', 'password', 'role', dan 'profile_picture' ada di $fillable Model User
+    User::create($validatedData);
+
+    // 5. Redirect dengan Pesan Sukses
+    return redirect()
+        ->route('admin.users.index')
+        ->with('success', 'User berhasil ditambahkan ke sistem.');
+}
 
     public function edit(User $user)
     {

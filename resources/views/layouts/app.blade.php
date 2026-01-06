@@ -16,27 +16,29 @@
             body, html {
                 height: 100%;
                 overflow: hidden; 
-                background-color: #050505;
+                /* Perubahan: Warna latar belakang dashboard menjadi terang (Slate 50) */
+                background-color: #f8fafc; 
                 font-family: 'Inter', sans-serif;
             }
 
-            .custom-scroll::-webkit-scrollbar { width: 4px; }
-            .custom-scroll::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); }
+            /* Perubahan: Scrollbar disesuaikan untuk tema terang agar lebih kontras */
+            .custom-scroll::-webkit-scrollbar { width: 5px; }
+            .custom-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
             .custom-scroll::-webkit-scrollbar-thumb { 
-                background: rgba(99, 102, 241, 0.2); 
+                background: #cbd5e1; 
                 border-radius: 10px; 
             }
-            .custom-scroll::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.5); }
+            .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         </style>
     </head>
-    <body class="antialiased h-full text-slate-300">
-        <div x-data="{ isSidebarOpen: true }" class="flex h-full overflow-hidden">
+    
+    <body class="antialiased h-full text-slate-800">
+        <div x-data="{ isSidebarOpen: true }" class="flex h-full overflow-hidden bg-white">
             
             {{ $slot }}
 
         </div>
 
-    <!-- load Alpine and init store -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
     document.addEventListener('alpine:init', () => {
