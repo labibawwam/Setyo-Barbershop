@@ -18,6 +18,7 @@ class CustomerBookingController extends Controller
      */
     public function create()
 {
+    $kapsters = Kapster::all();
     // Tambahkan with('shifts') agar data jadwal kerja ikut terbawa
     $kapsters = Kapster::with('shifts')->get(); 
     
