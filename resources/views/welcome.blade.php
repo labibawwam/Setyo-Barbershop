@@ -63,11 +63,7 @@
             </p>
         </div>
 
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-50">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-        </div>
+       
     </section>
     <section id="kapster" class="py-24 relative bg-[#050505] overflow-hidden">
         <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-indigo-600/5 blur-[120px] pointer-events-none"></div>
