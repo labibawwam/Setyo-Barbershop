@@ -115,11 +115,15 @@
                     <p class="text-slate-400 text-sm font-medium reveal">Jangan khawatir. Masukkan email Anda untuk mendapatkan ritual pemulihan password.</p>
                 </div>
 
-                @if (session('status'))
-                    <div class="mb-6 p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold tracking-wide reveal">
-                        {{ session('status') }}
-                    </div>
-                @endif
+               @if (session('status'))
+    <div class="mb-8 p-6 rounded-[2rem] bg-green-500/20 border border-green-500/40 text-green-400 text-center reveal active">
+        <svg class="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <p class="font-bold uppercase tracking-widest text-[10px] mb-1">Success Transmitted</p>
+        <p class="text-sm font-medium italic">Silakan cek inbox email Anda untuk ritual pemulihan.</p>
+    </div>
+@endif
 
                 <form method="POST" action="{{ route('password.email') }}" class="space-y-8">
                     @csrf
