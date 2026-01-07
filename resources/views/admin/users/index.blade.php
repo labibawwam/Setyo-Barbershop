@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="flex h-screen w-screen overflow-hidden bg-[#f8fafc] font-sans text-slate-600">
         
-        <x-sidebar>
+        <x-sidebar></x-sidebar>
 
         <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc] relative overflow-hidden">
             
@@ -33,10 +33,9 @@
             </div>
 
             <div class="flex-1 overflow-hidden flex flex-col relative z-10">
-                <div class="flex-1 overflow-auto custom-scroll px-6 md:px-8 lg:px-12 py-4 md:py-6 overscroll-contain">
+                <div class="h-full overflow-x-auto overflow-y-auto custom-scroll px-6 md:px-8 lg:px-12 py-4 md:py-6 overscroll-contain">
                     <table class="w-full text-left border-separate border-spacing-y-3 min-w-[900px] lg:min-w-full">
-                        <thead class="sticky top-0 z-30 bg-[#f8fafc]/95 backdrop-blur-sm">
-                            <tr class="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em]">
+                        <thead class="sticky top-0 z-30 bg-[#f8fafc]"> <tr class="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em]">
                                 <th class="py-4 px-4 border-b border-slate-200 text-center w-[80px]">ID</th>
                                 <th class="py-4 px-6 border-b border-slate-200">Identity & Credentials</th>
                                 <th class="py-4 px-6 border-b border-slate-200 text-center w-[200px]">Privilege Level</th>
@@ -89,10 +88,10 @@
                 </div>
             </div>
         </main>
-    </x-sidebar>
     </div>
 
     <style>
+        /* CSS tetap sama */
         body, html { 
             overflow: hidden !important; 
             height: 100vh; 
@@ -118,5 +117,10 @@
         table { border-collapse: separate; table-layout: auto; }
         th, td { white-space: nowrap; }
         button, a { -webkit-tap-highlight-color: transparent; }
+        
+        /* Tambahkan ini agar background header saat sticky tidak transparan */
+        thead th {
+            background-color: #f8fafc;
+        }
     </style>
 </x-app-layout>
