@@ -120,6 +120,12 @@
                     <p class="text-slate-400 text-sm font-medium reveal">Otentikasi ritual ketampanan Anda.</p>
                 </div>
 
+                @if (session('status'))
+    <div class="mb-4 font-medium text-sm text-green-400">
+        {{ session('status') }}
+    </div>
+@endif
+
                 <form id="login-form" method="POST" action="{{ route('login') }}" class="space-y-8">
                     @csrf
 
@@ -138,8 +144,9 @@
                     <div class="reveal">
                         <div class="flex justify-between items-center mb-3 ml-1">
                             <label class="block text-[10px] font-bold text-blue-400 uppercase tracking-[0.25em]">Secret Key</label>
-                            <a href="#" class="text-[10px] text-purple-400 font-bold hover:text-blue-400 transition-colors">Forgot?</a>
-                        </div>
+@if (Route::has('password.request'))
+    <a href="{{ route('password.request') }}" class="text-[10px] text-purple-400 font-bold hover:text-blue-400 transition-colors">Forgot?</a>
+@endif                        </div>
                         <div class="relative group">
                             <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
