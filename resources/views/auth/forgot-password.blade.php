@@ -110,45 +110,54 @@
 
         <div class="md:w-[55%] w-full p-10 md:p-16 lg:p-24 flex flex-col justify-center">
             <div class="max-w-sm mx-auto w-full">
-                <div class="mb-12 text-center md:text-left">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight reveal">Forgot Key?</h2>
-                    <p class="text-slate-400 text-sm font-medium reveal">Jangan khawatir. Masukkan email Anda untuk mendapatkan ritual pemulihan password.</p>
-                </div>
-
-               @if (session('status'))
-    <div class="mb-8 p-6 rounded-[2rem] bg-green-500/20 border border-green-500/40 text-green-400 text-center reveal active">
-        <svg class="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-        <p class="font-bold uppercase tracking-widest text-[10px] mb-1">Success Transmitted</p>
-        <p class="text-sm font-medium italic">Silakan cek inbox email Anda untuk ritual pemulihan.</p>
-    </div>
-@endif
-
-                <form method="POST" action="{{ route('password.email') }}" class="space-y-8">
-                    @csrf
-
-                    <div class="reveal">
-                        <label class="block text-[10px] font-bold text-blue-400 uppercase tracking-[0.25em] mb-3 ml-1">Registered Email</label>
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            </span>
-                            <input id="email" type="email" name="email" :value="old('email')" required autofocus
-                                class="input-cyber block w-full text-white rounded-2xl p-4 pl-12 outline-none placeholder:text-slate-600 text-sm"
-                                placeholder="name@example.com">
+                
+                @if (session('status'))
+                    <div class="text-center">
+                        <div class="mb-8 p-6 rounded-[2rem] bg-green-500/10 border border-green-500/20 text-green-400 reveal active">
+                            <svg class="w-16 h-16 mx-auto mb-4 text-green-500/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <h3 class="text-xl font-bold text-white mb-2 tracking-tight">Email Transmitted</h3>
+                            <p class="text-sm font-medium text-slate-400 italic">
+                                Ritual pemulihan telah dikirim. Silakan periksa inbox atau folder spam email Anda.
+                            </p>
                         </div>
-                        <x-input-error :messages="$errors->get('email')" class="mt-2 text-[10px] text-red-400 font-bold uppercase tracking-wider" />
+                        <a href="{{ route('login') }}" class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400 hover:text-white transition-all">
+                            Kembali ke Gerbang Login
+                        </a>
+                    </div>
+                @else
+                    <div class="mb-12 text-center md:text-left">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight reveal">Forgot Key?</h2>
+                        <p class="text-slate-400 text-sm font-medium reveal">Jangan khawatir. Masukkan email Anda untuk mendapatkan ritual pemulihan password.</p>
                     </div>
 
-                    <div class="pt-2 reveal">
-                        <button type="submit"
-                            class="btn-cyber-gradient w-full text-white text-xs font-black uppercase tracking-[0.3em] rounded-2xl py-5 transition-all duration-500 flex items-center justify-center gap-3">
-                            <span>Request Link</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </button>
-                    </div>
-                </form>
+                    <form method="POST" action="{{ route('password.email') }}" class="space-y-8">
+                        @csrf
+
+                        <div class="reveal">
+                            <label class="block text-[10px] font-bold text-blue-400 uppercase tracking-[0.25em] mb-3 ml-1">Registered Email</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </span>
+                                <input id="email" type="email" name="email" :value="old('email')" required autofocus
+                                    class="input-cyber block w-full text-white rounded-2xl p-4 pl-12 outline-none placeholder:text-slate-600 text-sm"
+                                    placeholder="name@example.com">
+                            </div>
+                            <x-input-error :messages="$errors->get('email')" class="mt-2 text-[10px] text-red-400 font-bold uppercase tracking-wider" />
+                        </div>
+
+                        <div class="pt-2 reveal">
+                            <button type="submit"
+                                class="btn-cyber-gradient w-full text-white text-xs font-black uppercase tracking-[0.3em] rounded-2xl py-5 transition-all duration-500 flex items-center justify-center gap-3">
+                                <span>Request Link</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                        </div>
+                    </form>
+                @endif
+
             </div>
         </div>
     </div>
