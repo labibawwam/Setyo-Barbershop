@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 
 // Controllers
 use App\Http\Controllers\ProfileController;
@@ -68,4 +69,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 });
 
+// Tambahkan ini sementara untuk refresh setting
+Route::get('/refresh-setup', function() {
+    Artisan::call('config:cache');
+    Artisan::call('view:cache');
+    Artisan::call('route:cache');
+    return "Konfigurasi Brevo dan Cache Berhasil Diperbarui!";
+});
 require __DIR__ . '/auth.php';
