@@ -14,7 +14,6 @@ return new class extends Migration
     Schema::create('kapsters', function (Blueprint $table) {
         $table->id();
         $table->string('nama');
-        $table->string('status');
         $table->string('photo')->nullable();
         $table->string('actions')->nullable(); // biasanya tidak perlu actions di DB
         $table->timestamps();
