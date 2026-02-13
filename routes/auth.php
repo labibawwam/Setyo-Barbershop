@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\WaOtpController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,14 @@ Route::middleware('guest')->group(function () {
         ->name('register');
 
     Route::post('register', [RegisteredUserController::class, 'store']);
+
+    // AJAX: send OTP to a provided WA number before form submit
+    Route::post('wa/send-otp', [RegisteredUserController::class, 'sendOtpToNumber'])->name('wa.send_otp');
+
+    // WhatsApp OTP verification
+    Route::get('wa/verify', [WaOtpController::class, 'showVerifyForm'])->name('wa.verify.form');
+    Route::post('wa/verify', [WaOtpController::class, 'verify'])->name('wa.verify');
+    Route::post('wa/verify/resend', [WaOtpController::class, 'resend'])->name('wa.verify.resend');
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');

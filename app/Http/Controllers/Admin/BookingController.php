@@ -14,13 +14,26 @@ class BookingController extends Controller
     {
         $query = Booking::with(['user', 'kapster', 'services']);
 
-        // 1. Pencarian
-        if ($request->filled('search')) {
-            $query->whereHas('user', function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->search . '%')
-                    ->orWhere('email', 'like', '%' . $request->search . '%');
-            });
-        }
+       // 1. Pencarian (User, Kapster, dan Service)
+if ($request->filled('search')) {
+    $searchTerm = $request->search;
+
+    $query->where(function ($mainQuery) use ($searchTerm) {
+        // Cari berdasarkan Nama atau Email User (Customer)
+        $mainQuery->whereHas('user', function ($q) use ($searchTerm) {
+            $q->where('name', 'like', '%' . $searchTerm . '%')
+              ->orWhere('email', 'like', '%' . $searchTerm . '%');
+        })
+        // Cari berdasarkan Nama Kapster
+        ->orWhereHas('kapster', function ($q) use ($searchTerm) {
+            $q->where('nama', 'like', '%' . $searchTerm . '%');
+        })
+        // Cari berdasarkan Nama Service/Treatment
+        ->orWhereHas('services', function ($q) use ($searchTerm) {
+            $q->where('nama_service', 'like', '%' . $searchTerm . '%');
+        });
+    });
+}
 
         // 2. Filter Status
         if ($request->filled('status')) {

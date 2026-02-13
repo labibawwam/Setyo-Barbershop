@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <!-- Ensure responsive viewport and compiled Tailwind CSS are loaded -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('css/tailwind.css') }}" rel="stylesheet">
     <title>Setyo Barbershop - Elite Grooming Experience</title>
@@ -48,7 +47,6 @@
                 opacity: 0;
                 transform: translateY(10px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -70,7 +68,7 @@
         }
 
         .gold-gradient {
-            background: linear-gradient(to right, #fbbf24, #d97706);
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fcf6ba, #aa771c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -84,7 +82,6 @@
             border-radius: 20px;
         }
 
-        /* Animasi Keluar untuk Notifikasi */
         .toast-fade-out {
             opacity: 0;
             transform: translateY(-20px);
@@ -190,50 +187,59 @@
             <div class="w-full max-w-5xl">
                 <form action="{{ route('booking.store') }}" method="POST" id="bookingForm">
                     @csrf
+                    
                     <div id="step-1" class="step-content active">
                         <div class="text-center mb-10 lg:mb-16">
                             <h2 class="text-4xl lg:text-7xl font-bold text-white tracking-tighter italic leading-none">Define Your <br><span class="gold-gradient font-serif">master artist</span></h2>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                            <div onclick="selectKapster(this, 'random', 'Pilihkan Untuk Saya')" class="kapster-item group glass rounded-[3rem] p-8 transition-all duration-500 cursor-pointer flex flex-col items-center hover:bg-white/[0.05] border-dashed border-2 border-white/10">
+                                <div class="relative mb-6">
+                                    <div class="w-32 h-32 rounded-full bg-gradient-to-br from-indigo-600 to-purple-700 flex items-center justify-center shadow-2xl group-hover:scale-105 transition-transform duration-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                    </div>
+                                    <div class="absolute -bottom-1 -right-1 bg-indigo-500 text-[8px] px-2 py-1 rounded-full text-white font-black tracking-tighter uppercase shadow-lg">Auto</div>
+                                </div>
+                                <h4 class="text-xl font-bold text-white tracking-tight text-center">Pilihkan Untuk Saya</h4>
+                                <p class="text-[9px] text-indigo-400 font-black uppercase tracking-[0.2em] mt-1 mb-6">Any Available Artist</p>
+                                <div class="w-full pt-5 border-t border-white/5 text-center">
+                                    <p class="text-[10px] text-slate-400 leading-relaxed italic">Sistem kami akan memilihkan artist terbaik yang tersedia untuk Anda.</p>
+                                </div>
+                            </div>
+
                             @foreach($kapsters as $k)
                             <div onclick="selectKapster(this, '{{ $k->id }}', '{{ $k->nama }}')" class="kapster-item group glass rounded-[3rem] p-8 transition-all duration-500 cursor-pointer flex flex-col items-center hover:bg-white/[0.05]">
-
                                 <div class="relative mb-6">
                                     <img src="{{ asset('storage/' . $k->photo) }}" class="w-32 h-32 rounded-full object-cover border-4 border-white/5 group-hover:border-indigo-500/50 transition-all shadow-2xl" onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($k->nama) }}&background=111&color=fff'">
                                     <div class="absolute bottom-2 right-2 w-4 h-4 bg-emerald-500 border-4 border-[#050505] rounded-full"></div>
                                 </div>
-
                                 <h4 class="text-xl font-bold text-white tracking-tight">{{ $k->nama }}</h4>
                                 <p class="text-[9px] text-indigo-400 font-black uppercase tracking-[0.2em] mt-1 mb-6">Professional Barber</p>
-
-                                <div class="w-full pt-5 border-t border-white/5 space-y-3">
-                                    <p class="text-[8px] text-slate-500 uppercase font-black tracking-[0.3em] text-center">Weekly Schedule</p>
-
+                                <div class="w-full pt-5 border-t border-white/5 space-y-3 text-center">
+                                    <p class="text-[8px] text-slate-500 uppercase font-black tracking-[0.3em]">Weekly Schedule</p>
                                     <div class="flex flex-wrap justify-center gap-2">
                                         @php
-                                        // Definisikan urutan hari kustom
-                                        $urutanHari = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
-
-                                        // Urutkan koleksi shifts berdasarkan urutanHari
-                                        $sortedShifts = $k->shifts->sortBy(function($shift) use ($urutanHari) {
-                                        return array_search($shift->hari, $urutanHari);
-                                        });
+                                            $urutanHari = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+                                            $sortedShifts = $k->shifts->sortBy(function($shift) use ($urutanHari) {
+                                                return array_search($shift->hari, $urutanHari);
+                                            });
                                         @endphp
-
                                         @forelse($sortedShifts as $shift)
-                                        @if($shift->is_libur)
-                                        <div class="px-3 py-1.5 rounded-xl bg-red-500/10 border border-red-500/20 text-[9px] text-red-400 font-bold">
-                                            <span class="opacity-60">{{ substr($shift->hari, 0, 3) }}:</span> LIBUR
-                                        </div>
-                                        @else
-                                        <div class="px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/10 text-[9px] text-slate-300 font-bold">
-                                            <span class="text-indigo-400 mr-1">{{ substr($shift->hari, 0, 3) }}:</span>
-                                            {{ \Carbon\Carbon::parse($shift->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($shift->jam_selesai)->format('H:i') }}
-                                        </div>
-                                        @endif
+                                            @if($shift->is_libur)
+                                            <div class="px-3 py-1.5 rounded-xl bg-red-500/10 border border-red-500/20 text-[9px] text-red-400 font-bold">
+                                                <span class="opacity-60">{{ substr($shift->hari, 0, 3) }}:</span> LIBUR
+                                            </div>
+                                            @else
+                                            <div class="px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/10 text-[9px] text-slate-300 font-bold">
+                                                <span class="text-indigo-400 mr-1">{{ substr($shift->hari, 0, 3) }}:</span>
+                                                {{ \Carbon\Carbon::parse($shift->jam_mulai)->format('H:i') }}
+                                            </div>
+                                            @endif
                                         @empty
-                                        <div class="text-[10px] text-slate-600 italic tracking-widest">No schedule set</div>
+                                            <div class="text-[10px] text-slate-600 italic tracking-widest">No schedule</div>
                                         @endforelse
                                     </div>
                                 </div>
@@ -242,26 +248,6 @@
                         </div>
                         <input type="hidden" name="kapster_id" id="input_kapster" required>
                     </div>
-
-                    <style>
-                        .gold-gradient {
-                            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fcf6ba, #aa771c);
-                            -webkit-background-clip: text;
-                            -webkit-text-fill-color: transparent;
-                        }
-
-                        .glass {
-                            background: rgba(255, 255, 255, 0.02);
-                            backdrop-filter: blur(10px);
-                            border: 1px solid rgba(255, 255, 255, 0.05);
-                        }
-
-                        .kapster-item.selected {
-                            background: rgba(79, 70, 229, 0.1) !important;
-                            border-color: rgba(79, 70, 229, 0.5) !important;
-                            transform: translateY(-5px);
-                        }
-                    </style>
 
                     <div id="step-2" class="step-content">
                         <div class="flex flex-col lg:flex-row justify-between items-center mb-12 gap-8">
@@ -290,11 +276,8 @@
 
                     <div id="step-3" class="step-content">
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-
                             <div class="glass p-8 lg:p-10 rounded-[3rem] flex flex-col justify-center">
-                                <h3 class="text-2xl font-bold text-white mb-8 tracking-tight italic text-center">
-                                    Pick Your <span class="text-amber-500">Date</span>
-                                </h3>
+                                <h3 class="text-2xl font-bold text-white mb-8 tracking-tight italic text-center">Pick Your <span class="text-amber-500">Date</span></h3>
                                 <div id="flatpickr-inline" class="flex justify-center scale-95 sm:scale-100 origin-center"></div>
                                 <input type="text" name="tgl_booking" id="tgl_booking" class="hidden" required>
                             </div>
@@ -302,24 +285,16 @@
                             <div class="flex flex-col gap-6 lg:gap-8">
                                 <div class="glass p-8 lg:p-10 rounded-[3rem] text-center flex flex-col justify-center min-h-[300px]">
                                     <p class="text-[11px] text-indigo-400 font-black uppercase tracking-[0.3em] mb-6">Arrival Time</p>
-
                                     <div class="relative w-full overflow-hidden px-2">
-                                        <input type="time" name="jam_mulai" id="jam_mulai"
-                                            onclick="this.showPicker()"
-                                            class="w-full bg-transparent border-none text-5xl lg:text-6xl font-black text-white text-center focus:ring-0 appearance-none cursor-pointer tracking-tighter"
-                                            required>
+                                        <input type="time" name="jam_mulai" id="jam_mulai" onclick="this.showPicker()" class="w-full bg-transparent border-none text-5xl lg:text-6xl font-black text-white text-center focus:ring-0 appearance-none cursor-pointer tracking-tighter" required>
                                     </div>
-
                                     <p class="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-4">Tap numbers to set</p>
                                 </div>
                                 <div id="booked-slots-container" class="glass p-6 rounded-[2.5rem] hidden">
                                     <p class="text-[10px] text-red-400 font-black uppercase tracking-[0.3em] mb-4 text-center">Occupied Slots</p>
                                     <div id="booked-slots-list" class="grid grid-cols-2 gap-3"></div>
                                 </div>
-
-                                <button type="button" onclick="showStep(6)" class="w-full py-7 bg-white text-black rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-600 hover:text-white transition-all shadow-2xl active:scale-95">
-                                    Summary Details
-                                </button>
+                                <button type="button" onclick="showStep(6)" class="w-full py-7 bg-white text-black rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-600 hover:text-white transition-all shadow-2xl active:scale-95">Summary Details</button>
                             </div>
                         </div>
                     </div>
@@ -355,10 +330,8 @@
                             </div>
 
                             <div class="px-8 lg:px-12 pb-12">
-                                <button type="submit" id="btn-submit-booking" class="w-full py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-500 shadow-xl transition-all disabled:opacity-20 disabled:cursor-not-allowed">
-                                    Secure Booking Now
-                                </button>
-                                <p id="hint-text" class="text-[9px] text-center mt-4 text-slate-500 uppercase tracking-widest">Pastikan langkah 1-3 sudah terisi dengan benar</p>
+                                <button type="submit" id="btn-submit-booking" class="w-full py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-500 shadow-xl transition-all disabled:opacity-20 disabled:cursor-not-allowed">Secure Booking Now</button>
+                                <p id="hint-text" class="text-[9px] text-center mt-4 text-slate-500 uppercase tracking-widest">Lengkapi langkah 1-3 untuk konfirmasi</p>
                             </div>
                         </div>
                     </div>
@@ -417,9 +390,7 @@
                                 @if($booking->status != 'cancelled' && $booking->status != 'completed')
                                 <form action="{{ route('booking.cancel', $booking->id) }}" method="POST" onsubmit="return confirm('Securely cancel this elite booking?')" class="md:flex-none">
                                     @csrf @method('PATCH')
-                                    <button type="submit" class="w-12 h-12 rounded-2xl bg-red-500/10 text-red-500 border border-red-500/20 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-                                            <path d="M6 18L18 6M6 6l12 12" />
-                                        </svg></button>
+                                    <button type="submit" class="w-12 h-12 rounded-2xl bg-red-500/10 text-red-500 border border-red-500/20 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12" /></svg></button>
                                 </form>
                                 @endif
                             </div>
@@ -429,7 +400,6 @@
                         @endforelse
                     </div>
                 </div>
-
             </div>
         </main>
     </div>
@@ -450,22 +420,21 @@
     </div>
 
     <script>
-        // Data dari Laravel Controller (safely default to empty arrays)
         const allBookings = @json($allBookings ?? []);
         const myBookingsData = @json($myBookings ?? []);
 
-        // AUTO-HIDE TOAST LOGIC (3 detik)
+        // AUTO-HIDE TOAST
         document.addEventListener('DOMContentLoaded', function() {
             const toast = document.getElementById('auto-toast');
             if (toast) {
                 setTimeout(() => {
                     toast.classList.add('toast-fade-out');
                     setTimeout(() => toast.remove(), 500);
-                }, 3000); // Pesan hilang setelah 3 detik
+                }, 3000);
             }
         });
 
-        // Navigation & Sidebar Logic (safe guards)
+        // Navigation & Sidebar
         const btnToggle = document.getElementById('mobile-toggle');
         const sidebarNav = document.getElementById('sidebar-nav');
         const bar1 = document.getElementById('bar-1');
@@ -485,9 +454,9 @@
         }
 
         function mobileClose() {
-            if (typeof sidebarNav !== 'undefined' && sidebarNav) sidebarNav.classList.remove('active');
-            if (typeof bar1 !== 'undefined' && bar1) bar1.style.transform = "rotate(0) translateY(0)";
-            if (typeof bar2 !== 'undefined' && bar2) bar2.style.transform = "rotate(0) translateY(0)";
+            if (sidebarNav) sidebarNav.classList.remove('active');
+            if (bar1) bar1.style.transform = "rotate(0) translateY(0)";
+            if (bar2) bar2.style.transform = "rotate(0) translateY(0)";
             document.body.style.overflow = "auto";
         }
 
@@ -500,11 +469,7 @@
 
         function formatDate(dateString) {
             if (!dateString) return "-";
-            const options = {
-                day: 'numeric',
-                month: 'short',
-                year: 'numeric'
-            };
+            const options = { day: 'numeric', month: 'short', year: 'numeric' };
             return new Date(dateString).toLocaleDateString('en-GB', options);
         }
 
@@ -514,10 +479,7 @@
             if (target) target.classList.add('active');
             updateSidebarUI(step);
             if (step === 6) updateReview();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function updateSidebarUI(step) {
@@ -551,17 +513,13 @@
 
             if (checkbox.checked) {
                 selectedServiceIds.push(id);
-                selectedServicesData.push({
-                    id: id,
-                    name: name,
-                    price: harga
-                }); // Simpan objek
+                selectedServicesData.push({ id, name, price: harga });
                 totalPrice += harga;
                 el.classList.add('item-selected');
                 dot.classList.add('scale-100');
             } else {
                 selectedServiceIds = selectedServiceIds.filter(i => i !== id);
-                selectedServicesData = selectedServicesData.filter(s => s.id !== id); // Filter berdasarkan id
+                selectedServicesData = selectedServicesData.filter(s => s.id !== id);
                 totalPrice -= harga;
                 el.classList.remove('item-selected');
                 dot.classList.remove('scale-100');
@@ -573,6 +531,13 @@
         function updateBookedSlots(dateStr) {
             const container = document.getElementById('booked-slots-container');
             const list = document.getElementById('booked-slots-list');
+            
+            // Jika ID adalah random, kita tidak bisa menampilkan slot spesifik
+            if(selectedKapsterId === 'random') {
+                container.classList.add('hidden');
+                return;
+            }
+
             const filtered = allBookings.filter(b => b.kapster_id == selectedKapsterId && b.tgl_booking === dateStr && b.status !== 'cancelled');
             if (filtered.length > 0) {
                 list.innerHTML = filtered.map(b => `
@@ -592,24 +557,21 @@
             const date = document.getElementById('tgl_booking').value;
             const time = document.getElementById('jam_mulai').value;
 
-            // Update Text UI
             document.getElementById('rev-artist').innerText = artist || "Belum dipilih";
             document.getElementById('rev-datetime').innerText = date ? `${formatDate(date)} at ${time}` : "Jadwal belum diatur";
             document.getElementById('rev-total').innerText = 'Rp ' + totalPrice.toLocaleString('id-ID');
 
-            // Tampilkan Nama + Harga per item
             document.getElementById('rev-services').innerHTML = services.length > 0 ?
                 services.map(s => `
-            <li class="flex items-center justify-between text-xs text-left">
-                <div class="flex items-center gap-3">
-                    <div class="w-1 h-1 bg-amber-500 rounded-full shrink-0"></div> 
-                    <span>${s.name}</span>
-                </div>
-                <span class="text-slate-400 font-mono">Rp ${s.price.toLocaleString('id-ID')}</span>
-            </li>`).join('') :
+                <li class="flex items-center justify-between text-xs text-left">
+                    <div class="flex items-center gap-3">
+                        <div class="w-1 h-1 bg-amber-500 rounded-full shrink-0"></div> 
+                        <span>${s.name}</span>
+                    </div>
+                    <span class="text-slate-400 font-mono">Rp ${s.price.toLocaleString('id-ID')}</span>
+                </li>`).join('') :
                 `<li class="text-red-400">Belum ada treatment dipilih</li>`;
 
-            // Logika Validasi Tombol & Peringatan
             const isComplete = artist && services.length > 0 && date && time;
             const btnSubmit = document.getElementById('btn-submit-booking');
             const warning = document.getElementById('incomplete-warning');
@@ -651,5 +613,4 @@
         });
     </script>
 </body>
-
 </html>

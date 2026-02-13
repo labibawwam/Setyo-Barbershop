@@ -64,6 +64,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             // Perbaikan penulisan di sini:
             Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+            Route::get('/reports/pdf', [ReportController::class, 'pdf'])->name('reports.pdf');
             // Atau jika ingin menggunakan resource:
             // Route::resource('reports', ReportController::class);
         });

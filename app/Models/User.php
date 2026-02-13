@@ -16,11 +16,17 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'wa_number',
+        'wa_verified',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    protected $casts = [
+        'wa_verified' => 'boolean',
     ];
 
     public function bookings()

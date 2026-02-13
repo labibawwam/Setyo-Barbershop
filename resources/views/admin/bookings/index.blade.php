@@ -36,7 +36,7 @@
                                 <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-500 transition-colors">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="2.5"/></svg>
                                 </div>
-                                <input type="text" name="search" value="{{ request('search') }}" placeholder="Name or email..." 
+                                <input type="text" name="search" value="{{ request('search') }}" placeholder="client/kapster/service..." 
                                        class="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3 pl-12 pr-4 text-xs font-medium text-slate-800 placeholder:text-slate-400 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all">
                             </div>
                         </div>

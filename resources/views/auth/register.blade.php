@@ -92,7 +92,7 @@
     
     <div class="mesh-bg"></div>
 
-    <div class="w-full max-w-6xl flex flex-col md:flex-row overflow-hidden rounded-[3rem] glass-panel relative">
+    <div class="w-full max-w-6xl flex flex-col md:flex-row overflow-visible rounded-[3rem] glass-panel relative">
         
         <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-blue-500 to-purple-500 opacity-50"></div>
 
@@ -129,6 +129,15 @@
 
         <div class="md:w-[60%] w-full p-8 md:p-12 lg:p-16 flex flex-col justify-center overflow-y-auto max-h-[90vh] custom-scrollbar">
             <div class="max-w-md mx-auto w-full">
+                    @php $pendingId = session('pending_wa_user'); $pendingUser = $pendingId ? \App\Models\User::find($pendingId) : null; @endphp
+                    @if($pendingUser)
+                        <div class="mb-4" style="margin-top:0.75rem; overflow:visible; z-index:50;">
+                            <div class="bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-2 rounded otp-banner" style="position:relative; z-index:60; overflow:visible; max-width:100%;">
+                                Kode OTP telah dikirim ke nomor WhatsApp: <strong>+62{{ $pendingUser->wa_number }}</strong>. Masukkan kode di bawah untuk menyelesaikan pendaftaran.
+                            </div>
+                        </div>
+                        <script>window.addEventListener('DOMContentLoaded', () => { const el = document.getElementById('otp'); if (el) { el.focus(); } });</script>
+                    @endif
                 <div class="mb-10 text-center md:text-left">
                     <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight reveal">Create Account</h2>
                     <p class="text-slate-400 text-sm font-medium reveal">Lengkapi identitas Anda untuk akses VIP.</p>
@@ -159,6 +168,33 @@
                                 class="input-cyber block w-full text-white rounded-2xl p-4 pl-12 outline-none placeholder:text-slate-600 text-sm"
                                 placeholder="name@example.com">
                         </div>
+                    </div>
+
+                    <div class="reveal">
+                        <label class="block text-[10px] font-bold text-blue-400 uppercase tracking-[0.25em] mb-3 ml-1">WhatsApp Number</label>
+                        <div class="relative flex items-center gap-3">
+                            <div class="relative flex-1">
+                                <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500">+62</span>
+                                <input id="wa_number" type="text" name="wa_number" value="{{ old('wa_number') }}" required
+                                    class="input-cyber block w-full text-white rounded-2xl p-4 pl-12 outline-none placeholder:text-slate-600 text-sm"
+                                    placeholder="81234567890">
+                            </div>
+                            <div class="shrink-0">
+                                <button id="sendWaOtpBtn" type="button" class="px-4 py-2 bg-indigo-600 text-white rounded-2xl text-sm">Send</button>
+                            </div>
+                        </div>
+                        @error('wa_number')<p class="text-red-400 text-xs mt-2">{{ $message }}</p>@enderror
+                        <p id="waSendStatus" class="text-xs mt-2 text-slate-300"></p>
+                    </div>
+
+                    <div class="reveal">
+                        <label class="block text-[10px] font-bold text-blue-400 uppercase tracking-[0.25em] mb-3 ml-1">OTP (6 digits)</label>
+                        <div class="relative">
+                            <input id="otp" type="text" name="otp" inputmode="numeric" maxlength="6" value="{{ old('otp') }}"
+                                class="input-cyber block w-full text-white rounded-2xl p-4 pl-4 outline-none placeholder:text-slate-600 text-sm"
+                                placeholder="Enter OTP received on WhatsApp">
+                        </div>
+                        @error('otp')<p class="text-red-400 text-xs mt-2">{{ $message }}</p>@enderror
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -234,6 +270,38 @@
                 eye.innerHTML = '<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
             }
         }
+
+        // Send WA OTP via AJAX
+        document.getElementById('sendWaOtpBtn').addEventListener('click', function () {
+            const wa = document.getElementById('wa_number').value.trim();
+            const status = document.getElementById('waSendStatus');
+            if (! wa) {
+                status.textContent = 'Masukkan nomor WA terlebih dahulu.';
+                return;
+            }
+
+            status.textContent = 'Mengirim kode...';
+
+            fetch("{{ route('wa.send_otp') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ wa_number: wa })
+            }).then(res => res.json())
+              .then(data => {
+                  if (data.status === 'ok') {
+                      status.textContent = data.message;
+                      // allow user to enter OTP
+                  } else {
+                      status.textContent = data.message || 'Gagal mengirim kode.';
+                  }
+              }).catch(err => {
+                  status.textContent = 'Terjadi kesalahan saat mengirim. Cek konsol.';
+                  console.error(err);
+              });
+        });
     </script>
 </body>
 </html>

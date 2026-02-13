@@ -28,16 +28,16 @@ class AppServiceProvider extends ServiceProvider
         }
 
         // --- Logika Notifikasi Global ---
-     View::composer('*', function ($view) {
-    // Kita ambil semua status yang diinginkan
-    $notifikasiBooking = Booking::with(['user', 'kapster'])
-        ->whereIn('status', ['confirmed', 'cancelled', 'completed']) 
-        ->orderBy('created_at', 'desc')
-        ->limit(10) // Kita perbanyak limitnya jadi 10 agar semua status terlihat
-        ->get();
+        View::composer('*', function ($view) {
+            // Kita ambil semua status yang diinginkan
+            $notifikasiBooking = Booking::with(['user', 'kapster'])
+                ->whereIn('status', ['confirmed', 'cancelled', 'completed'])
+                ->orderBy('created_at', 'desc')
+                ->limit(10) // Kita perbanyak limitnya jadi 10 agar semua status terlihat
+                ->get();
 
-    $view->with('notifikasiBooking', $notifikasiBooking);
-});
+            $view->with('notifikasiBooking', $notifikasiBooking);
+        });
         // --------------------------------
 
         // Ensure public/storage exists without calling disabled functions (exec/symlink)
