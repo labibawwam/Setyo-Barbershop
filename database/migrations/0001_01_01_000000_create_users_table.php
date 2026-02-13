@@ -18,7 +18,7 @@ return new class extends Migration
     $table->timestamp('email_verified_at')->nullable();
     $table->string('password');
     $table->enum('role', ['admin', 'customer'])->default('customer');
-    $table->string('phone_number')->nullable(); // Nomor HP customer
+    $table->string('wa_number')->nullable(); // Nomor HP customer
     $table->string('profile_picture')->nullable(); // Path/URL foto profil
 
     $table->rememberToken();

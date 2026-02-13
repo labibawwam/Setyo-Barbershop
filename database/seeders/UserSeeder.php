@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@barbershop.com',
             'password' => Hash::make('admin123'),
             'role' => 'admin',
-            'phone_number' => '081234567890',
+            'wa_number' => '081234567890',
             'profile_picture' => null,
         ]);
 
@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
             'email' => 'customer@barbershop.com',
             'password' => Hash::make('customer123'),
             'role' => 'customer',
-            'phone_number' => '081298765432',
+            'wa_number' => '081298765432',
             'profile_picture' => null,
         ]);
     }
