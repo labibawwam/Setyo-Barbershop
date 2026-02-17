@@ -20,6 +20,8 @@ Route::middleware('guest')->group(function () {
 
     // AJAX: send OTP to a provided WA number before form submit
     Route::post('wa/send-otp', [RegisteredUserController::class, 'sendOtpToNumber'])->name('wa.send_otp');
+    // AJAX: send OTP to a provided email before form submit
+    Route::post('email/send-otp', [RegisteredUserController::class, 'sendOtpToEmail'])->name('email.send_otp');
 
     // WhatsApp OTP verification
     Route::get('wa/verify', [WaOtpController::class, 'showVerifyForm'])->name('wa.verify.form');
@@ -55,6 +57,14 @@ Route::middleware('auth')->group(function () {
     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
         ->middleware('throttle:6,1')
         ->name('verification.send');
+
+    // OTP-based email verification (Brevo)
+    Route::get('verify-email/otp', [\App\Http\Controllers\Auth\EmailOtpController::class, 'showVerifyForm'])
+        ->name('verification.otp.form');
+    Route::post('verify-email/otp', [\App\Http\Controllers\Auth\EmailOtpController::class, 'verify'])
+        ->name('verification.otp.verify');
+    Route::post('verify-email/otp/send', [\App\Http\Controllers\Auth\EmailOtpController::class, 'send'])
+        ->name('verification.otp.send');
 
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
         ->name('password.confirm');

@@ -135,9 +135,10 @@
                             <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </span>
-                            <input id="email" type="email" name="email" required autofocus
+                            <input id="identifier" type="text" name="identifier" required autofocus
                                 class="input-cyber block w-full text-white rounded-2xl p-4 pl-12 outline-none placeholder:text-slate-600 text-sm"
-                                placeholder="Email Address">
+                                placeholder="Email atau WhatsApp (mis. 0812...)">
+                            @error('identifier')<p class="text-red-600 text-sm mt-2">{{ $message }}</p>@enderror
                         </div>
                     </div>
 
@@ -190,12 +191,12 @@
                 }, 100 * index);
             });
 
-            // LOGIKA INGAT EMAIL (REMEMBER EMAIL)
-            const emailInput = document.getElementById('email');
+            // LOGIKA INGAT IDENTIFIER (REMEMBER EMAIL/WA)
+            const emailInput = document.getElementById('identifier');
             const loginForm = document.getElementById('login-form');
 
             // 1. Cek apakah ada email yang tersimpan di browser
-            const savedEmail = localStorage.getItem('remembered_email');
+            const savedEmail = localStorage.getItem('remembered_identifier');
             if (savedEmail) {
                 emailInput.value = savedEmail;
                 // Pindahkan fokus ke password jika email sudah terisi
@@ -204,7 +205,7 @@
 
             // 2. Simpan email saat tombol submit diklik
             loginForm.addEventListener('submit', () => {
-                localStorage.setItem('remembered_email', emailInput.value);
+                localStorage.setItem('remembered_identifier', emailInput.value);
             });
         });
 

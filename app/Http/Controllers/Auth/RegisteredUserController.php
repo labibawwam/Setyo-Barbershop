@@ -57,20 +57,35 @@ class RegisteredUserController extends Controller
                 }
 
                 if ($request->filled('otp')) {
-                    $sessionKey = 'wa_otp_session_' . session()->getId();
-                    $userKey = 'wa_otp_' . $user->id;
-                    $cachedSession = \Illuminate\Support\Facades\Cache::get($sessionKey);
-                    $cachedUser = \Illuminate\Support\Facades\Cache::get($userKey);
+                    $sessionKeyWa = 'wa_otp_session_' . session()->getId();
+                    $sessionKeyEmail = 'email_otp_session_' . session()->getId();
+                    $userKeyWa = 'wa_otp_' . $user->id;
+                    $userKeyEmail = 'email_otp_' . $user->id;
+                    $cachedSessionWa = \Illuminate\Support\Facades\Cache::get($sessionKeyWa);
+                    $cachedSessionEmail = \Illuminate\Support\Facades\Cache::get($sessionKeyEmail);
+                    $cachedUserWa = \Illuminate\Support\Facades\Cache::get($userKeyWa);
+                    $cachedUserEmail = \Illuminate\Support\Facades\Cache::get($userKeyEmail);
                     $inputCode = $request->input('otp');
 
-                    if (($cachedSession && (string)$cachedSession === (string)$inputCode) || ($cachedUser && (string)$cachedUser === (string)$inputCode)) {
-                        $user->wa_verified = true;
+                    $matchedWa = ($cachedSessionWa && (string)$cachedSessionWa === (string)$inputCode) || ($cachedUserWa && (string)$cachedUserWa === (string)$inputCode);
+                    $matchedEmail = ($cachedSessionEmail && (string)$cachedSessionEmail === (string)$inputCode) || ($cachedUserEmail && (string)$cachedUserEmail === (string)$inputCode);
+
+                    if ($matchedWa || $matchedEmail) {
+                        if ($matchedWa) {
+                            $user->wa_verified = true;
+                        }
+                        if ($matchedEmail) {
+                            $user->email_verified_at = $user->email_verified_at ?: now();
+                        }
                         $user->save();
-                        \Illuminate\Support\Facades\Cache::forget($sessionKey);
-                        \Illuminate\Support\Facades\Cache::forget($userKey);
+
+                        \Illuminate\Support\Facades\Cache::forget($sessionKeyWa);
+                        \Illuminate\Support\Facades\Cache::forget($sessionKeyEmail);
+                        \Illuminate\Support\Facades\Cache::forget($userKeyWa);
+                        \Illuminate\Support\Facades\Cache::forget($userKeyEmail);
                         session()->forget('pending_wa_user');
                         Auth::login($user);
-                        return redirect()->route('booking.create')->with('success', 'Nomor WhatsApp terverifikasi. Selamat datang, ' . $user->name . '!');
+                        return redirect()->route('booking.create')->with('success', 'Nomor terverifikasi. Selamat datang, ' . $user->name . '!');
                     }
 
                     return back()->withErrors(['otp' => 'Kode OTP salah atau sudah kedaluwarsa. Silakan coba lagi.'])->withInput();
@@ -83,12 +98,24 @@ class RegisteredUserController extends Controller
             // If no pending user but OTP was provided (pre-send flow via "Send"),
             // validate session-scoped OTP and create+verify user immediately.
             if (! $pendingId && $request->filled('otp')) {
-                $sessionKey = 'wa_otp_session_' . session()->getId();
+                $sessionKeyWa = 'wa_otp_session_' . session()->getId();
                 $cacheNumberKey = 'wa_pending_number_' . session()->getId();
-                $cachedCode = \Illuminate\Support\Facades\Cache::get($sessionKey);
-                $cachedNumber = \Illuminate\Support\Facades\Cache::get($cacheNumberKey);
+                $sessionKeyEmail = 'email_otp_session_' . session()->getId();
+                $cacheEmailKey = 'email_pending_email_' . session()->getId();
 
-                if (! $cachedCode || (string)$cachedCode !== (string)$request->otp || $cachedNumber !== $request->wa_number) {
+                $cachedCodeWa = \Illuminate\Support\Facades\Cache::get($sessionKeyWa);
+                $cachedNumber = \Illuminate\Support\Facades\Cache::get($cacheNumberKey);
+                $cachedCodeEmail = \Illuminate\Support\Facades\Cache::get($sessionKeyEmail);
+                $cachedEmail = \Illuminate\Support\Facades\Cache::get($cacheEmailKey);
+
+                $providedOtp = (string)$request->otp;
+                $validSessionMatch = ($cachedCodeWa && $cachedCodeWa === $providedOtp && $cachedNumber === $request->wa_number)
+                    || ($cachedCodeEmail && $cachedCodeEmail === $providedOtp && $cachedEmail === $request->email);
+
+                $matchedWa = ($cachedCodeWa && $cachedCodeWa === $providedOtp && $cachedNumber === $request->wa_number);
+                $matchedEmail = ($cachedCodeEmail && $cachedCodeEmail === $providedOtp && $cachedEmail === $request->email);
+
+                if ($matchedWa || $matchedEmail) {
                     return back()->withErrors(['otp' => 'Kode OTP salah atau sudah kedaluwarsa. Silakan coba lagi.'])->withInput();
                 }
 
@@ -99,29 +126,36 @@ class RegisteredUserController extends Controller
                     ->orWhere('wa_number', $normalizedWa)
                     ->first();
 
-                if ($existing) {
-                    // Update existing user with verification and password if needed
-                    $existing->wa_verified = true;
-                    $existing->wa_number = $request->wa_number;
-                    if (! Hash::check($request->password, $existing->password)) {
-                        $existing->password = Hash::make($request->password);
+                    if ($existing) {
+                        // Update existing user with verification and password if needed
+                        if ($matchedWa) {
+                            $existing->wa_verified = true;
+                        }
+                        if ($matchedEmail) {
+                            $existing->email_verified_at = $existing->email_verified_at ?: now();
+                        }
+                        $existing->wa_number = $request->wa_number;
+                        if (! Hash::check($request->password, $existing->password)) {
+                            $existing->password = Hash::make($request->password);
+                        }
+                        $existing->save();
+                        $user = $existing;
+                    } else {
+                        $user = User::create([
+                            'name' => $request->name,
+                            'email' => $request->email,
+                            'password' => Hash::make($request->password),
+                            'role' => 'customer',
+                            'wa_number' => $request->wa_number,
+                            'wa_verified' => $matchedWa ? true : false,
+                            'email_verified_at' => $matchedEmail ? now() : null,
+                        ]);
                     }
-                    $existing->save();
-                    $user = $existing;
-                } else {
-                    $user = User::create([
-                        'name' => $request->name,
-                        'email' => $request->email,
-                        'password' => Hash::make($request->password),
-                        'role' => 'customer',
-                        'wa_number' => $request->wa_number,
-                        'wa_verified' => true,
-                    ]);
-                    event(new Registered($user));
-                }
                 // consume caches
-                \Illuminate\Support\Facades\Cache::forget($sessionKey);
+                \Illuminate\Support\Facades\Cache::forget($sessionKeyWa);
+                \Illuminate\Support\Facades\Cache::forget($sessionKeyEmail);
                 \Illuminate\Support\Facades\Cache::forget($cacheNumberKey);
+                \Illuminate\Support\Facades\Cache::forget($cacheEmailKey);
                 Auth::login($user);
                 return redirect()->route('booking.create')->with('success', 'Nomor WhatsApp terverifikasi. Selamat datang, ' . $user->name . '!');
             }
@@ -149,8 +183,8 @@ class RegisteredUserController extends Controller
                 'wa_verified' => false,
             ]);
 
-            event(new Registered($user));
-
+            // Do not fire the default Registered event (Breeze would send a signed verification link)
+            // We use OTP-based verification via WA/Email instead.
             $sent = $this->sendWaOtp($user);
             session(['pending_wa_user' => $user->id]);
 
@@ -167,6 +201,9 @@ class RegisteredUserController extends Controller
         // Cache code for 5 minutes
         \Illuminate\Support\Facades\Cache::put('wa_otp_' . $user->id, $code, now()->addMinutes(5));
 
+        // Also store same code for email so both channels accept the same OTP
+        \Illuminate\Support\Facades\Cache::put('email_otp_' . $user->id, $code, now()->addMinutes(5));
+
         // Send via configured Fonte API if available
         $to = $this->normalizeWaNumber($user->wa_number);
         $message = "Your verification code: {$code}";
@@ -174,11 +211,114 @@ class RegisteredUserController extends Controller
 
         if (! $sent) {
             \Log::error("WA OTP NOT SENT for user {$user->id} ({$user->wa_number}): {$code}");
+            // still attempt sending email if configured
+            $emailSent = $this->sendEmailMessage($user->email, $user->name, $code);
+            if ($emailSent) {
+                \Log::info("Email OTP sent for user {$user->id} ({$user->email}) after WA failed");
+                return true;
+            }
             return false;
         }
 
+        // Also send same code via email if Brevo configured
+        $this->sendEmailMessage($user->email, $user->name, $code);
+
         \Log::info("WA OTP sent for user {$user->id} ({$user->wa_number})");
         return true;
+    }
+
+    /**
+     * Send OTP to an email address using Brevo (if configured). This is used for pre-register flows.
+     */
+    public function sendOtpToEmail(Request $request)
+    {
+        $request->validate([
+            'email' => ['required', 'email']
+        ]);
+
+        $email = $request->email;
+        $sessionId = session()->getId();
+        $cacheKey = 'email_otp_session_' . $sessionId;
+        $cacheEmailKey = 'email_pending_email_' . $sessionId;
+
+        $code = rand(100000, 999999);
+        \Illuminate\Support\Facades\Cache::put($cacheKey, $code, now()->addMinutes(5));
+        \Illuminate\Support\Facades\Cache::put($cacheEmailKey, $email, now()->addMinutes(5));
+
+        $sent = $this->sendEmailMessage($email, null, $code);
+
+        if ($sent) {
+            return response()->json(['status' => 'ok', 'message' => 'OTP telah dikirim ke email.']);
+        }
+
+        \Log::error("(pre-register) Email OTP NOT SENT for session {$sessionId} ({$email}): {$code}");
+        return response()->json(['status' => 'error', 'message' => 'Gagal mengirim OTP lewat email. Periksa konfigurasi.']);
+    }
+
+    /**
+     * Send email using Brevo's transactional API.
+     */
+    public function sendEmailMessage(string $toEmail, ?string $toName, int $code): bool
+    {
+        $apiKey = env('BREVO_API_KEY');
+        if (! $apiKey || ! $toEmail) {
+            \Log::warning('Brevo API key not configured or missing recipient email.');
+            return false;
+        }
+
+        $fromEmail = env('MAIL_FROM_ADDRESS', 'no-reply@setyobarbershop.local');
+        $fromName = env('MAIL_FROM_NAME', 'Setyo Barbershop');
+
+        // If MAIL_FROM_ADDRESS is a placeholder or local dev address, prefer the SMTP username
+        // since Brevo requires a verified sender address for reliable delivery.
+        $smtpUser = env('MAIL_USERNAME');
+        // Only use MAIL_USERNAME as sender if it's a valid email address.
+        if ($smtpUser && filter_var($smtpUser, FILTER_VALIDATE_EMAIL)
+            && (str_contains($fromEmail, 'example.com') || str_contains($fromEmail, 'local') || $fromEmail === 'no-reply@setyobarbershop.local')) {
+            $fromEmail = $smtpUser;
+            \Log::info('Adjusted from email to SMTP username for Brevo delivery: ' . $fromEmail);
+        }
+
+        // Render blade template if exists to provide nicer HTML
+        try {
+            $htmlContent = view('emails.otp', ['code' => $code, 'name' => $toName])->render();
+        } catch (\Throwable $e) {
+            $htmlContent = "<p>Kode verifikasi Anda: <strong>{$code}</strong></p>";
+        }
+
+        $recipientName = $toName ?: preg_replace('/@.*$/', '', $toEmail);
+
+        $body = [
+            'sender' => ['name' => $fromName, 'email' => $fromEmail],
+            'to' => [['email' => $toEmail, 'name' => $recipientName] ],
+            'subject' => 'Kode Verifikasi Anda',
+            'htmlContent' => $htmlContent,
+            'textContent' => "Kode verifikasi Anda: {$code}"
+        ];
+
+        try {
+            $response = Http::withHeaders(['api-key' => $apiKey, 'Accept' => 'application/json'])
+                ->post('https://api.brevo.com/v3/smtp/email', $body);
+
+            \Log::info('Brevo response', ['status' => $response->status(), 'body' => $response->body()]);
+
+            // Save same code under email cache for verification parity if user exists
+            if ($response->successful()) {
+                try {
+                    $user = \App\Models\User::where('email', $toEmail)->first();
+                    if ($user) {
+                        \Illuminate\Support\Facades\Cache::put('email_otp_' . $user->id, $code, now()->addMinutes(5));
+                    }
+                } catch (\Throwable $e) {
+                    \Log::warning('Unable to cache email OTP per-user: '.$e->getMessage());
+                }
+                return true;
+            }
+            return false;
+        } catch (\Throwable $e) {
+            \Log::error('Failed to send email via Brevo: ' . $e->getMessage());
+            return false;
+        }
     }
 
     /**
@@ -189,28 +329,47 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'wa_number' => ['required', 'string', 'min:7', 'max:20'],
+            'email' => ['nullable', 'email'],
         ]);
 
         $wa = $request->wa_number;
+        $email = $request->email;
         $sessionId = session()->getId();
-        $cacheKey = 'wa_otp_session_' . $sessionId;
+        $cacheKeyWa = 'wa_otp_session_' . $sessionId;
         $cacheNumberKey = 'wa_pending_number_' . $sessionId;
+        $cacheKeyEmail = 'email_otp_session_' . $sessionId;
+        $cacheEmailKey = 'email_pending_email_' . $sessionId;
 
         $code = rand(100000, 999999);
-        \Illuminate\Support\Facades\Cache::put($cacheKey, $code, now()->addMinutes(5));
+        // Cache both session codes so verification accepts either channel
+        \Illuminate\Support\Facades\Cache::put($cacheKeyWa, $code, now()->addMinutes(5));
         \Illuminate\Support\Facades\Cache::put($cacheNumberKey, $wa, now()->addMinutes(5));
-
-        // Send via device API only
-        $to = $this->normalizeWaNumber($wa);
-        $message = "Your verification code: {$code}";
-        $sent = $this->sendWhatsAppMessage($to, $message);
-
-        if ($sent) {
-            return response()->json(['status' => 'ok', 'message' => 'OTP telah dikirim ke WhatsApp.']);
+        if ($email) {
+            \Illuminate\Support\Facades\Cache::put($cacheKeyEmail, $code, now()->addMinutes(5));
+            \Illuminate\Support\Facades\Cache::put($cacheEmailKey, $email, now()->addMinutes(5));
         }
 
-        \Log::error("(pre-register) WA OTP NOT SENT for session {$sessionId} ({$wa}): {$code}");
-        return response()->json(['status' => 'error', 'message' => 'Gagal mengirim OTP. Periksa nomor atau konfigurasi.']);
+        // Send via device API for WA
+        $to = $this->normalizeWaNumber($wa);
+        $message = "Your verification code: {$code}";
+        $sentWa = $this->sendWhatsAppMessage($to, $message);
+
+        // Send via Brevo for email if provided
+        $sentEmail = false;
+        if ($email) {
+            $sentEmail = $this->sendEmailMessage($email, null, $code);
+        }
+
+        if ($sentWa || $sentEmail) {
+            $channels = [];
+            if ($sentWa) $channels[] = 'WhatsApp';
+            if ($sentEmail) $channels[] = 'Email';
+            $msg = 'OTP telah dikirim via ' . implode(' & ', $channels) . '.';
+            return response()->json(['status' => 'ok', 'message' => $msg]);
+        }
+
+        \Log::error("(pre-register) OTP NOT SENT for session {$sessionId} ({$wa} / {$email}): {$code}");
+        return response()->json(['status' => 'error', 'message' => 'Gagal mengirim OTP. Periksa konfigurasi.']);
     }
 
     /**

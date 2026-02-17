@@ -180,7 +180,9 @@
                                     placeholder="81234567890">
                             </div>
                             <div class="shrink-0">
-                                <button id="sendWaOtpBtn" type="button" class="px-4 py-2 bg-indigo-600 text-white rounded-2xl text-sm">Send</button>
+                                <div class="flex gap-2">
+                                    <button id="sendOtpBtn" type="button" class="px-4 py-2 bg-indigo-600 text-white rounded-2xl text-sm">Send OTP</button>
+                                </div>
                             </div>
                         </div>
                         @error('wa_number')<p class="text-red-400 text-xs mt-2">{{ $message }}</p>@enderror
@@ -271,9 +273,10 @@
             }
         }
 
-        // Send WA OTP via AJAX
-        document.getElementById('sendWaOtpBtn').addEventListener('click', function () {
+        // Send single OTP to both channels (WA + Email if provided)
+        document.getElementById('sendOtpBtn').addEventListener('click', function () {
             const wa = document.getElementById('wa_number').value.trim();
+            const email = document.getElementById('email').value.trim();
             const status = document.getElementById('waSendStatus');
             if (! wa) {
                 status.textContent = 'Masukkan nomor WA terlebih dahulu.';
@@ -288,12 +291,11 @@
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
-                body: JSON.stringify({ wa_number: wa })
+                body: JSON.stringify({ wa_number: wa, email: email })
             }).then(res => res.json())
               .then(data => {
                   if (data.status === 'ok') {
                       status.textContent = data.message;
-                      // allow user to enter OTP
                   } else {
                       status.textContent = data.message || 'Gagal mengirim kode.';
                   }

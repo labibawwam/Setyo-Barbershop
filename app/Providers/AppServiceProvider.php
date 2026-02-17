@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View; // Tambahkan ini
 use App\Models\Booking; // Tambahkan ini agar model Booking terbaca
+use App\Observers\BookingObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -39,6 +40,9 @@ class AppServiceProvider extends ServiceProvider
             $view->with('notifikasiBooking', $notifikasiBooking);
         });
         // --------------------------------
+
+        // Register Booking observer to handle status change notifications
+        Booking::observe(BookingObserver::class);
 
         // Ensure public/storage exists without calling disabled functions (exec/symlink)
         $publicStorage = public_path('storage');

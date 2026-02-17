@@ -43,19 +43,22 @@ class WaOtpController extends Controller
             return redirect()->route('register')->with('error', 'User not found.');
         }
 
-        $cacheKey = 'wa_otp_' . $user->id;
-        $cached = Cache::get($cacheKey);
+        $cacheKeyWa = 'wa_otp_' . $user->id;
+        $cacheKeyEmail = 'email_otp_' . $user->id;
+        $cachedWa = Cache::get($cacheKeyWa);
+        $cachedEmail = Cache::get($cacheKeyEmail);
 
-        if (! $cached || (string) $cached !== (string) $request->code) {
+        if ((! $cachedWa || (string) $cachedWa !== (string) $request->code) && (! $cachedEmail || (string) $cachedEmail !== (string) $request->code)) {
             // Keep pending session and redirect back to register so user can re-enter OTP there
             return redirect()->route('register')->withErrors(['otp' => 'Kode OTP salah atau sudah kedaluwarsa. Silakan masukkan ulang.'])->withInput();
         }
 
-        // Mark verified, clear cache, login user, and proceed
+        // Mark verified, clear caches, login user, and proceed
         $user->wa_verified = true;
         $user->save();
 
-        Cache::forget($cacheKey);
+        Cache::forget($cacheKeyWa);
+        Cache::forget($cacheKeyEmail);
         session()->forget('pending_wa_user');
 
         Auth::login($user);
@@ -75,14 +78,23 @@ class WaOtpController extends Controller
             return redirect()->route('register')->with('error', 'User not found.');
         }
 
-        // Generate new code and cache
+        // Generate new code and cache for both channels so verification accepts either
         $code = rand(100000, 999999);
         Cache::put('wa_otp_' . $user->id, $code, now()->addMinutes(5));
+        Cache::put('email_otp_' . $user->id, $code, now()->addMinutes(5));
 
         $to = $this->normalizeWaNumber($user->wa_number);
         $message = "Your verification code: {$code}";
 
         $sent = $this->sendWhatsAppMessage($to, $message);
+        // Try email as well (best-effort)
+        try {
+            // Use RegisteredUserController's helper to send email if available
+            $reg = new \App\Http\Controllers\Auth\RegisteredUserController();
+            $reg->sendEmailMessage($user->email, $user->name, $code);
+        } catch (\Throwable $e) {
+            Log::warning('Failed to call sendEmailMessage for resend: '.$e->getMessage());
+        }
 
         Log::info("(resend) WA OTP for user {$user->id} ({$user->wa_number}): {$code}");
 

@@ -355,6 +355,10 @@
                                     <label class="text-[10px] font-black uppercase tracking-widest text-indigo-400 ml-4">Email Address</label>
                                     <input type="email" name="email" value="{{ optional(Auth::user())->email ?? '' }}" class="w-full mt-2 bg-white/[0.03] border border-white/10 rounded-3xl px-8 py-4 md:py-5 text-sm text-white focus:border-indigo-500 transition-all outline-none" required>
                                 </div>
+                                <div>
+                                    <label class="text-[10px] font-black uppercase tracking-widest text-indigo-400 ml-4">WhatsApp Number</label>
+                                    <input type="tel" name="wa_number" value="{{ optional(Auth::user())->wa_number ?? '' }}" class="w-full mt-2 bg-white/[0.03] border border-white/10 rounded-3xl px-8 py-4 md:py-5 text-sm text-white focus:border-indigo-500 transition-all outline-none" placeholder="0812... (nomor WhatsApp)">
+                                </div>
                             </div>
                             <button type="submit" class="w-full mt-8 py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-500 transition-all shadow-xl">Update Identity</button>
                         </form>
