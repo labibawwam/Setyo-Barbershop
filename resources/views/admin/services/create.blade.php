@@ -10,12 +10,12 @@
 
             <div class="w-full max-w-3xl relative z-10 flex flex-col items-center my-auto entrance-animation">
                 
-                <div class="mb-8 md:mb-10 text-center shrink-0">
+                    <div class="mb-8 md:mb-10 text-center shrink-0">
                     <h1 class="font-display text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight uppercase">
-                        Create <span class="text-indigo-600 italic font-serif lowercase">New Service</span>
+                        Buat <span class="text-indigo-600 italic font-serif lowercase">Layanan Baru</span>
                     </h1>
                     <p class="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.3em] md:tracking-[0.4em] text-slate-400 mt-3">
-                        Professional Treatment Configuration
+                        Konfigurasi Perawatan Profesional
                     </p>
                 </div>
 
@@ -26,13 +26,13 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
                             <div class="space-y-2 group">
                                 <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
-                                    Service Name
+                                    Nama Layanan
                                 </label>
                                 <input 
                                     type="text" 
                                     name="nama_service" 
                                     value="{{ old('nama_service') }}"
-                                    placeholder="e.g. Premium Haircut"
+                                    placeholder="mis. Potongan Rambut Premium"
                                     class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 py-3 md:py-3.5 text-sm text-slate-900 font-semibold focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 transition-all duration-300"
                                     required
                                 >
@@ -40,7 +40,7 @@
 
                             <div class="space-y-2 group">
                                 <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
-                                    Treatment Category
+                                    Kategori Perawatan
                                 </label>
                                 <div class="relative">
                                     <select 
@@ -48,7 +48,7 @@
                                         class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 py-3 md:py-3.5 text-sm text-slate-900 font-bold focus:outline-none focus:border-indigo-500 transition-all appearance-none cursor-pointer pr-12"
                                         required
                                     >
-                                        <option value="" disabled selected class="bg-white">Select Category</option>
+                                        <option value="" disabled selected class="bg-white">Pilih Kategori</option>
                                         @foreach($categories as $cat)
                                             <option value="{{ $cat->id }}" class="bg-white" {{ old('category_id') == $cat->id ? 'selected' : '' }}>
                                                 {{ $cat->nama_kategori }}
@@ -63,13 +63,13 @@
                         </div>
 
                         <div class="space-y-2 group">
-                            <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
-                                Description
+                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
+                                Deskripsi
                             </label>
                             <textarea 
                                 name="deskripsi"
                                 rows="2"
-                                placeholder="Brief treatment details..."
+                                placeholder="Deskripsi singkat perawatan..."
                                 class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 py-3 md:py-3.5 text-sm text-slate-900 font-medium placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 transition-all resize-none min-h-[80px]"
                                 required
                             >{{ old('deskripsi') }}</textarea>
@@ -78,8 +78,8 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
                             <div class="space-y-2 group">
                                 <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
-                                    Price (IDR)
-                                </label>
+                                        Harga (IDR)
+                                    </label>
                                 <input 
                                     type="number" 
                                     name="harga" 
@@ -91,7 +91,7 @@
                             </div>
                             <div class="space-y-2 group">
                                 <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
-                                    Session Duration (Mins)
+                                    Durasi Sesi (Menit)
                                 </label>
                                 <input 
                                     type="number" 
@@ -106,7 +106,7 @@
 
                         <div class="space-y-2 group">
                             <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-indigo-600 ml-1">
-                                Visual Media
+                                Media Visual
                             </label>
                             <div class="relative">
                                 <input 
@@ -117,7 +117,7 @@
                                 >
                                 <div class="w-full bg-[#f8fafc] border-2 border-dashed border-slate-200 rounded-xl md:rounded-[1.5rem] py-6 md:py-8 flex flex-col items-center justify-center group-hover:bg-white group-hover:border-indigo-300 transition-all duration-500 text-center px-4">
                                     <svg class="w-6 h-6 text-indigo-500/50 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                    <span class="file-name text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest group-hover:text-slate-600">Choose Service Image</span>
+                                    <span class="file-name text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest group-hover:text-slate-600">Pilih Gambar Layanan</span>
                                 </div>
                             </div>
                         </div>
@@ -128,23 +128,23 @@
                                 class="w-full sm:flex-[2] group relative px-8 py-4 bg-slate-900 text-white rounded-xl md:rounded-2xl text-[10px] md:text-[11px] font-black uppercase tracking-widest transition-all hover:bg-indigo-600 active:scale-95 overflow-hidden shadow-lg shadow-slate-200"
                             >
                                 <div class="absolute inset-0 bg-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-                                <span class="relative z-10 w-full text-center">Confirm & Save Service</span>
+                                <span class="relative z-10 w-full text-center">Konfirmasi & Simpan Layanan</span>
                             </button>
 
                             <a 
                                 href="{{ route('admin.services.index') }}"
                                 class="w-full sm:flex-1 px-8 py-4 bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl text-center text-[10px] md:text-[11px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-700 hover:bg-white transition-all shadow-sm"
                             >
-                                Cancel
+                                Batal
                             </a>
                         </div>
                     </form>
                 </div>
 
-                <div class="mt-8 md:mt-10 opacity-60 shrink-0 text-center mb-6">
+                        <div class="mt-8 md:mt-10 opacity-60 shrink-0 text-center mb-6">
                     <p class="text-[7px] md:text-[8px] font-bold text-slate-400 uppercase tracking-[0.5em] flex items-center justify-center gap-4">
                         <span class="hidden xs:block w-12 md:w-16 h-px bg-slate-200"></span>
-                        Service Identity Protocol Sync
+                        Sinkronisasi Identitas Layanan
                         <span class="hidden xs:block w-12 md:w-16 h-px bg-slate-200"></span>
                     </p>
                 </div>

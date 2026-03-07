@@ -13,20 +13,20 @@
                     <div class="flex items-center gap-4 min-w-0">
                         <div class="min-w-0">
                             <h1 class="text-2xl md:text-4xl font-black text-slate-900 tracking-tight flex items-center gap-3">
-                                Users <span class="text-indigo-600 italic font-serif text-xl md:text-2xl font-normal lowercase tracking-normal">directory</span>
+                                Direktori <span class="text-indigo-600 italic font-serif text-xl md:text-2xl font-normal lowercase tracking-normal">Pengguna</span>
                             </h1>
                             <p class="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-slate-500 mt-1 md:mt-2 flex items-center gap-2">
                                 <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)] animate-pulse"></span>
-                                <span class="truncate">Verified Database Management</span>
+                                <span class="truncate">Manajemen Basis Data Terverifikasi</span>
                             </p>
                         </div>
                     </div>
                     
                     <a href="{{ route('admin.users.create') }}" class="w-full sm:w-auto shrink-0 group relative px-6 md:px-8 py-3 md:py-3.5 bg-slate-900 text-white rounded-2xl text-[10px] md:text-[11px] font-black uppercase tracking-widest transition-all hover:bg-indigo-600 active:scale-95 overflow-hidden shadow-lg shadow-slate-200 text-center">
                         <div class="absolute inset-0 bg-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                        <span class="relative z-10 flex items-center justify-center gap-2">
+                            <span class="relative z-10 flex items-center justify-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"/></svg>
-                            Add New <span class="hidden xs:inline">Entry</span>
+                            Tambah Pengguna <span class="hidden xs:inline">Baru</span>
                         </span>
                     </a>
                 </div>
@@ -38,9 +38,9 @@
                         <thead class="sticky top-0 z-30 bg-[#f8fafc]/95 backdrop-blur-sm">
                             <tr class="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em]">
                                 <th class="py-4 px-4 border-b border-slate-200 text-center w-[80px]">ID</th>
-                                <th class="py-4 px-6 border-b border-slate-200">Identity & Credentials</th>
-                                <th class="py-4 px-6 border-b border-slate-200 text-center w-[200px]">Privilege Level</th>
-                                <th class="py-4 px-6 border-b border-slate-200 text-right w-[180px]">Actions</th>
+                                <th class="py-4 px-6 border-b border-slate-200">Identitas & Kredensial</th>
+                                <th class="py-4 px-6 border-b border-slate-200 text-center w-[200px]">Tingkat Hak Akses</th>
+                                <th class="py-4 px-6 border-b border-slate-200 text-right w-[180px]">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-transparent">
@@ -74,7 +74,7 @@
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" /></svg>
                                         </a>
 
-                                        <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="inline m-0" onsubmit="return confirm('Secure Warning: Are you sure you want to delete this user?');">
+                                        <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="inline m-0" onsubmit="return confirm('Peringatan: Anda yakin ingin menghapus pengguna ini?');">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="w-10 h-10 flex items-center justify-center rounded-xl bg-rose-50 border border-rose-100 text-rose-600 hover:bg-rose-600 hover:text-white transition-all duration-300 shadow-sm">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.34 9m-4.72 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>

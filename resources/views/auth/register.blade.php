@@ -1,309 +1,504 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join Elite | Setyo Barbershop</title>
-    @vite(['resources/css/app.css','resources/js/app.js'])
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:italic&display=swap');
-        
-        :root {
-            --primary-blue: #2563eb;
-            --primary-purple: #7c3aed;
-            --bg-deep: #020617;
-        }
 
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: var(--bg-deep);
-            color: #e2e8f0;
-            overflow-x: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        .font-serif { font-family: 'Instrument Serif', serif; }
+<title>Register | STY Barber</title>
 
-        /* Ultra Glassmorphism */
-        .glass-panel {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(40px) saturate(200%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
-        }
+@vite(['resources/css/app.css','resources/js/app.js'])
 
-        /* Input Cyber-Blue Style */
-        .input-cyber {
-            background: rgba(30, 41, 59, 0.3);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-        .input-cyber:focus {
-            background: rgba(15, 23, 42, 0.9);
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 15px rgba(37, 99, 235, 0.3);
-        }
+<style>
 
-        /* Animated Mesh Background */
-        .mesh-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            background: 
-                radial-gradient(circle at 10% 10%, rgba(37, 99, 235, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 90% 90%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 1) 0%, transparent 100%);
-        }
+body{
+font-family:'Inter',sans-serif;
+background:#f8fafc;
+}
 
-        /* Floating Logo Animation */
-        @keyframes floatLogo {
-            0%, 100% { transform: translateY(0px) rotate(12deg); filter: drop-shadow(0 0 10px rgba(37, 99, 235, 0.4)); }
-            50% { transform: translateY(-15px) rotate(14deg); filter: drop-shadow(0 0 25px rgba(124, 58, 237, 0.6)); }
-        }
-        .animate-float-luxury { animation: floatLogo 5s ease-in-out infinite; }
+/* card */
 
-        /* Reveal Logic */
-        .reveal {
-            opacity: 0;
-            transform: translateY(15px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+.card{
+background:white;
+border:1px solid #e5e7eb;
+border-radius:16px;
+box-shadow:0 20px 40px rgba(0,0,0,0.05);
+}
 
-        /* Custom Button Glow */
-        .btn-cyber-gradient {
-            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
-            box-shadow: 0 10px 25px -10px rgba(124, 58, 237, 0.5);
-        }
-        .btn-cyber-gradient:hover {
-            box-shadow: 0 15px 35px -5px rgba(37, 99, 235, 0.6);
-            transform: scale(1.02);
-        }
+/* floating input */
 
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--primary-blue); border-radius: 10px; }
-    </style>
+.field{
+position:relative;
+}
+
+.field input{
+width:100%;
+border:1px solid #e5e7eb;
+padding:16px 14px;
+border-radius:10px;
+font-size:14px;
+background:white;
+}
+
+.field label{
+position:absolute;
+left:14px;
+top:14px;
+font-size:13px;
+color:#6b7280;
+transition:.2s;
+background:white;
+padding:0 4px;
+}
+
+.field input:focus+label,
+.field input:not(:placeholder-shown)+label{
+top:-8px;
+font-size:11px;
+color:#2563eb;
+}
+
+.field input:focus{
+outline:none;
+border-color:#2563eb;
+box-shadow:0 0 0 3px rgba(37,99,235,.15);
+}
+
+/* password */
+
+.password-wrapper{
+position:relative;
+}
+
+.password-wrapper input{
+padding-right:44px;
+}
+
+.toggle-password{
+position:absolute;
+right:12px;
+top:50%;
+transform:translateY(-50%);
+width:22px;
+height:22px;
+cursor:pointer;
+color:#6b7280;
+}
+
+.toggle-password:hover{
+color:#2563eb;
+}
+
+/* otp */
+
+.otp{
+display:flex;
+gap:8px;
+justify-content:space-between;
+}
+
+.otp input{
+width:48px;
+height:52px;
+text-align:center;
+font-size:20px;
+border-radius:10px;
+border:1px solid #e5e7eb;
+}
+
+.otp input:focus{
+outline:none;
+border-color:#2563eb;
+box-shadow:0 0 0 3px rgba(37,99,235,.15);
+}
+
+/* button */
+
+.btn{
+background:#111827;
+color:white;
+padding:12px;
+border-radius:10px;
+font-weight:600;
+width:100%;
+transition:.2s;
+}
+
+.btn:hover{
+background:#2563eb;
+}
+
+/* spinner */
+
+.spinner{
+border:2px solid rgba(255,255,255,.3);
+border-top:2px solid white;
+border-radius:50%;
+width:16px;
+height:16px;
+animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+0%{transform:rotate(0)}
+100%{transform:rotate(360deg)}
+}
+
+/* toast */
+
+.toast{
+position:fixed;
+top:20px;
+right:20px;
+background:#111827;
+color:white;
+padding:12px 18px;
+border-radius:8px;
+opacity:0;
+transform:translateY(-10px);
+transition:.3s;
+z-index:100;
+}
+
+.toast.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* progress */
+
+.progress{
+height:6px;
+background:#e5e7eb;
+border-radius:999px;
+overflow:hidden;
+}
+
+.progress-bar{
+height:100%;
+width:0%;
+background:#2563eb;
+transition:.4s;
+}
+
+/* responsive */
+
+@media(max-width:640px){
+
+.otp input{
+width:40px;
+height:48px;
+font-size:18px;
+}
+
+#sendOtpBtn{
+font-size:12px;
+padding:0 10px;
+}
+
+}
+
+</style>
+
 </head>
 
-<body class="min-h-screen flex items-center justify-center p-4 relative antialiased">
-    
-    <div class="mesh-bg"></div>
+<body class="min-h-screen flex items-center justify-center px-4 py-10">
 
-    <div class="w-full max-w-6xl flex flex-col md:flex-row overflow-visible rounded-[3rem] glass-panel relative">
-        
-        <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-blue-500 to-purple-500 opacity-50"></div>
+<div id="toast" class="toast"></div>
 
-        <div class="md:w-[40%] flex flex-col justify-center items-center text-center p-12 relative overflow-hidden bg-black/40 border-b md:border-b-0 md:border-r border-white/5">
-            <div class="absolute top-[-50px] left-[-50px] w-64 h-64 bg-blue-600/10 blur-[80px] rounded-full"></div>
-            
-            <div class="relative z-10">
-                <div class="w-28 h-28 md:w-36 md:h-36 bg-black/50 rounded-[2.8rem] flex items-center justify-center shadow-2xl mb-12 mx-auto border border-blue-500/30 overflow-hidden animate-float-luxury p-1">
-                    <img src="{{ asset('gambar/setyo1.jpg') }}" 
-                         alt="Logo Setyo Barbershop" 
-                         class="-rotate-12 w-full h-full object-cover rounded-[2.3rem]">
-                </div>
-                
-                <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tighter leading-none reveal">
-                    Join<br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-serif italic py-2 block">
-                        Exclusive
-                    </span>
-                </h1>
-                
-                <div class="flex items-center justify-center gap-3 mt-6 reveal">
-                    <span class="h-[1px] w-6 bg-blue-500/50"></span>
-                    <p class="text-blue-400 text-[10px] font-black tracking-[0.5em] uppercase">Registration</p>
-                    <span class="h-[1px] w-6 bg-blue-500/50"></span>
-                </div>
-            </div>
+<div class="w-full max-w-md">
 
-            <div class="mt-14 reveal">
-                <span class="px-6 py-2 bg-blue-500/10 rounded-full border border-blue-500/20 text-[10px] text-blue-300 font-bold tracking-widest backdrop-blur-md">
-                    RESERVE YOUR STYLE
-                </span>
-            </div>
-        </div>
+<div class="text-center mb-8">
 
-        <div class="md:w-[60%] w-full p-8 md:p-12 lg:p-16 flex flex-col justify-center overflow-y-auto max-h-[90vh] custom-scrollbar">
-            <div class="max-w-md mx-auto w-full">
-                    @php $pendingId = session('pending_wa_user'); $pendingUser = $pendingId ? \App\Models\User::find($pendingId) : null; @endphp
-                    @if($pendingUser)
-                        <div class="mb-4" style="margin-top:0.75rem; overflow:visible; z-index:50;">
-                            <div class="bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-2 rounded otp-banner" style="position:relative; z-index:60; overflow:visible; max-width:100%;">
-                                Kode OTP telah dikirim ke nomor WhatsApp: <strong>+62{{ $pendingUser->wa_number }}</strong>. Masukkan kode di bawah untuk menyelesaikan pendaftaran.
-                            </div>
-                        </div>
-                        <script>window.addEventListener('DOMContentLoaded', () => { const el = document.getElementById('otp'); if (el) { el.focus(); } });</script>
-                    @endif
-                <div class="mb-10 text-center md:text-left">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight reveal">Create Account</h2>
-                    <p class="text-slate-400 text-sm font-medium reveal">Lengkapi identitas Anda untuk akses VIP.</p>
-                </div>
+<img src="{{ asset('gambar/setyo1.jpg') }}" class="w-16 h-16 rounded-xl mx-auto shadow mb-5">
 
-                <form method="POST" action="{{ route('register') }}" class="space-y-6">
-                    @csrf
+<h1 class="text-3xl font-bold text-gray-900">
+Create your account
+</h1>
 
-                    <div class="reveal">
-                        <label class="block text-[10px] font-bold text-blue-400 uppercase tracking-[0.25em] mb-3 ml-1">Full Name</label>
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            </span>
-                            <input id="name" type="text" name="name" :value="old('name')" required autofocus
-                                class="input-cyber block w-full text-white rounded-2xl p-4 pl-12 outline-none placeholder:text-slate-700 text-sm"
-                                placeholder="Enter your full name">
-                        </div>
-                    </div>
+<p class="text-gray-500 text-sm mt-1">
+Join Setyo Barbershop membership
+</p>
 
-                    <div class="reveal">
-                        <label class="block text-[10px] font-bold text-blue-400 uppercase tracking-[0.25em] mb-3 ml-1">Identification (Email)</label>
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            </span>
-                            <input id="email" type="email" name="email" :value="old('email')" required
-                                class="input-cyber block w-full text-white rounded-2xl p-4 pl-12 outline-none placeholder:text-slate-600 text-sm"
-                                placeholder="name@example.com">
-                        </div>
-                    </div>
+</div>
 
-                    <div class="reveal">
-                        <label class="block text-[10px] font-bold text-blue-400 uppercase tracking-[0.25em] mb-3 ml-1">WhatsApp Number</label>
-                        <div class="relative flex items-center gap-3">
-                            <div class="relative flex-1">
-                                <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500">+62</span>
-                                <input id="wa_number" type="text" name="wa_number" value="{{ old('wa_number') }}" required
-                                    class="input-cyber block w-full text-white rounded-2xl p-4 pl-12 outline-none placeholder:text-slate-600 text-sm"
-                                    placeholder="81234567890">
-                            </div>
-                            <div class="shrink-0">
-                                <div class="flex gap-2">
-                                    <button id="sendOtpBtn" type="button" class="px-4 py-2 bg-indigo-600 text-white rounded-2xl text-sm">Send OTP</button>
-                                </div>
-                            </div>
-                        </div>
-                        @error('wa_number')<p class="text-red-400 text-xs mt-2">{{ $message }}</p>@enderror
-                        <p id="waSendStatus" class="text-xs mt-2 text-slate-300"></p>
-                    </div>
+<div class="progress mb-6">
+<div id="progressBar" class="progress-bar"></div>
+</div>
 
-                    <div class="reveal">
-                        <label class="block text-[10px] font-bold text-blue-400 uppercase tracking-[0.25em] mb-3 ml-1">OTP (6 digits)</label>
-                        <div class="relative">
-                            <input id="otp" type="text" name="otp" inputmode="numeric" maxlength="6" value="{{ old('otp') }}"
-                                class="input-cyber block w-full text-white rounded-2xl p-4 pl-4 outline-none placeholder:text-slate-600 text-sm"
-                                placeholder="Enter OTP received on WhatsApp">
-                        </div>
-                        @error('otp')<p class="text-red-400 text-xs mt-2">{{ $message }}</p>@enderror
-                    </div>
+<div class="card p-6">
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="reveal">
-                            <label class="block text-[10px] font-bold text-blue-400 uppercase tracking-[0.25em] mb-3 ml-1">Secret Key</label>
-                            <div class="relative group">
-                                <input id="password" type="password" name="password" required
-                                    class="input-cyber block w-full text-white rounded-2xl p-4 px-5 outline-none placeholder:text-slate-600 text-sm"
-                                    placeholder="••••••••">
-                                <button type="button" onclick="togglePass('password', 'eye-1')" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-500 hover:text-blue-400 transition-all focus:outline-none">
-                                    <svg id="eye-1" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
+<form id="registerForm" method="POST" action="{{ route('register') }}" class="space-y-5">
 
-                        <div class="reveal">
-                            <label class="block text-[10px] font-bold text-blue-400 uppercase tracking-[0.25em] mb-3 ml-1">Confirm Key</label>
-                            <div class="relative group">
-                                <input id="password_confirmation" type="password" name="password_confirmation" required
-                                    class="input-cyber block w-full text-white rounded-2xl p-4 px-5 outline-none placeholder:text-slate-600 text-sm"
-                                    placeholder="••••••••">
-                                <button type="button" onclick="togglePass('password_confirmation', 'eye-2')" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-500 hover:text-blue-400 transition-all focus:outline-none">
-                                    <svg id="eye-2" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+@csrf
 
-                    <div class="pt-4 reveal">
-                        <button type="submit"
-                            class="btn-cyber-gradient w-full text-white text-xs font-black uppercase tracking-[0.3em] rounded-2xl py-5 transition-all duration-500 flex items-center justify-center gap-3">
-                            <span>Register Membership</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </button>
-                    </div>
+<div class="field">
+<input type="text" name="name" required placeholder=" ">
+<label>Full name</label>
+</div>
 
-                    <p class="text-center text-slate-500 text-[10px] font-bold uppercase tracking-widest reveal">
-                        Already a member? 
-                        <a href="{{ route('login') }}" class="text-purple-400 hover:text-white transition-all ml-1 border-b border-purple-500/30">
-                            Sign In Access
-                        </a>
-                    </p>
-                </form>
-            </div>
-        </div>
-    </div>
+<div class="field">
+<input type="email" name="email" required placeholder=" ">
+<label>Email</label>
+</div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const elements = document.querySelectorAll('.reveal');
-            elements.forEach((el, index) => {
-                setTimeout(() => {
-                    el.classList.add('active');
-                }, 100 * index);
-            });
-        });
+<div>
 
-        function togglePass(inputId, eyeId) {
-            const input = document.getElementById(inputId);
-            const eye = document.getElementById(eyeId);
-            
-            if (input.type === 'password') {
-                input.type = 'text';
-                eye.innerHTML = '<path d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
-            } else {
-                input.type = 'password';
-                eye.innerHTML = '<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
-            }
-        }
+<label class="text-sm font-medium text-gray-700 block mb-2">
+WhatsApp number
+</label>
 
-        // Send single OTP to both channels (WA + Email if provided)
-        document.getElementById('sendOtpBtn').addEventListener('click', function () {
-            const wa = document.getElementById('wa_number').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const status = document.getElementById('waSendStatus');
-            if (! wa) {
-                status.textContent = 'Masukkan nomor WA terlebih dahulu.';
-                return;
-            }
+<div class="flex gap-2">
 
-            status.textContent = 'Mengirim kode...';
+<div class="flex items-center px-3 border rounded-lg text-sm bg-gray-50">
++62
+</div>
 
-            fetch("{{ route('wa.send_otp') }}", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ wa_number: wa, email: email })
-            }).then(res => res.json())
-              .then(data => {
-                  if (data.status === 'ok') {
-                      status.textContent = data.message;
-                  } else {
-                      status.textContent = data.message || 'Gagal mengirim kode.';
-                  }
-              }).catch(err => {
-                  status.textContent = 'Terjadi kesalahan saat mengirim. Cek konsol.';
-                  console.error(err);
-              });
-        });
-    </script>
+<input id="wa_number" type="text" name="wa_number" required
+class="flex-1 border rounded-lg px-4 py-3 text-sm">
+
+<button
+type="button"
+id="sendOtpBtn"
+class="bg-gray-900 text-white text-xs px-4 rounded-lg flex items-center gap-2 justify-center">
+
+<span id="otpText">Send OTP</span>
+
+<div id="spinner" class="spinner hidden"></div>
+
+</button>
+
+</div>
+
+<p id="countdown" class="text-xs text-gray-500 mt-2"></p>
+
+</div>
+
+<div>
+
+<label class="text-sm font-medium text-gray-700 block mb-2">
+OTP Code
+</label>
+
+<div class="otp">
+
+<input maxlength="1">
+<input maxlength="1">
+<input maxlength="1">
+<input maxlength="1">
+<input maxlength="1">
+<input maxlength="1">
+
+</div>
+
+<input type="hidden" name="otp" id="otp">
+
+</div>
+
+<div class="field password-wrapper">
+
+<input type="password" id="password" name="password" required placeholder=" ">
+
+<label>Password</label>
+
+<span class="toggle-password" onclick="togglePassword('password')">
+
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+stroke-width="1.8" stroke="currentColor">
+
+<path stroke-linecap="round" stroke-linejoin="round"
+d="M2.25 12s3.75-7.5 9.75-7.5S21.75 12 21.75 12s-3.75 7.5-9.75 7.5S2.25 12 2.25 12z"/>
+
+<circle cx="12" cy="12" r="3"/>
+
+</svg>
+
+</span>
+
+</div>
+
+<div class="field password-wrapper">
+
+<input type="password" id="confirmPassword" name="password_confirmation" required placeholder=" ">
+
+<label>Confirm password</label>
+
+<span class="toggle-password" onclick="togglePassword('confirmPassword')">
+
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+stroke-width="1.8" stroke="currentColor">
+
+<path stroke-linecap="round" stroke-linejoin="round"
+d="M2.25 12s3.75-7.5 9.75-7.5S21.75 12 21.75 12s-3.75 7.5-9.75 7.5S2.25 12 2.25 12z"/>
+
+<circle cx="12" cy="12" r="3"/>
+
+</svg>
+
+</span>
+
+</div>
+
+<button type="submit" class="btn">
+Create account
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+<script>
+
+/* toggle password */
+
+function togglePassword(id){
+const input=document.getElementById(id)
+input.type=input.type==="password"?"text":"password"
+}
+
+/* toast */
+
+function toast(msg){
+const t=document.getElementById("toast")
+t.textContent=msg
+t.classList.add("show")
+setTimeout(()=>t.classList.remove("show"),3000)
+}
+
+/* OTP auto focus */
+
+const inputs=document.querySelectorAll(".otp input")
+const hidden=document.getElementById("otp")
+
+inputs.forEach((input,i)=>{
+
+input.addEventListener("input",()=>{
+
+if(input.value && i<5){
+inputs[i+1].focus()
+}
+
+updateOtp()
+
+})
+
+input.addEventListener("keydown",e=>{
+
+if(e.key==="Backspace" && !input.value && i>0){
+inputs[i-1].focus()
+}
+
+})
+
+})
+
+function updateOtp(){
+hidden.value=[...inputs].map(i=>i.value).join("")
+}
+
+/* paste OTP */
+
+document.addEventListener("paste",e=>{
+
+const text=(e.clipboardData||window.clipboardData).getData("text")
+
+if(text.length===6){
+
+inputs.forEach((input,i)=>input.value=text[i])
+updateOtp()
+
+}
+
+})
+
+/* send OTP */
+
+let countdown=0
+
+document.getElementById("sendOtpBtn").onclick=()=>{
+
+if(countdown>0)return
+
+const wa=document.getElementById("wa_number").value.trim()
+const email=document.querySelector('[name="email"]').value.trim()
+
+if(!wa){
+toast("Masukkan nomor WhatsApp")
+return
+}
+
+if(!email){
+toast("Masukkan email terlebih dahulu")
+return
+}
+
+const spinner=document.getElementById("spinner")
+const text=document.getElementById("otpText")
+
+spinner.classList.remove("hidden")
+text.textContent="Sending..."
+
+fetch("{{ route('wa.send_otp') }}",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json",
+"X-CSRF-TOKEN":"{{ csrf_token() }}"
+},
+
+body:JSON.stringify({
+wa_number:wa,
+email:email
+})
+
+})
+
+.then(res=>res.json())
+.then(data=>{
+
+toast(data.message || "OTP sent to WhatsApp & Email")
+startCountdown()
+
+})
+.catch(()=>toast("Failed sending OTP"))
+
+.finally(()=>{
+
+spinner.classList.add("hidden")
+text.textContent="Send OTP"
+
+})
+
+}
+
+function startCountdown(){
+
+const el=document.getElementById("countdown")
+
+countdown=30
+
+const timer=setInterval(()=>{
+
+countdown--
+
+el.textContent="Resend OTP in "+countdown+"s"
+
+if(countdown<=0){
+clearInterval(timer)
+el.textContent="You can resend OTP"
+}
+
+},1000)
+
+}
+
+</script>
+
 </body>
 </html>

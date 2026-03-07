@@ -10,12 +10,12 @@
 
             <div class="w-full max-w-2xl relative z-10 flex flex-col items-center my-auto entrance-animation">
                 
-                <div class="mb-8 md:mb-10 text-center shrink-0">
+                    <div class="mb-8 md:mb-10 text-center shrink-0">
                     <h1 class="font-display text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
-                        Register <span class="text-indigo-600 italic font-serif">New Artist</span>
+                        Daftar <span class="text-indigo-600 italic font-serif">Kapster Baru</span>
                     </h1>
                     <p class="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.3em] md:tracking-[0.4em] text-slate-400 mt-3">
-                        Master Barber Onboarding System
+                        Sistem Pendaftaran Kapster
                     </p>
                 </div>
 
@@ -25,12 +25,12 @@
 
                         <div class="space-y-2 group">
                             <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
-                                Full Name
+                                Nama Lengkap
                             </label>
                             <input 
                                 type="text" 
                                 name="nama"
-                                placeholder="e.g. Aditya Pratama"
+                                placeholder="mis. Aditya Pratama"
                                 class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 py-3.5 md:py-4 text-sm text-slate-900 font-semibold placeholder-slate-300 focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 transition-all duration-300"
                                 required
                             >
@@ -38,19 +38,19 @@
 
                         <div class="space-y-2 group">
                             <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
-                                Artist Biography
+                                Biografi Kapster
                             </label>
                             <textarea 
                                 name="bio" 
                                 rows="3" 
-                                placeholder="Describe the artist's expertise and experience..."
+                                placeholder="Jelaskan keahlian dan pengalaman kapster..."
                                 class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 py-3.5 md:py-4 text-sm text-slate-900 font-medium placeholder-slate-300 focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 transition-all duration-300 resize-none min-h-[100px]"
                             ></textarea>
                         </div>
 
                         <div class="space-y-2 group">
                             <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
-                                Portrait Identity
+                                Foto Profil
                             </label>
                             <div class="relative">
                                 <input 
@@ -63,7 +63,7 @@
                                     <div class="w-8 h-8 md:w-10 md:h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-500 mb-2 transition-transform group-hover:scale-110">
                                         <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                     </div>
-                                    <span class="file-name text-[9px] md:text-[10px] font-bold text-slate-400 italic tracking-wide text-center px-4">Professional portrait (JPG/PNG)</span>
+                                    <span class="file-name text-[9px] md:text-[10px] font-bold text-slate-400 italic tracking-wide text-center px-4">Foto profesional (JPG/PNG)</span>
                                 </div>
                             </div>
                         </div>
@@ -74,23 +74,23 @@
                                 class="w-full sm:flex-[2] group relative px-8 py-3.5 md:py-4 bg-slate-900 text-white rounded-xl md:rounded-2xl text-[10px] md:text-[11px] font-black uppercase tracking-widest transition-all hover:bg-indigo-600 active:scale-95 overflow-hidden shadow-lg shadow-slate-200"
                             >
                                 <div class="absolute inset-0 bg-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-                                <span class="relative z-10 flex items-center justify-center gap-2">Confirm Registration</span>
+                                <span class="relative z-10 flex items-center justify-center gap-2">Konfirmasi Pendaftaran</span>
                             </button>
 
                             <a 
                                 href="{{ route('admin.kapsters.index') }}"
                                 class="w-full sm:w-auto px-10 py-3.5 md:py-4 border border-slate-200 rounded-xl md:rounded-2xl text-center text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-700 hover:bg-white transition-all shadow-sm"
                             >
-                                Cancel
+                                Batal
                             </a>
                         </div>
                     </form>
                 </div>
 
                 <div class="mt-8 md:mt-12 mb-4 text-center shrink-0 opacity-60">
-                    <p class="text-[7px] md:text-[8px] font-bold text-slate-400 uppercase tracking-[0.5em] flex items-center justify-center gap-4">
+                        <p class="text-[7px] md:text-[8px] font-bold text-slate-400 uppercase tracking-[0.5em] flex items-center justify-center gap-4">
                         <span class="hidden xs:block w-10 md:w-16 h-px bg-gradient-to-r from-transparent to-slate-200"></span>
-                        Authorized Node Access Only
+                        Hanya Akses Terotorisasi
                         <span class="hidden xs:block w-10 md:w-16 h-px bg-gradient-to-l from-transparent to-slate-200"></span>
                     </p>
                 </div>

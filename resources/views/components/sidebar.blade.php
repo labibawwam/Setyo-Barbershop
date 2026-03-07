@@ -43,18 +43,18 @@
 
         <div class="flex-1 overflow-y-auto custom-scroll overscroll-contain flex flex-col">
             <div class="px-6 mt-8 mb-2" x-show="!isCollapsed || isMobileOpen">
-                <p class="text-[9px] font-black text-slate-400 uppercase tracking-[0.4em]">Management</p>
+                <p class="text-[9px] font-black text-slate-400 uppercase tracking-[0.4em]">Manajemen</p>
             </div>
 
             <nav class="py-2 px-3 space-y-1 relative z-10">
                 @php
                 $menus = [
-                    ['name' => 'User Management', 'route' => 'admin.users.index', 'icon' => 'M18 18.72a6 6 0 0 0-3.44-5.15m2.07-3.57a3 3 0 1 0-4.26-4.26m5.63 7.83a7 7 0 1 1-9.42-9.42m0 12.15a6 6 0 0 1-3.44-5.15m2.07-3.57a3 3 0 1 1-4.26-4.26m5.63 7.83a7 7 0 1 0-9.42-9.42'],
+                    ['name' => 'Manajemen Pengguna', 'route' => 'admin.users.index', 'icon' => 'M18 18.72a6 6 0 0 0-3.44-5.15m2.07-3.57a3 3 0 1 0-4.26-4.26m5.63 7.83a7 7 0 1 1-9.42-9.42m0 12.15a6 6 0 0 1-3.44-5.15m2.07-3.57a3 3 0 1 1-4.26-4.26m5.63 7.83a7 7 0 1 0-9.42-9.42'],
                     ['name' => 'Kapster', 'route' => 'admin.kapsters.index', 'icon' => 'M4 19a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4ZM14 5l-2 5M10 5l2 5M12 10l-4 9M12 10l4 9'],
-                    ['name' => 'Kapster Shifts', 'route' => 'admin.kapster_shifts.index', 'icon' => 'M12 6v6l4 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z'],
-                    ['name' => 'Service Menu', 'route' => 'admin.services.index', 'icon' => 'M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2Z'],
-                    ['name' => 'Bookings List', 'route' => 'admin.bookings.index', 'icon' => 'M19 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm-7 15l-5-5 1.41-1.41L12 16.17l7.59-7.59L21 10l-9 9Z'],
-                    ['name' => 'Operating Report', 'route' => 'admin.reports.index', 'icon' => 'M3 3v18h18M7 16l4-4 4 4 6-6'],
+                    ['name' => 'Jadwal Kapster', 'route' => 'admin.kapster_shifts.index', 'icon' => 'M12 6v6l4 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z'],
+                    ['name' => 'Menu Layanan', 'route' => 'admin.services.index', 'icon' => 'M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2Z'],
+                    ['name' => 'Daftar Reservasi', 'route' => 'admin.bookings.index', 'icon' => 'M19 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm-7 15l-5-5 1.41-1.41L12 16.17l7.59-7.59L21 10l-9 9Z'],
+                    ['name' => 'Laporan Operasional', 'route' => 'admin.reports.index', 'icon' => 'M3 3v18h18M7 16l4-4 4 4 6-6'],
                 ];
                 @endphp
 
@@ -102,7 +102,7 @@
                                         <svg class="w-4 h-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-width="2" />
                                         </svg>
-                                        Identity Settings
+                                        Pengaturan Identitas
                                     </div>
                                 </x-dropdown-link>
 
@@ -117,7 +117,7 @@
                                             <svg class="w-4 h-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-width="2" />
                                             </svg>
-                                            Terminate Session
+                                            Keluar
                                         </div>
                                     </x-dropdown-link>
                                 </form>
@@ -152,13 +152,13 @@
                     </svg>
                 </button>
 
-                <h2 class="text-[10px] md:text-sm font-bold text-slate-500 uppercase tracking-[0.2em] hidden xs:block">Management System</h2>
+                <h2 class="text-[10px] md:text-sm font-bold text-slate-500 uppercase tracking-[0.2em] hidden xs:block">Sistem Manajemen</h2>
             </div>
 
             <div class="flex items-center gap-4">
-                <div class="hidden sm:flex items-center gap-3 bg-slate-100/50 border border-slate-200 px-3 py-1.5 rounded-full text-emerald-600 shadow-sm">
+                    <div class="hidden sm:flex items-center gap-3 bg-slate-100/50 border border-slate-200 px-3 py-1.5 rounded-full text-emerald-600 shadow-sm">
                     <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.3)] animate-pulse"></div>
-                    <span class="text-[8px] md:text-[10px] font-bold tracking-widest uppercase">Server Active</span>
+                    <span class="text-[8px] md:text-[10px] font-bold tracking-widest uppercase">Server Aktif</span>
                 </div>
 
                 {{-- Livewire Component - REALTIME BELL --}}

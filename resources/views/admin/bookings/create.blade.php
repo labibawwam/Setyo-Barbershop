@@ -12,10 +12,10 @@
                 
                 <div class="mb-8 md:mb-10 text-center shrink-0">
                     <h1 class="font-display text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight uppercase">
-                        Manual <span class="text-indigo-600 italic font-serif lowercase">Reservation</span>
+                        Reservasi <span class="text-indigo-600 italic font-serif lowercase">Manual</span>
                     </h1>
                     <p class="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.3em] md:tracking-[0.4em] text-slate-400 mt-3">
-                        Professional Appointment Configuration
+                        Konfigurasi Janji Profesional
                     </p>
                 </div>
 
@@ -28,13 +28,13 @@
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <h4 class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] text-indigo-600 mb-1">Schedule Conflict Detected</h4>
+                            <h4 class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] text-indigo-600 mb-1">Konflik Jadwal Terdeteksi</h4>
                             <p class="text-xs md:text-sm text-slate-600 leading-relaxed font-medium">
                                 {{ session('error') }}
                             </p>
                             <div class="mt-4">
                                 <button type="button" onclick="useRecommendedTime()" class="w-full sm:w-auto group flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest px-6 py-3 bg-slate-900 text-white rounded-xl hover:bg-indigo-600 transition-all shadow-md active:scale-95">
-                                    Apply Recommendation
+                                    Gunakan Rekomendasi
                                     <svg class="w-3 h-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-width="3" stroke-linecap="round"/></svg>
                                 </button>
                             </div>
@@ -49,10 +49,10 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
                             <div class="space-y-2 group">
-                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Client Profile</label>
+                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Profil Klien</label>
                                 <div class="relative">
                                     <select name="user_id" class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 py-3.5 text-sm text-slate-900 font-bold focus:outline-none focus:border-indigo-500 transition-all appearance-none cursor-pointer pr-12" required>
-                                        <option value="" disabled selected class="bg-white">Select Registered User</option>
+                                        <option value="" disabled selected class="bg-white">Pilih Pengguna Terdaftar</option>
                                         @foreach($users as $user)
                                             <option value="{{ $user->id }}" class="bg-white" {{ old('user_id') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                                         @endforeach
@@ -62,10 +62,10 @@
                             </div>
 
                             <div class="space-y-2 group">
-                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Assigned Artist</label>
+                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Kapster</label>
                                 <div class="relative">
                                     <select name="kapster_id" class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 py-3.5 text-sm text-slate-900 font-bold focus:outline-none focus:border-indigo-500 transition-all appearance-none cursor-pointer pr-12" required>
-                                        <option value="" disabled selected class="bg-white">Choose Kapster</option>
+                                        <option value="" disabled selected class="bg-white">Pilih Kapster</option>
                                         @foreach($kapsters as $k)
                                             <option value="{{ $k->id }}" class="bg-white" {{ old('kapster_id') == $k->id ? 'selected' : '' }}>{{ $k->nama }}</option>
                                         @endforeach
@@ -76,7 +76,7 @@
                         </div>
 
                         <div class="space-y-2">
-                            <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-indigo-600 ml-1">Treatment Selection</label>
+                            <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-indigo-600 ml-1">Pilih Perawatan</label>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[200px] md:max-h-[160px] overflow-y-auto custom-scroll p-3 bg-[#f8fafc] rounded-xl border border-slate-200 shadow-inner">
                                 @foreach($services as $service)
                                 <label class="flex items-center gap-3 p-3 bg-white border border-slate-100 rounded-xl cursor-pointer hover:border-indigo-200 hover:bg-indigo-50/30 transition-all group">
@@ -92,24 +92,24 @@
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
                             <div class="space-y-2 group">
-                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Session Date</label>
+                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Tanggal Reservasi</label>
                                 <input type="date" name="tgl_booking" value="{{ old('tgl_booking') }}" class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 py-3.5 text-sm text-slate-900 font-semibold focus:outline-none focus:border-indigo-500 transition-all [color-scheme:light]" required>
                             </div>
 
                             <div class="space-y-2 group">
-                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Start Window</label>
+                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Waktu Mulai</label>
                                 <input type="time" name="jam_mulai" value="{{ old('jam_mulai') }}" class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 py-3.5 text-sm text-slate-900 font-semibold focus:outline-none focus:border-indigo-500 transition-all [color-scheme:light]" required>
                             </div>
                         </div>
 
                         <div class="flex flex-col sm:flex-row items-center gap-4 pt-4 md:pt-6">
-                            <button type="submit" class="w-full sm:flex-[2] group relative px-8 py-4 bg-slate-900 text-white rounded-xl md:rounded-2xl text-[10px] md:text-[11px] font-black uppercase tracking-widest transition-all hover:bg-indigo-600 active:scale-95 overflow-hidden shadow-lg shadow-slate-200">
+                                <button type="submit" class="w-full sm:flex-[2] group relative px-8 py-4 bg-slate-900 text-white rounded-xl md:rounded-2xl text-[10px] md:text-[11px] font-black uppercase tracking-widest transition-all hover:bg-indigo-600 active:scale-95 overflow-hidden shadow-lg shadow-slate-200">
                                 <div class="absolute inset-0 bg-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-                                <span class="relative z-10 w-full text-center font-black">Deploy Reservation</span>
+                                <span class="relative z-10 w-full text-center font-black">Buat Reservasi</span>
                             </button>
 
                             <a href="{{ route('admin.bookings.index') }}" class="w-full sm:w-auto px-10 py-4 bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl text-center text-[10px] md:text-[11px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-700 hover:bg-white transition-all shadow-sm">
-                                Cancel
+                                Batal
                             </a>
                         </div>
                     </form>

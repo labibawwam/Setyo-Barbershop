@@ -10,14 +10,14 @@
 
             <div class="w-full max-w-2xl relative z-10 flex flex-col items-center my-auto entrance-animation">
                 
-                <div class="mb-8 md:mb-10 text-center shrink-0">
+                    <div class="mb-8 md:mb-10 text-center shrink-0">
                     <h1 class="font-display text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight uppercase">
-                        Update <span class="text-indigo-600 italic font-serif lowercase">Artist Data</span>
+                        Perbarui <span class="text-indigo-600 italic font-serif lowercase">Data Kapster</span>
                     </h1>
                     <div class="flex items-center justify-center gap-3 mt-3 md:mt-4">
                         <span class="h-px w-6 md:w-8 bg-indigo-200"></span>
                         <p class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-slate-400 px-2 truncate">
-                            Elite Barber Profile Modification
+                            Modifikasi Profil Kapster
                         </p>
                         <span class="h-px w-6 md:w-8 bg-indigo-200"></span>
                     </div>
@@ -30,7 +30,7 @@
 
                         <div class="group space-y-2">
                             <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
-                                Full Name
+                                Nama Lengkap
                             </label>
                             <input 
                                 type="text" 
@@ -44,7 +44,7 @@
 
                         <div class="group space-y-2">
                             <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
-                                Artist Biography
+                                Biografi Kapster
                             </label>
                             <textarea 
                                 name="bio" 
@@ -56,7 +56,7 @@
 
                         <div class="space-y-4">
                             <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">
-                                Artist Portrait
+                                Foto Kapster
                             </label>
                             
                             <div class="flex flex-col sm:flex-row items-center gap-6 md:gap-8">
@@ -79,7 +79,7 @@
                                         <div class="w-8 h-8 md:w-10 md:h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-500 mb-2 transition-all">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         </div>
-                                        <span class="file-name text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest group-hover/upload:text-slate-600 text-center px-4">Change Portrait</span>
+                                        <span class="file-name text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest group-hover/upload:text-slate-600 text-center px-4">Ganti Foto</span>
                                     </div>
                                 </div>
                             </div>
@@ -91,23 +91,23 @@
                                 class="w-full sm:flex-[2] group relative px-8 py-3.5 md:py-5 bg-slate-900 text-white rounded-xl md:rounded-2xl text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] transition-all hover:bg-indigo-600 hover:shadow-[0_10px_30px_rgba(79,70,229,0.2)] active:scale-95 overflow-hidden"
                             >
                                 <div class="absolute inset-0 bg-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-                                <span class="relative z-10">Save Changes</span>
+                                <span class="relative z-10">Simpan Perubahan</span>
                             </button>
 
                             <a 
                                 href="{{ route('admin.kapsters.index') }}"
                                 class="w-full sm:flex-1 px-8 py-3.5 md:py-5 bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl text-center text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-700 hover:bg-white transition-all shadow-sm"
                             >
-                                Cancel
+                                Batal
                             </a>
                         </div>
                     </form>
                 </div>
 
                 <div class="mt-8 md:mt-10 mb-4 text-center shrink-0 opacity-60">
-                    <p class="text-[7px] md:text-[9px] font-bold text-slate-400 uppercase tracking-[0.5em] flex items-center justify-center gap-4">
+                        <p class="text-[7px] md:text-[9px] font-bold text-slate-400 uppercase tracking-[0.5em] flex items-center justify-center gap-4">
                         <span class="hidden xs:block w-12 md:w-16 h-px bg-gradient-to-r from-transparent to-slate-200"></span>
-                        Executive Profile Management
+                        Manajemen Profil Kapster
                         <span class="hidden xs:block w-12 md:w-16 h-px bg-gradient-to-l from-transparent to-slate-200"></span>
                     </p>
                 </div>

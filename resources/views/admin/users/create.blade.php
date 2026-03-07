@@ -9,13 +9,13 @@
             <div class="absolute bottom-0 left-0 w-[200px] md:w-[400px] h-[200px] md:h-[400px] bg-purple-500/[0.02] blur-[70px] md:blur-[100px] pointer-events-none"></div>
 
             <div class="w-full max-w-xl mx-auto relative z-10 entrance-animation my-auto">
-                <div class="mb-8 md:mb-10 text-center">
+                    <div class="mb-8 md:mb-10 text-center">
                     <h1 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight uppercase leading-tight">
-                        Create <span class="text-indigo-600 italic font-serif lowercase tracking-normal">new entry</span>
+                        Buat <span class="text-indigo-600 italic font-serif lowercase tracking-normal">Pengguna Baru</span>
                     </h1>
                     <div class="flex items-center justify-center gap-3 mt-3 md:mt-4">
                         <span class="h-[1px] w-6 md:w-8 bg-indigo-200"></span>
-                        <p class="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-slate-400">User Directory Management</p>
+                        <p class="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-slate-400">Manajemen Pengguna</p>
                         <span class="h-[1px] w-6 md:w-8 bg-indigo-200"></span>
                     </div>
                 </div>
@@ -25,26 +25,26 @@
                         @csrf
                         
                         <div class="group">
-                            <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Full Name</label>
-                            <input type="text" name="name" class="w-full mt-1.5 md:mt-2 bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 md:px-6 py-3.5 md:py-4 text-sm text-slate-900 font-semibold focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 transition-all duration-300" placeholder="Enter user name..." required>
+                            <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Nama Lengkap</label>
+                            <input type="text" name="name" class="w-full mt-1.5 md:mt-2 bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 md:px-6 py-3.5 md:py-4 text-sm text-slate-900 font-semibold focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 transition-all duration-300" placeholder="Masukkan nama pengguna..." required>
                         </div>
 
                         <div class="group">
-                            <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Email Address</label>
+                            <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Alamat Email</label>
                             <input type="email" name="email" class="w-full mt-1.5 md:mt-2 bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 md:px-6 py-3.5 md:py-4 text-sm text-slate-900 font-semibold focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 transition-all duration-300" placeholder="user@company.com" required>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
                            <div class="group">
     <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
-        Privilege
+        Hak Akses
     </label>
     
     <div class="relative mt-1.5 md:mt-2">
         <select name="role" 
             class="w-full bg-[#f8fafc] border {{ $errors->has('role') ? 'border-red-500' : 'border-slate-200' }} rounded-xl md:rounded-2xl px-5 md:px-6 py-3.5 md:py-4 text-sm text-slate-900 font-bold focus:outline-none focus:border-indigo-500 transition-all appearance-none cursor-pointer pr-12">
             
-            <option value="customer" {{ old('role') == 'customer' ? 'selected' : '' }} class="bg-white text-slate-900">Standard User</option>
+            <option value="customer" {{ old('role') == 'customer' ? 'selected' : '' }} class="bg-white text-slate-900">Pengguna Biasa</option>
             <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }} class="bg-white text-slate-900">Administrator</option>
             
         </select>
@@ -62,7 +62,7 @@
 </div>
 
                             <div class="group">
-                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Password</label>
+                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Kata Sandi</label>
                                 <div class="relative mt-1.5 md:mt-2">
                                     <input type="password" name="password" id="passwordInput"
                                         class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 md:px-6 py-3.5 md:py-4 pr-12 text-sm text-slate-900 font-semibold focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 transition-all duration-300" 
@@ -83,7 +83,7 @@
                             <button type="submit" class="w-full md:flex-1 group relative bg-slate-900 text-white py-3.5 md:py-4 rounded-xl md:rounded-2xl text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] transition-all hover:bg-indigo-600 hover:shadow-[0_10px_30px_rgba(79,70,229,0.2)] active:scale-95 overflow-hidden">
                                 <span class="relative z-10">Finalize Entry</span>
                             </button>
-                            <a href="{{ route('admin.users.index') }}" class="w-full md:w-auto px-10 py-3.5 md:py-4 border border-slate-200 rounded-xl md:rounded-2xl text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-700 hover:bg-slate-50 transition-all text-center">Cancel</a>
+                                <a href="{{ route('admin.users.index') }}" class="w-full md:w-auto px-10 py-3.5 md:py-4 border border-slate-200 rounded-xl md:rounded-2xl text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-700 hover:bg-slate-50 transition-all text-center">Batal</a>
                         </div>
                     </form>
                 </div>

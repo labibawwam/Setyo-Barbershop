@@ -13,14 +13,14 @@
                     <div class="flex items-center justify-between">
                         <a href="{{ route('admin.bookings.index') }}" class="group flex items-center gap-2 text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-indigo-600 transition-all">
                             <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"/></svg>
-                            Back to Registry
+                            Kembali ke Daftar
                         </a>
                     </div>
 
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-b border-slate-200 pb-10">
                         <div class="space-y-4">
                             <h1 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tighter uppercase leading-tight">
-                                Reservation <span class="text-indigo-600 italic font-serif lowercase tracking-normal text-3xl md:text-4xl font-normal">intel</span>
+                                Reservasi <span class="text-indigo-600 italic font-serif lowercase tracking-normal text-3xl md:text-4xl font-normal">Detail</span>
                             </h1>
                             <div class="flex flex-wrap items-center gap-3 md:gap-4">
                                 <p class="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.3em] md:tracking-[0.5em] text-slate-400 font-mono">
@@ -43,25 +43,25 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                             <div class="bg-white p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-slate-200 shadow-sm flex flex-col justify-between">
                                 <div>
-                                    <label class="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-indigo-500 block mb-6 italic opacity-70">Customer Identity</label>
+                                    <label class="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-indigo-500 block mb-6 italic opacity-70">Identitas Pelanggan</label>
                                     <h4 class="text-xl md:text-2xl font-bold text-slate-900 tracking-tight break-words">{{ $booking->user->name }}</h4>
                                     <p class="text-[11px] md:text-xs text-slate-500 font-mono mt-1 break-all">{{ $booking->user->email }}</p>
                                 </div>
                                 <div class="mt-8 md:mt-10 pt-6 border-t border-slate-100 flex items-center gap-3">
                                     <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.4)] animate-pulse"></div>
-                                    <p class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400">Verified Client Account</p>
+                                    <p class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400">Akun Pelanggan Terverifikasi</p>
                                 </div>
                             </div>
 
                             <div class="bg-white p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-slate-200 shadow-sm">
-                                <label class="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-indigo-500 block mb-6 italic opacity-70">Assigned Master</label>
+                                <label class="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-indigo-500 block mb-6 italic opacity-70">Kapster Tersedia</label>
                                 <div class="flex items-center gap-4 md:gap-5">
                                     <div class="w-16 h-16 md:w-20 md:h-20 shrink-0 rounded-[1.5rem] md:rounded-[2rem] bg-gradient-to-br from-indigo-50 to-slate-50 border border-indigo-100 flex items-center justify-center text-indigo-600 text-2xl md:text-3xl font-black italic shadow-inner">
                                         {{ strtoupper(substr($booking->kapster->nama, 0, 2)) }}
                                     </div>
                                     <div class="min-w-0">
                                         <h4 class="text-lg md:text-xl font-bold text-slate-900 truncate">{{ $booking->kapster->nama }}</h4>
-                                        <p class="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-400 mt-1">Professional Artist</p>
+                                        <p class="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-400 mt-1">Kapster Profesional</p>
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@
 
                         <div class="bg-white rounded-[2rem] md:rounded-[3rem] border border-slate-200 shadow-sm overflow-hidden">
                             <div class="px-6 md:px-8 py-5 md:py-6 border-b border-slate-100 bg-slate-50/50">
-                                <h3 class="text-[9px] md:text-[10px] font-black text-slate-900 uppercase tracking-[0.3em]">Treatment Manifest</h3>
+                                <h3 class="text-[9px] md:text-[10px] font-black text-slate-900 uppercase tracking-[0.3em]">Daftar Perawatan</h3>
                             </div>
                             <div class="p-6 md:p-8 overflow-x-auto">
                                 <table class="w-full text-left min-w-[400px]">
@@ -84,7 +84,7 @@
                                         <tr>
                                             <td class="py-4 md:py-5 px-2">
                                                 <p class="text-xs md:text-sm font-bold text-slate-800">{{ $service->nama_service }}</p>
-                                                <p class="text-[8px] md:text-[9px] text-slate-400 mt-1 uppercase font-black tracking-tighter">{{ $service->durasi }} Mins Session</p>
+                                                <p class="text-[8px] md:text-[9px] text-slate-400 mt-1 uppercase font-black tracking-tighter">{{ $service->durasi }} Menit</p>
                                             </td>
                                             <td class="py-4 md:py-5 px-2 text-right font-mono text-xs md:text-sm text-slate-900 font-bold">
                                                 Rp {{ number_format($service->harga) }}
@@ -96,7 +96,7 @@
                                         <tr>
                                             <td colspan="2" class="pt-6 md:pt-8">
                                                 <div class="bg-indigo-50/50 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-indigo-100 flex justify-between items-center gap-4 shadow-inner">
-                                                    <span class="text-[8px] md:text-[10px] font-black text-indigo-600 uppercase tracking-widest italic">Net Settlement</span>
+                                                    <span class="text-[8px] md:text-[10px] font-black text-indigo-600 uppercase tracking-widest italic">Total Bersih</span>
                                                     <span class="text-2xl md:text-4xl font-black text-slate-900 italic font-serif tracking-tight shrink-0">Rp {{ number_format($booking->total_harga) }}</span>
                                                 </div>
                                             </td>

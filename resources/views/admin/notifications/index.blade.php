@@ -10,18 +10,18 @@
                 <div class="flex items-center justify-between gap-6">
                     <div class="min-w-0">
                         <h1 class="text-3xl font-black text-white tracking-tight flex items-center gap-3">
-                            System <span class="text-indigo-500 italic font-serif text-2xl font-normal lowercase tracking-normal">notifications</span>
+                            Notifikasi <span class="text-indigo-500 italic font-serif text-2xl font-normal lowercase tracking-normal">Sistem</span>
                         </h1>
                         <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-500 mt-2 flex items-center gap-2">
                             <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
-                            Broadcast & Alert Logs
+                            Catatan Siaran & Peringatan
                         </p>
                     </div>
                     
                     <button class="shrink-0 group relative px-8 py-3 bg-white/[0.03] border border-white/10 text-white rounded-2xl text-xs font-black uppercase tracking-widest transition-all hover:bg-white/10 active:scale-95 overflow-hidden">
                         <span class="relative z-10 flex items-center gap-2">
                             <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                            Mark All Read
+                            Tandai Semua Terbaca
                         </span>
                     </button>
                 </div>
@@ -31,12 +31,12 @@
                 <div class="flex-1 overflow-y-auto overflow-x-auto custom-scroll px-8 lg:px-10 py-4">
                     <table class="w-full text-left border-separate border-spacing-y-3">
                         <thead class="sticky top-0 z-20 bg-[#050505]">
-                            <tr class="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em]">
+                                <tr class="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em]">
                                 <th class="py-4 px-4 border-b border-white/[0.05] text-center w-[60px]">No</th>
-                                <th class="py-4 px-6 border-b border-white/[0.05] w-[20%]">Recipient</th>
-                                <th class="py-4 px-6 border-b border-white/[0.05] w-[45%]">Subject & Message</th>
+                                <th class="py-4 px-6 border-b border-white/[0.05] w-[20%]">Penerima</th>
+                                <th class="py-4 px-6 border-b border-white/[0.05] w-[45%]">Subjek & Pesan</th>
                                 <th class="py-4 px-6 border-b border-white/[0.05] w-[10%] text-center">Status</th>
-                                <th class="py-4 px-6 border-b border-white/[0.05] text-right w-[120px]">Actions</th>
+                                <th class="py-4 px-6 border-b border-white/[0.05] text-right w-[120px]">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-transparent">
@@ -52,7 +52,7 @@
                                             <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                                         </div>
                                         <div class="min-w-0">
-                                            <div class="text-sm font-bold text-white truncate">{{ $notification->user?->name ?? 'System Wide' }}</div>
+                                            <div class="text-sm font-bold text-white truncate">{{ $notification->user?->name ?? 'Sistem' }}</div>
                                         </div>
                                     </div>
                                 </td>
@@ -71,25 +71,25 @@
                                 <td class="py-4 px-6 bg-white/[0.03] group-hover:bg-white/[0.06] border-y border-white/[0.05] text-center">
                                     @if($notification->is_read)
                                         <span class="inline-flex items-center px-2 py-1 rounded-lg text-[8px] font-black uppercase tracking-widest bg-slate-800 text-slate-500 border border-white/5">
-                                            READ
+                                            TERBACA
                                         </span>
                                     @else
                                         <span class="inline-flex items-center px-2 py-1 rounded-lg text-[8px] font-black uppercase tracking-widest bg-indigo-600 text-white shadow-[0_0_10px_#6366f1]">
-                                            NEW
+                                            BARU
                                         </span>
                                     @endif
                                 </td>
 
                                 <td class="py-4 px-6 bg-white/[0.03] group-hover:bg-white/[0.06] border-y border-r border-white/[0.05] rounded-r-2xl text-right transition-colors">
                                     <div class="flex justify-end items-center gap-3">
-                                        <a href="#" class="w-8 h-8 flex items-center justify-center rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition-all duration-300 group/edit shadow-lg shadow-indigo-600/20 active:scale-90" title="View Detail">
+                                        <a href="#" class="w-8 h-8 flex items-center justify-center rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition-all duration-300 group/edit shadow-lg shadow-indigo-600/20 active:scale-90" title="Lihat Detail">
                                             <svg class="w-4 h-4 transition-transform group-hover/edit:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.644C3.399 9.073 6.647 6 12 6c5.353 0 8.601 3.073 9.964 5.678.112.213.112.462 0 .675C20.601 15.227 17.353 18 12 18c-5.353 0-8.601-3.073-9.964-5.678z" />
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                             </svg>
                                         </a>
 
-                                        <form action="#" method="POST" class="inline m-0" onsubmit="return confirm('Hapus notifikasi ini?')">
+                                            <form action="#" method="POST" class="inline m-0" onsubmit="return confirm('Hapus notifikasi ini?')">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="w-8 h-8 flex items-center justify-center rounded-lg bg-red-600 text-white hover:bg-red-500 transition-all duration-300 group/del shadow-lg shadow-red-600/20 active:scale-90" title="Delete Notification">
                                                 <svg class="w-4 h-4 transition-transform group-hover/del:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
@@ -108,11 +108,11 @@
 
             <div class="flex-none px-8 py-6 lg:px-10 border-t border-white/[0.05] bg-[#050505]/80 backdrop-blur-md">
                 <div class="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-slate-500">
-                    <p>Alert Logs: <span class="text-indigo-400 ml-1 italic">{{ $notifications->count() }} System Notifications</span></p>
+                    <p>Catatan Peringatan: <span class="text-indigo-400 ml-1 italic">{{ $notifications->count() }} Notifikasi Sistem</span></p>
                     <div class="flex items-center gap-4">
-                        <button class="hover:text-white transition-colors">Prev</button>
+                        <button class="hover:text-white transition-colors">Sebelumnya</button>
                         <span class="px-3 py-1 rounded bg-indigo-600 text-white font-mono shadow-lg shadow-indigo-600/30">01</span>
-                        <button class="text-indigo-400 hover:text-indigo-300 transition-colors">Next</button>
+                        <button class="text-indigo-400 hover:text-indigo-300 transition-colors">Berikutnya</button>
                     </div>
                 </div>
             </div>

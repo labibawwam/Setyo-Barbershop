@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('css/tailwind.css') }}" rel="stylesheet">
-    <title>Setyo Barbershop - Elite Grooming Experience</title>
+    <title>Setyo Barbershop - Pengalaman Grooming Terbaik</title>
     @vite(['resources/css/app.css','resources/js/app.js'])
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
@@ -16,15 +16,15 @@
         :root {
             --primary: #6366f1;
             --accent: #fbbf24;
-            --bg: #050505;
+            --bg: #ffffff;
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg);
-            color: #cbd5e1;
-            background-image: radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 100% 100%, rgba(251, 191, 36, 0.02) 0%, transparent 50%);
+            color: #0f172a;
+            background-image: radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(251, 191, 36, 0.01) 0%, transparent 50%);
         }
 
         .font-serif {
@@ -54,10 +54,11 @@
         }
 
         .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            box-shadow: 0 10px 30px -10px rgba(2, 6, 23, 0.06);
+            color: #0f172a;
         }
 
         .item-selected {
@@ -96,10 +97,17 @@
                 left: 0;
                 width: 100%;
                 height: 100vh;
-                background: rgba(5, 5, 5, 0.98);
+                background: rgba(255, 255, 255, 0.98);
+                color: #0f172a;
+                border-right: 1px solid rgba(15,23,42,0.06);
                 z-index: 150;
                 transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             }
+
+            /* Ensure text and icon classes that were originally white become dark on mobile */
+            #sidebar-nav .text-white { color: #0f172a !important; }
+            #sidebar-nav .text-slate-500, #sidebar-nav .text-slate-400, #sidebar-nav .text-slate-300 { color: #475569 !important; }
+            #sidebar-nav .bg-white\/\[0\.03\], #sidebar-nav .bg-white\/5 { background-color: rgba(243,244,246,0.6) !important; }
 
             #sidebar-nav.active {
                 transform: translateX(0);
@@ -107,7 +115,8 @@
         }
 
         input[type="time"]::-webkit-calendar-picker-indicator {
-            filter: invert(1);
+            /* ensure native clock icon stays dark on light background */
+            filter: invert(0) !important;
             cursor: pointer;
         }
     </style>
@@ -115,13 +124,13 @@
 
 <body class="antialiased overflow-x-hidden">
 
-    <div class="lg:hidden fixed top-0 left-0 w-full p-6 flex justify-between items-center z-[200] bg-[#050505]/80 backdrop-blur-md border-b border-white/5">
+    <div class="lg:hidden fixed top-0 left-0 w-full p-6 flex justify-between items-center z-[200] bg-white/80 backdrop-blur-md border-b border-gray-200/30">
         <a href="/">
-            <h1 class="text-xl font-black text-white italic">SETYO<span class="text-indigo-500">.</span></h1>
+            <h1 class="text-xl font-black text-gray-900 italic">SETYO<span class="text-indigo-500">.</span></h1>
         </a>
         <button id="mobile-toggle" class="w-12 h-12 flex flex-col justify-center items-center gap-1.5 focus:outline-none bg-indigo-600/10 rounded-2xl border border-indigo-500/20">
-            <span class="w-6 h-[2px] bg-white transition-all duration-300 origin-center" id="bar-1"></span>
-            <span class="w-6 h-[2px] bg-white transition-all duration-300 origin-center" id="bar-2"></span>
+            <span class="w-6 h-[2px] bg-gray-700 transition-all duration-300 origin-center" id="bar-1"></span>
+            <span class="w-6 h-[2px] bg-gray-700 transition-all duration-300 origin-center" id="bar-2"></span>
         </button>
     </div>
 
@@ -129,51 +138,51 @@
         @if(session('success') || session('error'))
         <div id="auto-toast" class="toast-item glass border-{{ session('success') ? 'green' : 'red' }}-500/30 p-5 rounded-3xl flex items-center gap-4 shadow-2xl animate-bounce">
             <div class="bg-{{ session('success') ? 'green' : 'red' }}-500 p-2 rounded-xl text-white">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path d="{{ session('success') ? 'M5 13l4 4L19 7' : 'M6 18L18 6M6 6l12 12' }}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
             </div>
-            <p class="text-sm text-white font-bold">{{ session('success') ?? session('error') }}</p>
+            <p class="text-sm text-gray-900 font-bold">{{ session('success') ?? session('error') }}</p>
         </div>
         @endif
     </div>
 
     <div class="min-h-screen flex flex-col lg:flex-row">
-        <aside id="sidebar-nav" class="lg:w-[360px] lg:h-screen lg:fixed left-0 top-0 p-8 lg:p-12 border-r border-white/5 bg-black/40 backdrop-blur-2xl z-20">
+        <aside id="sidebar-nav" class="lg:w-[360px] lg:h-screen lg:fixed left-0 top-0 p-8 lg:p-12 border-r border-gray-200/30 bg-white/90 backdrop-blur-2xl z-20">
             <div class="h-full flex flex-col justify-between">
                 <div class="mt-20 lg:mt-0 text-center lg:text-left">
                     <div class="hidden lg:block mb-16">
                         <a href="/">
-                            <h1 class="text-3xl font-black text-white tracking-tighter italic">SETYO<span class="text-indigo-500">.</span></h1>
+                            <h1 class="text-3xl font-black text-gray-900 tracking-tighter italic">SETYO<span class="text-indigo-500">.</span></h1>
                         </a>
-                        <p class="text-[9px] text-indigo-400/60 tracking-[0.5em] uppercase font-bold mt-2">Elite Grooming Co.</p>
+                        <p class="text-[9px] text-indigo-600/60 tracking-[0.5em] uppercase font-bold mt-2">Perawatan Premium</p>
                     </div>
 
                     <nav class="space-y-8 lg:space-y-10 relative">
                         <div id="line-progress" class="hidden lg:block absolute left-[15px] top-2 w-[2px] h-0 bg-indigo-500 transition-all duration-1000"></div>
-                        <div class="flex items-center gap-8 group cursor-pointer nav-link" onclick="mobileClose(); showStep(1)">
-                            <div class="w-10 h-10 lg:w-8 lg:h-8 rounded-2xl border border-white/10 flex items-center justify-center text-[11px] font-black z-10 bg-[#050505] text-slate-500 transition-all" id="dot-1">01</div>
-                            <span class="text-xs lg:text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 transition-all" id="txt-1">Barber Artist</span>
+                            <div class="flex items-center gap-8 group cursor-pointer nav-link" onclick="mobileClose(); showStep(1)">
+                            <div class="w-10 h-10 lg:w-8 lg:h-8 rounded-2xl border border-gray-200/40 flex items-center justify-center text-[11px] font-black z-10 bg-white/80 text-slate-600 transition-all" id="dot-1">01</div>
+                            <span class="text-xs lg:text-[11px] font-black uppercase tracking-[0.2em] text-slate-600 transition-all" id="txt-1">Artis Barber</span>
                         </div>
                         <div class="flex items-center gap-8 group cursor-pointer nav-link" onclick="mobileClose(); showStep(2)">
-                            <div class="w-10 h-10 lg:w-8 lg:h-8 rounded-2xl border border-white/10 flex items-center justify-center text-[11px] font-black z-10 bg-[#050505] text-slate-500 transition-all" id="dot-2">02</div>
-                            <span class="text-xs lg:text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 transition-all" id="txt-2">Elite Treatments</span>
+                            <div class="w-10 h-10 lg:w-8 lg:h-8 rounded-2xl border border-gray-200/40 flex items-center justify-center text-[11px] font-black z-10 bg-white/80 text-slate-600 transition-all" id="dot-2">02</div>
+                            <span class="text-xs lg:text-[11px] font-black uppercase tracking-[0.2em] text-slate-600 transition-all" id="txt-2">Perawatan Premium</span>
                         </div>
                         <div class="flex items-center gap-8 group cursor-pointer nav-link" onclick="mobileClose(); showStep(3)">
-                            <div class="w-10 h-10 lg:w-8 lg:h-8 rounded-2xl border border-white/10 flex items-center justify-center text-[11px] font-black z-10 bg-[#050505] text-slate-500 transition-all" id="dot-3">03</div>
-                            <span class="text-xs lg:text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 transition-all" id="txt-3">Schedule Slot</span>
+                            <div class="w-10 h-10 lg:w-8 lg:h-8 rounded-2xl border border-gray-200/40 flex items-center justify-center text-[11px] font-black z-10 bg-white/80 text-slate-600 transition-all" id="dot-3">03</div>
+                            <span class="text-xs lg:text-[11px] font-black uppercase tracking-[0.2em] text-slate-600 transition-all" id="txt-3">Jadwal</span>
                         </div>
                     </nav>
 
-                    <div class="mt-12 lg:mt-20 space-y-4">
-                        <button onclick="mobileClose(); showStep(4)" class="w-full flex items-center justify-between p-6 lg:p-5 rounded-[2rem] bg-white/[0.03] border border-white/5 hover:border-indigo-500/50 transition-all group">
-                            <span class="text-[11px] font-black uppercase tracking-widest text-slate-400 group-hover:text-white">Client Profile</span>
+                        <div class="mt-12 lg:mt-20 space-y-4">
+                        <button onclick="mobileClose(); showStep(4)" class="w-full flex items-center justify-between p-6 lg:p-5 rounded-[2rem] bg-gray-50 border border-gray-200/30 hover:border-indigo-500/50 transition-all group">
+                            <span class="text-[11px] font-black uppercase tracking-widest text-slate-600 group-hover:text-gray-900">Profil Klien</span>
                             <svg class="w-5 h-5 text-slate-600 group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-width="2" />
                             </svg>
                         </button>
-                        <button onclick="mobileClose(); showStep(5)" class="w-full flex items-center justify-between p-6 lg:p-5 rounded-[2rem] bg-white/[0.03] border border-white/5 hover:border-indigo-500/50 transition-all group">
-                            <span class="text-[11px] font-black uppercase tracking-widest text-slate-400 group-hover:text-white">Booking Records</span>
+                        <button onclick="mobileClose(); showStep(5)" class="w-full flex items-center justify-between p-6 lg:p-5 rounded-[2rem] bg-gray-50 border border-gray-200/30 hover:border-indigo-500/50 transition-all group">
+                            <span class="text-[11px] font-black uppercase tracking-widest text-slate-600 group-hover:text-gray-900">Riwayat Booking</span>
                             <svg class="w-5 h-5 text-slate-600 group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-width="2" />
                             </svg>
@@ -190,7 +199,7 @@
                     
                     <div id="step-1" class="step-content active">
                         <div class="text-center mb-10 lg:mb-16">
-                            <h2 class="text-4xl lg:text-7xl font-bold text-white tracking-tighter italic leading-none">Define Your <br><span class="gold-gradient font-serif">master artist</span></h2>
+                            <h2 class="text-4xl lg:text-7xl font-bold text-gray-900 tracking-tighter italic leading-none">Tentukan <br><span class="gold-gradient font-serif">Master Artist Anda</span></h2>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -201,12 +210,12 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                                         </svg>
                                     </div>
-                                    <div class="absolute -bottom-1 -right-1 bg-indigo-500 text-[8px] px-2 py-1 rounded-full text-white font-black tracking-tighter uppercase shadow-lg">Auto</div>
+                                    <div class="absolute -bottom-1 -right-1 bg-indigo-500 text-[8px] px-2 py-1 rounded-full text-white font-black tracking-tighter uppercase shadow-lg">Otomatis</div>
                                 </div>
-                                <h4 class="text-xl font-bold text-white tracking-tight text-center">Pilihkan Untuk Saya</h4>
-                                <p class="text-[9px] text-indigo-400 font-black uppercase tracking-[0.2em] mt-1 mb-6">Any Available Artist</p>
+                                <h4 class="text-xl font-bold text-gray-900 tracking-tight text-center">Pilihkan Untuk Saya</h4>
+                                <p class="text-[9px] text-indigo-400 font-black uppercase tracking-[0.2em] mt-1 mb-6">Artis Tersedia</p>
                                 <div class="w-full pt-5 border-t border-white/5 text-center">
-                                    <p class="text-[10px] text-slate-400 leading-relaxed italic">Sistem kami akan memilihkan artist terbaik yang tersedia untuk Anda.</p>
+                                    <p class="text-[10px] text-slate-400 leading-relaxed italic">Sistem kami akan memilihkan artis terbaik yang tersedia untuk Anda.</p>
                                 </div>
                             </div>
 
@@ -216,10 +225,10 @@
                                     <img src="{{ asset('storage/' . $k->photo) }}" class="w-32 h-32 rounded-full object-cover border-4 border-white/5 group-hover:border-indigo-500/50 transition-all shadow-2xl" onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($k->nama) }}&background=111&color=fff'">
                                     <div class="absolute bottom-2 right-2 w-4 h-4 bg-emerald-500 border-4 border-[#050505] rounded-full"></div>
                                 </div>
-                                <h4 class="text-xl font-bold text-white tracking-tight">{{ $k->nama }}</h4>
-                                <p class="text-[9px] text-indigo-400 font-black uppercase tracking-[0.2em] mt-1 mb-6">Professional Barber</p>
+                                <h4 class="text-xl font-bold text-gray-900 tracking-tight">{{ $k->nama }}</h4>
+                                <p class="text-[9px] text-indigo-400 font-black uppercase tracking-[0.2em] mt-1 mb-6">Barber Profesional</p>
                                 <div class="w-full pt-5 border-t border-white/5 space-y-3 text-center">
-                                    <p class="text-[8px] text-slate-500 uppercase font-black tracking-[0.3em]">Weekly Schedule</p>
+                                    <p class="text-[8px] text-slate-500 uppercase font-black tracking-[0.3em]">Jadwal Mingguan</p>
                                     <div class="flex flex-wrap justify-center gap-2">
                                         @php
                                             $urutanHari = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
@@ -233,13 +242,13 @@
                                                 <span class="opacity-60">{{ substr($shift->hari, 0, 3) }}:</span> LIBUR
                                             </div>
                                             @else
-                                            <div class="px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/10 text-[9px] text-slate-300 font-bold">
+                                            <div class="px-3 py-1.5 rounded-xl bg-gray-50 border border-gray-200/30 text-[9px] text-slate-700 font-bold">
                                                 <span class="text-indigo-400 mr-1">{{ substr($shift->hari, 0, 3) }}:</span>
                                                 {{ \Carbon\Carbon::parse($shift->jam_mulai)->format('H:i') }}
                                             </div>
                                             @endif
                                         @empty
-                                            <div class="text-[10px] text-slate-600 italic tracking-widest">No schedule</div>
+                                            <div class="text-[10px] text-slate-600 italic tracking-widest">Tidak ada jadwal</div>
                                         @endforelse
                                     </div>
                                 </div>
@@ -251,18 +260,18 @@
 
                     <div id="step-2" class="step-content">
                         <div class="flex flex-col lg:flex-row justify-between items-center mb-12 gap-8">
-                            <h2 class="text-4xl lg:text-7xl font-bold text-white tracking-tighter italic text-center lg:text-left leading-none">Elite <br><span class="gold-gradient font-serif">treatments</span></h2>
+                            <h2 class="text-4xl lg:text-7xl font-bold text-gray-900 tracking-tighter italic text-center lg:text-left leading-none">Perawatan <br><span class="gold-gradient font-serif">Premium</span></h2>
                             <div class="glass px-10 py-5 rounded-[2rem] border-indigo-500/20 text-center w-full lg:w-auto">
-                                <p class="text-[10px] text-slate-500 uppercase font-black mb-1">Estimates</p>
-                                <p id="total-price-display" class="text-3xl font-black text-white italic">Rp 0</p>
+                                <p class="text-[10px] text-slate-600 uppercase font-black mb-1">Estimasi</p>
+                                <p id="total-price-display" class="text-3xl font-black text-gray-900 italic">Rp 0</p>
                             </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-h-[50vh] lg:max-h-full overflow-y-auto lg:overflow-visible pr-2 lg:pr-0 custom-scrollbar">
                             @foreach($services as $s)
                             <div onclick="toggleService(this, '{{ $s->id }}', '{{ $s->nama_service }}', {{ $s->harga }})" class="service-item glass p-6 rounded-[2.5rem] cursor-pointer flex items-center justify-between group transition-all duration-300">
                                 <div class="flex-grow text-left">
-                                    <h3 class="text-lg font-bold text-white group-hover:text-indigo-400">{{ $s->nama_service }}</h3>
-                                    <p class="text-[10px] text-slate-500 font-bold uppercase mt-1">{{ $s->durasi }} Mins • Rp {{ number_format($s->harga, 0, ',', '.') }}</p>
+                                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-indigo-400">{{ $s->nama_service }}</h3>
+                                    <p class="text-[10px] text-slate-500 font-bold uppercase mt-1">{{ $s->durasi }} Menit • Rp {{ number_format($s->harga, 0, ',', '.') }}</p>
                                 </div>
                                 <input type="checkbox" name="service_ids[]" value="{{ $s->id }}" class="hidden service-checkbox">
                                 <div class="tick-ui w-6 h-6 rounded-full border-2 border-white/10 flex items-center justify-center transition-all group-hover:border-indigo-500">
@@ -271,30 +280,30 @@
                             </div>
                             @endforeach
                         </div>
-                        <button type="button" id="btn-next-step-2" onclick="showStep(3)" class="w-full mt-10 py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-500 disabled:opacity-30 transition-all" disabled>Set Schedule</button>
+                        <button type="button" id="btn-next-step-2" onclick="showStep(3)" class="w-full mt-10 py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-500 disabled:opacity-30 transition-all" disabled>Atur Jadwal</button>
                     </div>
 
                     <div id="step-3" class="step-content">
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
                             <div class="glass p-8 lg:p-10 rounded-[3rem] flex flex-col justify-center">
-                                <h3 class="text-2xl font-bold text-white mb-8 tracking-tight italic text-center">Pick Your <span class="text-amber-500">Date</span></h3>
+                                <h3 class="text-2xl font-bold text-gray-900 mb-8 tracking-tight italic text-center">Pilih <span class="text-amber-500">Tanggal</span> Anda</h3>
                                 <div id="flatpickr-inline" class="flex justify-center scale-95 sm:scale-100 origin-center"></div>
                                 <input type="text" name="tgl_booking" id="tgl_booking" class="hidden" required>
                             </div>
 
                             <div class="flex flex-col gap-6 lg:gap-8">
                                 <div class="glass p-8 lg:p-10 rounded-[3rem] text-center flex flex-col justify-center min-h-[300px]">
-                                    <p class="text-[11px] text-indigo-400 font-black uppercase tracking-[0.3em] mb-6">Arrival Time</p>
+                                    <p class="text-[11px] text-indigo-400 font-black uppercase tracking-[0.3em] mb-6">Jam Kedatangan</p>
                                     <div class="relative w-full overflow-hidden px-2">
-                                        <input type="time" name="jam_mulai" id="jam_mulai" onclick="this.showPicker()" class="w-full bg-transparent border-none text-5xl lg:text-6xl font-black text-white text-center focus:ring-0 appearance-none cursor-pointer tracking-tighter" required>
+                                        <input type="time" name="jam_mulai" id="jam_mulai" onclick="this.showPicker()" class="w-full bg-transparent border-none text-5xl lg:text-6xl font-black text-gray-900 text-center focus:ring-0 appearance-none cursor-pointer tracking-tighter" required>
                                     </div>
-                                    <p class="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-4">Tap numbers to set</p>
+                                    <p class="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-4">Ketuk angka untuk mengatur</p>
                                 </div>
                                 <div id="booked-slots-container" class="glass p-6 rounded-[2.5rem] hidden">
                                     <p class="text-[10px] text-red-400 font-black uppercase tracking-[0.3em] mb-4 text-center">Occupied Slots</p>
                                     <div id="booked-slots-list" class="grid grid-cols-2 gap-3"></div>
                                 </div>
-                                <button type="button" onclick="showStep(6)" class="w-full py-7 bg-white text-black rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-600 hover:text-white transition-all shadow-2xl active:scale-95">Summary Details</button>
+                                <button type="button" onclick="showStep(6)" class="w-full py-7 bg-white text-black rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-600 hover:text-white transition-all shadow-2xl active:scale-95">Ringkasan Pesanan</button>
                             </div>
                         </div>
                     </div>
@@ -302,8 +311,8 @@
                     <div id="step-6" class="step-content items-center">
                         <div class="w-full max-w-xl glass rounded-[4rem] overflow-hidden border-white/10 shadow-2xl text-left">
                             <div class="p-8 lg:p-12 text-center bg-indigo-600/10">
-                                <h3 class="text-amber-500 font-black uppercase text-[10px] tracking-[0.5em] mb-2">Final Confirmation</h3>
-                                <h2 class="text-4xl font-serif text-white italic leading-none text-center">Elite Reservation</h2>
+                                <h3 class="text-amber-500 font-black uppercase text-[10px] tracking-[0.5em] mb-2">Konfirmasi Akhir</h3>
+                                <h2 class="text-4xl font-serif text-gray-900 italic leading-none text-center">Konfirmasi Reservasi</h2>
                             </div>
 
                             <div class="p-8 lg:p-12 space-y-8 text-sm">
@@ -312,25 +321,25 @@
                                 </div>
 
                                 <div class="flex justify-between border-b border-white/5 pb-6 text-left">
-                                    <span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Artist</span>
-                                    <span id="rev-artist" class="text-white font-bold"></span>
+                                    <span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Artis</span>
+                                    <span id="rev-artist" class="text-gray-900 font-bold"></span>
                                 </div>
                                 <div class="flex justify-between border-b border-white/5 pb-6 text-left">
-                                    <span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Schedule</span>
-                                    <span id="rev-datetime" class="text-white font-bold tracking-tight text-right ml-4"></span>
+                                    <span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Jadwal</span>
+                                    <span id="rev-datetime" class="text-gray-900 font-bold tracking-tight text-right ml-4"></span>
                                 </div>
                                 <div>
-                                    <span class="text-[10px] uppercase font-bold text-slate-500 block mb-4 tracking-widest text-left">Treatments</span>
-                                    <ul id="rev-services" class="grid grid-cols-1 gap-3 italic text-slate-300"></ul>
+                                    <span class="text-[10px] uppercase font-bold text-slate-500 block mb-4 tracking-widest text-left">Perawatan</span>
+                                    <ul id="rev-services" class="grid grid-cols-1 gap-3 italic text-slate-700"></ul>
                                 </div>
                                 <div class="pt-8 border-t border-dashed border-white/20 flex justify-between items-center">
-                                    <span class="text-[12px] uppercase font-black text-indigo-400">Payable</span>
-                                    <span id="rev-total" class="text-3xl font-black text-white italic"></span>
+                                    <span class="text-[12px] uppercase font-black text-indigo-400">Total Bayar</span>
+                                    <span id="rev-total" class="text-3xl font-black text-gray-900 italic"></span>
                                 </div>
                             </div>
 
                             <div class="px-8 lg:px-12 pb-12">
-                                <button type="submit" id="btn-submit-booking" class="w-full py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-500 shadow-xl transition-all disabled:opacity-20 disabled:cursor-not-allowed">Secure Booking Now</button>
+                                <button type="submit" id="btn-submit-booking" class="w-full py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-500 shadow-xl transition-all disabled:opacity-20 disabled:cursor-not-allowed">Amankan Pemesanan</button>
                                 <p id="hint-text" class="text-[9px] text-center mt-4 text-slate-500 uppercase tracking-widest">Lengkapi langkah 1-3 untuk konfirmasi</p>
                             </div>
                         </div>
@@ -341,38 +350,38 @@
                     <div class="glass p-8 lg:p-12 rounded-[3.5rem] md:rounded-[4rem] w-full max-w-2xl mx-auto relative overflow-hidden shadow-2xl">
                         <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 via-amber-500 to-indigo-500"></div>
                         <div class="text-center mb-10">
-                            <h2 class="text-4xl font-bold text-white tracking-tighter italic leading-none text-center">Edit <span class="gold-gradient font-serif">profile</span></h2>
+                            <h2 class="text-4xl font-bold text-gray-900 tracking-tighter italic leading-none text-center">Edit <span class="gold-gradient font-serif">Profil</span></h2>
                         </div>
                         <form action="{{ route('profile.update') }}" method="POST" class="space-y-6 md:space-y-8 text-left">
                             @csrf @method('PATCH')
                             <div class="w-24 h-24 rounded-[2rem] bg-indigo-600/20 mx-auto mb-10 flex items-center justify-center text-4xl text-white italic font-black border border-white/10 shadow-2xl">{{ substr(optional(Auth::user())->name ?? '', 0, 1) }}</div>
                             <div class="space-y-6">
                                 <div>
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-indigo-400 ml-4">Full Name</label>
-                                    <input type="text" name="name" value="{{ optional(Auth::user())->name ?? '' }}" class="w-full mt-2 bg-white/[0.03] border border-white/10 rounded-3xl px-8 py-4 md:py-5 text-sm text-white focus:border-indigo-500 transition-all outline-none" required>
+                                    <label class="text-[10px] font-black uppercase tracking-widest text-indigo-400 ml-4">Nama Lengkap</label>
+                                    <input type="text" name="name" value="{{ optional(Auth::user())->name ?? '' }}" class="w-full mt-2 bg-gray-50 border border-gray-200/30 rounded-3xl px-8 py-4 md:py-5 text-sm text-gray-900 focus:border-indigo-500 transition-all outline-none" required>
                                 </div>
                                 <div>
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-indigo-400 ml-4">Email Address</label>
-                                    <input type="email" name="email" value="{{ optional(Auth::user())->email ?? '' }}" class="w-full mt-2 bg-white/[0.03] border border-white/10 rounded-3xl px-8 py-4 md:py-5 text-sm text-white focus:border-indigo-500 transition-all outline-none" required>
+                                        <label class="text-[10px] font-black uppercase tracking-widest text-indigo-400 ml-4">Alamat Email</label>
+                                    <input type="email" name="email" value="{{ optional(Auth::user())->email ?? '' }}" class="w-full mt-2 bg-gray-50 border border-gray-200/30 rounded-3xl px-8 py-4 md:py-5 text-sm text-gray-900 focus:border-indigo-500 transition-all outline-none" required>
                                 </div>
                                 <div>
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-indigo-400 ml-4">WhatsApp Number</label>
-                                    <input type="tel" name="wa_number" value="{{ optional(Auth::user())->wa_number ?? '' }}" class="w-full mt-2 bg-white/[0.03] border border-white/10 rounded-3xl px-8 py-4 md:py-5 text-sm text-white focus:border-indigo-500 transition-all outline-none" placeholder="0812... (nomor WhatsApp)">
+                                        <label class="text-[10px] font-black uppercase tracking-widest text-indigo-400 ml-4">Nomor WhatsApp</label>
+                                    <input type="tel" name="wa_number" value="{{ optional(Auth::user())->wa_number ?? '' }}" class="w-full mt-2 bg-gray-50 border border-gray-200/30 rounded-3xl px-8 py-4 md:py-5 text-sm text-gray-900 focus:border-indigo-500 transition-all outline-none" placeholder="0812... (nomor WhatsApp)">
                                 </div>
                             </div>
-                            <button type="submit" class="w-full mt-8 py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-500 transition-all shadow-xl">Update Identity</button>
+                                <button type="submit" class="w-full mt-8 py-6 bg-indigo-600 text-white rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-indigo-500 transition-all shadow-xl">Perbarui Identitas</button>
                         </form>
                         <div class="mt-8 pt-8 border-t border-white/5 text-center">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button type="submit" class="w-full py-4 text-red-500 hover:text-red-400 text-[10px] font-black uppercase tracking-[0.4em] transition-all">Secure Sign Out</button>
+                                    <button type="submit" class="w-full py-4 text-red-500 hover:text-red-400 text-[10px] font-black uppercase tracking-[0.4em] transition-all">Keluar</button>
                             </form>
                         </div>
                     </div>
                 </div>
 
                 <div id="step-5" class="step-content">
-                    <h2 class="text-4xl lg:text-7xl font-bold text-white tracking-tighter italic mb-12 text-center lg:text-left leading-none">My <span class="gold-gradient font-serif lowercase">appointments</span></h2>
+                    <h2 class="text-4xl lg:text-7xl font-bold text-gray-900 tracking-tighter italic mb-12 text-center lg:text-left leading-none">Janji <span class="gold-gradient font-serif lowercase">Temu Saya</span></h2>
                     <div class="grid grid-cols-1 gap-6 max-h-[60vh] overflow-y-auto pr-2 md:pr-4 custom-scrollbar text-left">
                         @forelse($myBookings as $booking)
                         <div class="glass p-6 md:p-8 rounded-[2.5rem] md:rounded-[3rem] border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8 transition-all hover:bg-white/[0.05]">
@@ -382,7 +391,7 @@
                                     <span class="text-2xl md:text-3xl font-black italic leading-none">{{ \Carbon\Carbon::parse($booking->tgl_booking)->format('d') }}</span>
                                 </div>
                                 <div class="flex-grow min-w-0">
-                                    <h4 class="text-lg md:text-xl font-bold text-white truncate tracking-tight text-left">{{ $booking->kapster->nama }}</h4>
+                                    <h4 class="text-lg md:text-xl font-bold text-gray-900 truncate tracking-tight text-left">{{ $booking->kapster->nama }}</h4>
                                     <span class="inline-block px-3 py-1 rounded-full text-[8px] md:text-[9px] font-black uppercase tracking-widest border mt-2
                                         @if($booking->status == 'confirmed') border-green-500/20 bg-green-500/10 text-green-500
                                         @elseif($booking->status == 'cancelled') border-red-500/20 bg-red-500/10 text-red-500
@@ -390,9 +399,9 @@
                                 </div>
                             </div>
                             <div class="flex items-center gap-3 w-full md:w-auto justify-end">
-                                <button type="button" onclick="openDetailModal('{{ $booking->id }}')" class="flex-1 md:flex-none px-6 md:px-8 py-3.5 rounded-2xl bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest text-white hover:bg-white/10 transition-all">Details</button>
+                                <button type="button" onclick="openDetailModal('{{ $booking->id }}')" class="flex-1 md:flex-none px-6 md:px-8 py-3.5 rounded-2xl bg-gray-50 border border-gray-200/30 text-[10px] font-black uppercase tracking-widest text-gray-900 hover:bg-gray-100 transition-all">Detail</button>
                                 @if($booking->status != 'cancelled' && $booking->status != 'completed')
-                                <form action="{{ route('booking.cancel', $booking->id) }}" method="POST" onsubmit="return confirm('Securely cancel this elite booking?')" class="md:flex-none">
+                                    <form action="{{ route('booking.cancel', $booking->id) }}" method="POST" onsubmit="return confirm('Batalkan pemesanan ini?')" class="md:flex-none">
                                     @csrf @method('PATCH')
                                     <button type="submit" class="w-12 h-12 rounded-2xl bg-red-500/10 text-red-500 border border-red-500/20 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12" /></svg></button>
                                 </form>
@@ -400,7 +409,7 @@
                             </div>
                         </div>
                         @empty
-                        <div class="text-center py-20 lg:py-32 glass rounded-[3rem] md:rounded-[4rem] border-dashed border-white/10 opacity-40 italic font-serif text-2xl lg:text-3xl">No elite sessions found.</div>
+                        <div class="text-center py-20 lg:py-32 glass rounded-[3rem] md:rounded-[4rem] border-dashed border-white/10 opacity-40 italic font-serif text-2xl lg:text-3xl">Tidak ada sesi yang ditemukan.</div>
                         @endforelse
                     </div>
                 </div>
@@ -409,17 +418,17 @@
     </div>
 
     <div id="modal-detail" class="fixed inset-0 z-[300] hidden items-center justify-center p-6 lg:p-8 backdrop-blur-3xl bg-black/90">
-        <div class="w-full max-w-xl glass border-white/10 rounded-[3rem] lg:rounded-[4rem] p-8 md:p-10 lg:p-12 shadow-2xl relative text-left">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 md:mb-10 tracking-tight italic leading-none">Detail <span class="font-serif gold-gradient">booking</span></h2>
+        <div class="w-full max-w-xl glass border-gray-200/30 rounded-[3rem] lg:rounded-[4rem] p-8 md:p-10 lg:p-12 shadow-2xl relative text-left">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8 md:mb-10 tracking-tight italic leading-none">Detail <span class="font-serif gold-gradient">Pemesanan</span></h2>
             <div class="space-y-6 md:space-y-8">
-                <div class="flex justify-between border-b border-white/5 pb-5"><span class="text-[9px] md:text-[10px] uppercase font-bold text-slate-500 tracking-widest">Artist</span><span id="det-artist" class="text-white font-bold"></span></div>
-                <div class="flex justify-between border-b border-white/5 pb-5"><span class="text-[9px] md:text-[10px] uppercase font-bold text-slate-500 tracking-widest text-left">Schedule</span><span id="det-schedule" class="text-white font-bold tracking-tight text-right ml-4"></span></div>
-                <div class="border-t border-white/5 pt-4 text-left">
-                    <ul id="det-services" class="space-y-3 text-white italic text-xs md:text-sm text-left"></ul>
+                <div class="flex justify-between border-b border-gray-200/30 pb-5"><span class="text-[9px] md:text-[10px] uppercase font-bold text-slate-500 tracking-widest">Artis</span><span id="det-artist" class="text-gray-900 font-bold"></span></div>
+                <div class="flex justify-between border-b border-gray-200/30 pb-5"><span class="text-[9px] md:text-[10px] uppercase font-bold text-slate-500 tracking-widest text-left">Jadwal</span><span id="det-schedule" class="text-gray-900 font-bold tracking-tight text-right ml-4"></span></div>
+                <div class="border-t border-gray-200/30 pt-4 text-left">
+                    <ul id="det-services" class="space-y-3 text-slate-700 italic text-xs md:text-sm text-left"></ul>
                 </div>
-                <div class="border-t border-white/5 pt-6 md:pt-8 flex justify-between items-center"><span class="text-indigo-400 font-black uppercase text-[10px] md:text-[12px]">Total Paid</span><span id="det-total" class="text-2xl md:text-3xl font-black text-white italic tracking-tight"></span></div>
+                <div class="border-t border-gray-200/30 pt-6 md:pt-8 flex justify-between items-center"><span class="text-indigo-400 font-black uppercase text-[10px] md:text-[12px]">Total Dibayar</span><span id="det-total" class="text-2xl md:text-3xl font-black text-gray-900 italic tracking-tight"></span></div>
             </div>
-            <button onclick="closeDetailModal()" class="w-full mt-10 md:mt-12 py-5 bg-white text-black rounded-[2rem] font-black uppercase text-[10px] tracking-widest hover:bg-indigo-600 hover:text-white transition-all shadow-xl">Close Ticket</button>
+            <button onclick="closeDetailModal()" class="w-full mt-10 md:mt-12 py-5 bg-white text-black rounded-[2rem] font-black uppercase text-[10px] tracking-widest hover:bg-indigo-600 hover:text-white transition-all shadow-xl">Tutup</button>
         </div>
     </div>
 
@@ -474,7 +483,7 @@
         function formatDate(dateString) {
             if (!dateString) return "-";
             const options = { day: 'numeric', month: 'short', year: 'numeric' };
-            return new Date(dateString).toLocaleDateString('en-GB', options);
+            return new Date(dateString).toLocaleDateString('id-ID', options);
         }
 
         function showStep(step) {
@@ -488,13 +497,13 @@
 
         function updateSidebarUI(step) {
             document.querySelectorAll('.nav-link .w-10, .nav-link .w-8').forEach(dot => dot.classList.remove('bg-indigo-600', 'text-white'));
-            document.querySelectorAll('.nav-link span').forEach(span => span.classList.remove('text-white'));
+            document.querySelectorAll('.nav-link span').forEach(span => span.classList.remove('text-gray-900', 'text-white'));
             if (step <= 3) {
                 for (let i = 1; i <= step; i++) {
                     const dot = document.getElementById('dot-' + i);
                     const txt = document.getElementById('txt-' + i);
                     if (dot) dot.classList.add('bg-indigo-600', 'text-white');
-                    if (txt) txt.classList.add('text-white');
+                    if (txt) txt.classList.add('text-gray-900');
                 }
                 const line = document.getElementById('line-progress');
                 if (line) line.style.height = step === 1 ? '0%' : step === 2 ? '50%' : '100%';
@@ -562,7 +571,7 @@
             const time = document.getElementById('jam_mulai').value;
 
             document.getElementById('rev-artist').innerText = artist || "Belum dipilih";
-            document.getElementById('rev-datetime').innerText = date ? `${formatDate(date)} at ${time}` : "Jadwal belum diatur";
+            document.getElementById('rev-datetime').innerText = date ? `${formatDate(date)} pukul ${time}` : "Jadwal belum diatur";
             document.getElementById('rev-total').innerText = 'Rp ' + totalPrice.toLocaleString('id-ID');
 
             document.getElementById('rev-services').innerHTML = services.length > 0 ?
@@ -593,7 +602,7 @@
             const booking = myBookingsData.find(b => b.id == id);
             if (!booking) return;
             document.getElementById('det-artist').innerText = booking.kapster.nama;
-            document.getElementById('det-schedule').innerText = `${formatDate(booking.tgl_booking)} at ${booking.jam_mulai.substring(0,5)}`;
+            document.getElementById('det-schedule').innerText = `${formatDate(booking.tgl_booking)} pukul ${booking.jam_mulai.substring(0,5)}`;
             document.getElementById('det-total').innerText = 'Rp ' + parseInt(booking.total_harga).toLocaleString('id-ID');
             document.getElementById('det-services').innerHTML = booking.services.map(s => `<li class="flex items-center gap-3 text-left"><div class="w-1.5 h-1.5 bg-indigo-500 rounded-full shrink-0"></div> ${s.nama_service}</li>`).join('');
             document.getElementById('modal-detail').classList.remove('hidden');

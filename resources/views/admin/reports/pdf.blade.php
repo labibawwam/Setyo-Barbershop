@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="utf-8" />
-    <title>Report - {{ date('F', mktime(0,0,0,$month,1)) }} {{ $year }}</title>
+    <title>Laporan - {{ date('F', mktime(0,0,0,$month,1)) }} {{ $year }}</title>
     <style>
         @page { margin: 20mm }
         body { font-family: DejaVu Sans, Arial, Helvetica, sans-serif; color: #222; font-size:12px }
@@ -28,9 +28,9 @@
     <div class="header">
         <div class="brand">
             {{-- optionally add logo: <img src="/path/to/logo.png" style="height:36px"> --}}
-            <div>
+                <div>
                 <h2>Setyo Barbershop</h2>
-                <div class="small">Internal Monthly Report</div>
+                <div class="small">Laporan Bulanan Internal</div>
             </div>
         </div>
         <div class="meta">
@@ -41,26 +41,26 @@
 
     <div class="summary">
         <div class="card">
-            <div class="label">Total Revenue (this month)</div>
+            <div class="label">Total Pendapatan (bulan ini)</div>
             <div class="value">Rp {{ number_format($totalRevenue ?? 0, 0, ',', '.') }}</div>
         </div>
         <div class="card">
-            <div class="label">Total Bookings</div>
+            <div class="label">Total Pemesanan</div>
             <div class="value">{{ $totalBookings ?? 0 }}</div>
         </div>
         <div class="card">
-            <div class="label">Period</div>
+            <div class="label">Periode</div>
             <div class="value">{{ date('F', mktime(0,0,0,$month,1)) }} {{ $year }}</div>
         </div>
     </div>
 
     <section>
-        <h3 style="margin:0 0 8px 0">Daily Revenue</h3>
+        <h3 style="margin:0 0 8px 0">Pendapatan Harian</h3>
         <table>
-            <thead>
+                    <thead>
                 <tr>
-                    <th style="width:80px">Day</th>
-                    <th class="right">Revenue (Rp)</th>
+                    <th style="width:80px">Hari</th>
+                    <th class="right">Pendapatan (Rp)</th>
                 </tr>
             </thead>
             <tbody>
@@ -80,7 +80,7 @@
     </section>
 
     <section style="page-break-inside: avoid">
-        <h3 style="margin:0 0 8px 0">Booking Status Breakdown</h3>
+        <h3 style="margin:0 0 8px 0">Rincian Status Pemesanan</h3>
         <table>
             <thead>
                 <tr><th>Status</th><th class="right">Count</th></tr>
@@ -97,9 +97,9 @@
     </section>
 
     <section style="page-break-inside: avoid">
-        <h3 style="margin:0 0 8px 0">Top Artists (Sessions)</h3>
+        <h3 style="margin:0 0 8px 0">Kapster Teratas (Sesi)</h3>
         <table>
-            <thead><tr><th>Artist</th><th class="right">Sessions</th></tr></thead>
+            <thead><tr><th>Kapster</th><th class="right">Sesi</th></tr></thead>
             <tbody>
                 @foreach($kapsterPerformance as $k)
                 <tr>
@@ -112,9 +112,9 @@
     </section>
 
     <section style="page-break-inside: avoid">
-        <h3 style="margin:0 0 8px 0">Popular Services</h3>
+        <h3 style="margin:0 0 8px 0">Layanan Terpopuler</h3>
         <table>
-            <thead><tr><th>Service</th><th class="right">Orders</th></tr></thead>
+            <thead><tr><th>Layanan</th><th class="right">Pesanan</th></tr></thead>
             <tbody>
                 @foreach($popularServices as $p)
                 <tr>

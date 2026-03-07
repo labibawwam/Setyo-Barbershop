@@ -10,12 +10,12 @@
 
             <div class="w-full max-w-3xl relative z-10 flex flex-col items-center my-auto entrance-animation">
                 
-                <div class="mb-8 md:mb-10 text-center shrink-0">
+                    <div class="mb-8 md:mb-10 text-center shrink-0">
                     <h1 class="font-display text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight uppercase">
-                        Update <span class="text-indigo-600 italic font-serif lowercase">Service Detail</span>
+                        Perbarui <span class="text-indigo-600 italic font-serif lowercase">Detail Layanan</span>
                     </h1>
                     <p class="text-[8px] md:text-[9px] font-bold uppercase tracking-[0.3em] md:tracking-[0.4em] text-slate-400 mt-3">
-                        Service Configuration & Pricing Modification
+                        Konfigurasi Layanan & Perubahan Harga
                     </p>
                 </div>
 
@@ -27,7 +27,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
                             <div class="space-y-2 group">
                                 <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
-                                    Service Designation
+                                    Nama Layanan
                                 </label>
                                 <input 
                                     type="text" 
@@ -40,7 +40,7 @@
 
                             <div class="space-y-2 group">
                                 <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
-                                    Treatment Category
+                                    Kategori Perawatan
                                 </label>
                                 <div class="relative">
                                     <select 
@@ -63,7 +63,7 @@
 
                         <div class="space-y-2 group">
                             <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
-                                Brief Description
+                                Deskripsi Singkat
                             </label>
                             <textarea 
                                 name="deskripsi"
@@ -76,7 +76,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
                             <div class="space-y-2 group">
                                 <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
-                                    Price (IDR)
+                                    Harga (IDR)
                                 </label>
                                 <input 
                                     type="number" 
@@ -88,7 +88,7 @@
                             </div>
                             <div class="space-y-2 group">
                                 <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
-                                    Mins Session
+                                    Durasi (Menit)
                                 </label>
                                 <input 
                                     type="number" 
@@ -102,7 +102,7 @@
 
                         <div class="space-y-4">
                             <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-indigo-600 ml-1">
-                                Service Visual
+                                Media Layanan
                             </label>
                             <div class="flex flex-col sm:flex-row items-center gap-6 bg-[#f8fafc] p-4 rounded-2xl border border-slate-200 group/media transition-all hover:bg-white">
                                 @if($service->gambar)
@@ -122,7 +122,7 @@
                                     <div class="w-full border-2 border-dashed border-slate-200 rounded-xl py-6 flex flex-col items-center justify-center group-hover/upload:border-indigo-300 transition-all duration-500 text-center px-4">
                                         <svg class="w-6 h-6 text-indigo-500/50 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         <span class="file-name text-[9px] font-bold text-slate-400 uppercase tracking-widest group-hover:text-slate-600">
-                                            {{ $service->gambar ? 'Replace Current Media' : 'Upload Visual Media' }}
+                                            {{ $service->gambar ? 'Ganti Media Saat Ini' : 'Unggah Media Visual' }}
                                         </span>
                                     </div>
                                 </div>
@@ -135,23 +135,23 @@
                                 class="w-full sm:flex-[2] group relative px-8 py-3.5 md:py-4 bg-slate-900 text-white rounded-xl md:rounded-2xl text-[10px] md:text-[11px] font-black uppercase tracking-widest transition-all hover:bg-indigo-600 hover:shadow-lg shadow-indigo-100 active:scale-95 overflow-hidden"
                             >
                                 <div class="absolute inset-0 bg-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-                                <span class="relative z-10 w-full text-center">Commit Changes</span>
+                                <span class="relative z-10 w-full text-center">Simpan Perubahan</span>
                             </button>
 
                             <a 
                                 href="{{ route('admin.services.index') }}"
                                 class="w-full sm:w-auto px-10 py-3.5 md:py-4 border border-slate-200 rounded-xl md:rounded-2xl text-center text-[10px] md:text-[11px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-700 hover:bg-slate-50 transition-all shadow-sm"
                             >
-                                Cancel
+                                Batal
                             </a>
                         </div>
                     </form>
                 </div>
 
-                <div class="mt-8 md:mt-12 opacity-60 shrink-0 text-center mb-6">
+                        <div class="mt-8 md:mt-12 opacity-60 shrink-0 text-center mb-6">
                     <p class="text-[7px] md:text-[8px] font-bold text-slate-400 uppercase tracking-[0.5em] flex items-center justify-center gap-4">
                         <span class="hidden xs:block w-12 md:w-16 h-px bg-gradient-to-r from-transparent to-slate-200"></span>
-                        Internal Catalog Protocol
+                        Protokol Katalog Internal
                         <span class="hidden xs:block w-12 md:w-16 h-px bg-gradient-to-l from-transparent to-slate-200"></span>
                     </p>
                 </div>

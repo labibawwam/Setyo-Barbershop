@@ -14,7 +14,7 @@
                         <div class="flex items-center gap-4 min-w-0">
                             <div class="min-w-0">
                                 <h1 class="text-2xl md:text-3xl font-black text-slate-900 tracking-tight truncate uppercase">
-                                    <span class="text-indigo-600 italic font-serif font-normal lowercase tracking-normal">reservations</span>
+                                    <span class="text-indigo-600 italic font-serif font-normal lowercase tracking-normal">Reservasi</span>
                                 </h1>
                             </div>
                         </div>
@@ -22,16 +22,16 @@
                         <a href="{{ route('admin.bookings.create') }}" 
                            class="shrink-0 group relative px-6 md:px-8 py-3 bg-slate-900 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all hover:bg-indigo-600 active:scale-95 overflow-hidden shadow-lg shadow-slate-200 text-center">
                             <div class="absolute inset-0 bg-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                            <span class="relative z-10 flex items-center justify-center gap-2">
+                                <span class="relative z-10 flex items-center justify-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"/></svg>
-                                <span class="hidden sm:inline">Add New Booking</span>
+                                <span class="hidden sm:inline">Tambah Reservasi</span>
                             </span>
                         </a>
                     </div>
 
                     <form action="{{ route('admin.bookings.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 items-end">
                         <div class="group">
-                            <label class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2 block ml-1">Client Identity</label>
+                            <label class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2 block ml-1">Identitas Klien</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-500 transition-colors">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="2.5"/></svg>
@@ -43,11 +43,11 @@
 
                         <div class="flex items-center gap-2">
                             <div class="flex-1">
-                                <label class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2 block ml-1">Start Date</label>
+                                <label class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2 block ml-1">Tanggal Mulai</label>
                                 <input type="date" name="start_date" value="{{ request('start_date') }}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3 px-3 text-[10px] md:text-xs text-slate-800 [color-scheme:light]">
                             </div>
                             <div class="flex-1">
-                                <label class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2 block ml-1">End Date</label>
+                                <label class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2 block ml-1">Tanggal Selesai</label>
                                 <input type="date" name="end_date" value="{{ request('end_date') }}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3 px-3 text-[10px] md:text-xs text-slate-800 [color-scheme:light]">
                             </div>
                         </div>
@@ -56,17 +56,17 @@
                             <label class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2 block ml-1">Status</label>
                             <div class="relative">
                                 <select name="status" class="w-full appearance-none bg-slate-50 border border-slate-200 rounded-2xl py-3 px-4 text-[10px] font-bold uppercase tracking-widest text-slate-600 focus:border-indigo-500 transition-all cursor-pointer">
-                                    <option value="" class="bg-white">All Status</option>
-                                    <option value="confirmed" {{ request('status') == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
-                                    <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Completed</option>
-                                    <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                                    <option value="" class="bg-white">Semua Status</option>
+                                    <option value="confirmed" {{ request('status') == 'confirmed' ? 'selected' : '' }}>Dikonfirmasi</option>
+                                    <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Selesai</option>
+                                    <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Dibatalkan</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="flex items-center gap-2">
                             <button type="submit" class="flex-1 p-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl transition-all shadow-md shadow-indigo-100 active:scale-95">
-                                <span class="flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest">Search</span>
+                                <span class="flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest">Cari</span>
                             </button>
                             @if(request()->anyFilled(['search', 'status', 'start_date', 'end_date']))
                                 <a href="{{ route('admin.bookings.index') }}" class="p-3.5 bg-white border border-slate-200 text-slate-400 rounded-2xl hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200 transition-all">
@@ -83,12 +83,12 @@
                     <table class="w-full text-left border-separate border-spacing-y-3 min-w-[1100px] lg:min-w-full table-fixed">
                         <thead class="sticky top-0 z-20 bg-[#f8fafc]/95 backdrop-blur-sm">
                             <tr class="text-[10px] font-black text-slate-400 uppercase tracking-[0.25em]">
-                                <th class="py-4 px-6 border-b border-slate-200 w-[20%]">Client</th>
-                                <th class="py-4 px-6 border-b border-slate-200 w-[18%]">Hair Artist</th>
-                                <th class="py-4 px-6 border-b border-slate-200 w-[25%]">Treatments</th>
-                                <th class="py-4 px-6 border-b border-slate-200 w-[20%] text-center">Schedule</th>
+                                <th class="py-4 px-6 border-b border-slate-200 w-[20%]">Klien</th>
+                                <th class="py-4 px-6 border-b border-slate-200 w-[18%]">Artis</th>
+                                <th class="py-4 px-6 border-b border-slate-200 w-[25%]">Perawatan</th>
+                                <th class="py-4 px-6 border-b border-slate-200 w-[20%] text-center">Jadwal</th>
                                 <th class="py-4 px-6 border-b border-slate-200 w-[10%] text-center">Status</th>
-                                <th class="py-4 px-6 border-b border-slate-200 text-right w-[140px]">Actions</th>
+                                <th class="py-4 px-6 border-b border-slate-200 text-right w-[140px]">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-transparent">
@@ -137,7 +137,7 @@
                                     <div class="flex justify-end gap-2.5">
                                         <a href="{{ route('admin.bookings.show', $booking->id) }}" class="p-2 rounded-lg bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-all shadow-sm"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M2.036 12.322a1.012 1.012 0 010-.644C3.67 8.242 7.84 4.5 12 4.5c4.16 0 8.33 3.742 9.964 7.178.07.143.07.312 0 .456C20.33 15.758 16.16 19.5 12 19.5c-4.16 0-8.33-3.742-9.964-7.178z" /><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg></a>
                                         <a href="{{ route('admin.bookings.edit', $booking->id) }}" class="p-2 rounded-lg bg-slate-50 text-slate-400 hover:bg-slate-900 hover:text-white transition-all shadow-sm"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" /></svg></a>
-                                        <form action="{{ route('admin.bookings.destroy', $booking->id) }}" method="POST" class="inline m-0" onsubmit="return confirm('Purge this record from history?')">
+                                        <form action="{{ route('admin.bookings.destroy', $booking->id) }}" method="POST" class="inline m-0" onsubmit="return confirm('Hapus data ini dari riwayat?')">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="p-2 rounded-lg bg-rose-50 text-rose-500 hover:bg-rose-600 hover:text-white transition-all shadow-sm"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M14.74 9l-.34 9m-4.72 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg></button>
                                         </form>
@@ -145,7 +145,7 @@
                                 </td>
                             </tr>
                             @empty
-                            <tr><td colspan="6" class="py-24 text-center opacity-40 text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">Zero data discovered</td></tr>
+                            <tr><td colspan="6" class="py-24 text-center opacity-40 text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">Tidak ada data</td></tr>
                             @endforelse
                         </tbody>
                     </table>

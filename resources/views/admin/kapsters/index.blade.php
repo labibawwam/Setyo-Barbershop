@@ -11,11 +11,11 @@
                     <div class="flex items-center gap-4 min-w-0">
                         <div class="min-w-0">
                             <h1 class="text-2xl md:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
-                                Hair <span class="text-indigo-600 italic font-serif text-xl md:text-2xl font-normal lowercase tracking-normal">artists</span>
+                                Kapster <span class="text-indigo-600 italic font-serif text-xl md:text-2xl font-normal lowercase tracking-normal">Tim</span>
                             </h1>
                             <p class="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-slate-400 mt-1 md:mt-2 flex items-center gap-2">
                                 <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)] animate-pulse"></span>
-                                <span class="truncate">Team & Kapster Management</span>
+                                <span class="truncate">Manajemen Tim & Kapster</span>
                             </p>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                         <div class="absolute inset-0 bg-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                         <span class="relative z-10 flex items-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"/></svg>
-                            Add New <span class="hidden xs:inline">Artist</span>
+                            Tambah <span class="hidden xs:inline">Kapster</span>
                         </span>
                     </a>
                 </div>
@@ -37,10 +37,10 @@
                         <thead class="sticky top-0 z-20 bg-[#f8fafc]/95 backdrop-blur-sm">
                             <tr class="text-[10px] font-black text-slate-400 uppercase tracking-[0.25em]">
                                 <th class="py-4 px-4 border-b border-slate-200 text-center w-[60px]">ID</th>
-                                <th class="py-4 px-6 border-b border-slate-200 w-[80px]">Photo</th>
-                                <th class="py-4 px-6 border-b border-slate-200 w-[180px]">Artist Name</th>
-                                <th class="py-4 px-6 border-b border-slate-200">Biography</th>
-                                <th class="py-4 px-6 border-b border-slate-200 text-right w-[120px]">Actions</th>
+                                <th class="py-4 px-6 border-b border-slate-200 w-[80px]">Foto</th>
+                                <th class="py-4 px-6 border-b border-slate-200 w-[180px]">Nama Kapster</th>
+                                <th class="py-4 px-6 border-b border-slate-200">Biografi</th>
+                                <th class="py-4 px-6 border-b border-slate-200 text-right w-[120px]">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-transparent">
@@ -57,7 +57,7 @@
                                                  class="w-10 h-10 md:w-12 md:h-12 rounded-xl object-cover border border-slate-100 shadow-md group-hover:border-indigo-400 transition-all">
                                         @else
                                             <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-[8px] font-black text-slate-400 italic">
-                                                N/A
+                                                Tidak Tersedia
                                             </div>
                                         @endif
                                     </div>
@@ -68,7 +68,7 @@
                                         {{ $kapster->nama }}
                                     </div>
                                     <div class="text-[8px] text-indigo-500 font-black uppercase tracking-widest mt-1">
-                                        Pro Barber
+                                        Kapster Profesional
                                     </div>
                                 </td>
 
@@ -87,7 +87,7 @@
                                             </svg>
                                         </a>
 
-                                        <form action="{{ route('admin.kapsters.destroy', $kapster->id) }}" method="POST" class="inline m-0" onsubmit="return confirm('Secure Warning: Delete this entry?')">
+                                        <form action="{{ route('admin.kapsters.destroy', $kapster->id) }}" method="POST" class="inline m-0" onsubmit="return confirm('Peringatan: Hapus entri ini?')">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center rounded-lg bg-rose-50 border border-rose-100 text-rose-500 hover:bg-rose-600 hover:text-white transition-all duration-300 shadow-sm active:scale-90" title="Delete">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M14.74 9l-.34 9m-4.72 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>

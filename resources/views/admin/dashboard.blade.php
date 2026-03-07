@@ -13,11 +13,11 @@
                         <div class="flex items-center gap-4 min-w-0">
                             <div class="min-w-0">
                                 <h1 class="text-2xl md:text-4xl font-black text-slate-900 tracking-tight flex items-center gap-3">
-                                    System <span class="text-indigo-600 italic font-serif text-xl md:text-2xl font-normal lowercase tracking-normal">dashboard</span>
+                                    Dasbor <span class="text-indigo-600 italic font-serif text-xl md:text-2xl font-normal lowercase tracking-normal">Sistem</span>
                                 </h1>
                                 <p class="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-slate-400 mt-1 md:mt-2 flex items-center gap-2">
                                     <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.4)]"></span>
-                                    <span class="truncate">Verified Database Management</span>
+                                    <span class="truncate">Manajemen Basis Data Terverifikasi</span>
                                 </p>
                             </div>
                         </div>

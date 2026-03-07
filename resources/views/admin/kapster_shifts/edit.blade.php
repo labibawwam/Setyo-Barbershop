@@ -10,13 +10,13 @@
 
             <div class="w-full max-w-2xl relative z-10 flex flex-col items-center my-auto entrance-animation">
                 
-                <div class="mb-8 md:mb-10 text-center shrink-0">
+                    <div class="mb-8 md:mb-10 text-center shrink-0">
                     <h1 class="font-display text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight uppercase">
-                        Modify <span class="text-indigo-600 italic font-serif lowercase tracking-normal">Shift Schedule</span>
+                        Ubah <span class="text-indigo-600 italic font-serif lowercase tracking-normal">Jadwal Shift</span>
                     </h1>
                     <p class="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.3em] md:tracking-[0.4em] text-slate-400 mt-3 flex items-center justify-center gap-2">
                         <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.4)]"></span>
-                        Updating Artist: {{ $kapsterShift->kapster->nama }}
+                        Memperbarui Kapster: {{ $kapsterShift->kapster->nama }}
                     </p>
                 </div>
 
@@ -26,7 +26,7 @@
                         @method('PUT')
                         
                         <div class="space-y-2 group">
-                            <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Duty Day</label>
+                            <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Hari Tugas</label>
                             <div class="relative">
                                 <select name="hari" class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 py-3.5 md:py-4 text-sm text-slate-900 font-bold appearance-none focus:outline-none focus:border-indigo-500 transition-all cursor-pointer pr-12" required>
                                     @foreach(['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'] as $day)
@@ -41,34 +41,34 @@
 
                         <div id="time-inputs" class="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6 transition-all duration-500 {{ $kapsterShift->is_libur ? 'opacity-20 pointer-events-none grayscale' : '' }}">
                             <div class="space-y-2 group">
-                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-400 transition-colors">Start Time</label>
+                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-400 transition-colors">Jam Mulai</label>
                                 <input type="time" name="jam_mulai" value="{{ \Carbon\Carbon::parse($kapsterShift->jam_mulai)->format('H:i') }}" class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 py-3.5 md:py-4 text-sm text-slate-900 font-semibold focus:outline-none focus:border-indigo-500 transition-all [color-scheme:light]">
                             </div>
                             <div class="space-y-2 group">
-                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-400 transition-colors">End Time</label>
+                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-400 transition-colors">Jam Selesai</label>
                                 <input type="time" name="jam_selesai" value="{{ \Carbon\Carbon::parse($kapsterShift->jam_selesai)->format('H:i') }}" class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 py-3.5 md:py-4 text-sm text-slate-900 font-semibold focus:outline-none focus:border-indigo-500 transition-all [color-scheme:light]">
                             </div>
                         </div>
 
                         <div class="flex items-center gap-3 px-1 py-1">
                             <input type="checkbox" name="is_libur" id="is_libur" class="w-5 h-5 rounded border-slate-300 bg-slate-50 text-indigo-600 focus:ring-indigo-500/20 transition-all cursor-pointer" {{ $kapsterShift->is_libur ? 'checked' : '' }} onchange="toggleTimeInputs(this)">
-                            <label for="is_libur" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-500 cursor-pointer select-none">Mark as Day Off / Closed</label>
+                            <label for="is_libur" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-500 cursor-pointer select-none">Tandai sebagai Libur / Tutup</label>
                         </div>
 
                         <div class="flex flex-col sm:flex-row items-center gap-4 pt-4">
                             <button type="submit" class="w-full sm:flex-[2] group relative px-8 py-3.5 md:py-4 bg-slate-900 text-white rounded-xl md:rounded-2xl text-[10px] md:text-[11px] font-black uppercase tracking-widest transition-all hover:bg-indigo-600 active:scale-95 overflow-hidden shadow-lg shadow-slate-200">
                                 <div class="absolute inset-0 bg-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-                                <span class="relative z-10">Commit Changes</span>
+                                <span class="relative z-10">Simpan Perubahan</span>
                             </button>
-                            <a href="{{ route('admin.kapster_shifts.index') }}" class="w-full sm:w-auto px-8 py-3.5 md:py-4 border border-slate-200 rounded-xl md:rounded-2xl text-center text-[10px] md:text-[11px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-700 hover:bg-slate-50 transition-all shadow-sm">Cancel</a>
+                            <a href="{{ route('admin.kapster_shifts.index') }}" class="w-full sm:w-auto px-8 py-3.5 md:py-4 border border-slate-200 rounded-xl md:rounded-2xl text-center text-[10px] md:text-[11px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-700 hover:bg-slate-50 transition-all shadow-sm">Batal</a>
                         </div>
                     </form>
                 </div>
 
                 <div class="mt-8 md:mt-12 opacity-60 shrink-0 mb-4">
-                    <p class="text-[7px] md:text-[8px] font-bold text-slate-400 uppercase tracking-[0.5em] flex items-center justify-center gap-4">
+                        <p class="text-[7px] md:text-[8px] font-bold text-slate-400 uppercase tracking-[0.5em] flex items-center justify-center gap-4">
                         <span class="hidden xs:block w-10 md:w-16 h-px bg-gradient-to-r from-transparent to-slate-200"></span>
-                        Operational Protocol Node
+                        Protokol Operasional
                         <span class="hidden xs:block w-10 md:w-16 h-px bg-gradient-to-l from-transparent to-slate-200"></span>
                     </p>
                 </div>

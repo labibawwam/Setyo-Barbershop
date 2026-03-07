@@ -12,11 +12,11 @@
                 
                 <div class="mb-8 md:mb-10 text-center shrink-0">
                     <h1 class="font-display text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight uppercase">
-                        Modify <span class="text-indigo-600 italic font-serif lowercase">Reservation</span>
+                        Ubah <span class="text-indigo-600 italic font-serif lowercase">Reservasi</span>
                     </h1>
                     <p class="text-[8px] md:text-[9px] font-bold uppercase tracking-[0.3em] md:tracking-[0.4em] text-slate-400 mt-3 flex items-center justify-center gap-2">
                         <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.4)]"></span>
-                        Appointment Identity: #BK-{{ str_pad($booking->id, 4, '0', STR_PAD_LEFT) }}
+                        Identitas Janji: #BK-{{ str_pad($booking->id, 4, '0', STR_PAD_LEFT) }}
                     </p>
                 </div>
 
@@ -27,14 +27,14 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
                             <div class="space-y-2 opacity-80 group">
-                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Client Name</label>
+                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Nama Klien</label>
                                 <div class="w-full bg-slate-50 border border-slate-200 rounded-xl md:rounded-2xl px-5 py-3 md:py-3.5 text-sm text-slate-500 font-semibold cursor-not-allowed">
                                     {{ $booking->user->name }}
                                 </div>
                             </div>
 
                             <div class="space-y-2 group">
-                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Assigned Artist</label>
+                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Kapster</label>
                                 <div class="relative">
                                     <select name="kapster_id" class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 py-3 md:py-3.5 text-sm text-slate-900 font-bold focus:outline-none focus:border-indigo-500 transition-all appearance-none cursor-pointer pr-12" required>
                                         @foreach($kapsters as $kapster)
@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="space-y-2">
-                            <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-indigo-600 ml-1">Treatment Services</label>
+                            <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-indigo-600 ml-1">Perawatan</label>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[200px] md:max-h-[160px] overflow-y-auto custom-scroll p-3 bg-[#f8fafc] rounded-xl border border-slate-200 shadow-inner">
                                 @foreach($services as $service)
                                 <label class="flex items-center gap-3 p-3 bg-white border border-slate-100 rounded-xl cursor-pointer hover:border-indigo-200 hover:bg-indigo-50/30 transition-all group/item">
@@ -69,12 +69,12 @@
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 md:gap-4">
                             <div class="space-y-2 group">
-                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Date</label>
+                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Tanggal</label>
                                 <input type="date" name="tgl_booking" value="{{ $booking->tgl_booking }}" class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-4 py-3 text-sm text-slate-900 font-semibold focus:outline-none focus:border-indigo-500 transition-all [color-scheme:light]" required>
                             </div>
 
                             <div class="space-y-2 group">
-                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Start Time</label>
+                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Waktu Mulai</label>
                                 <input type="time" name="jam_mulai" value="{{ substr($booking->jam_mulai, 0, 5) }}" class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-4 py-3 text-sm text-slate-900 font-semibold focus:outline-none focus:border-indigo-500 transition-all [color-scheme:light]" required>
                             </div>
 
@@ -84,7 +84,7 @@
                                     <select name="status" class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-4 py-3 text-sm text-slate-900 font-bold appearance-none focus:outline-none focus:border-indigo-500 transition-all cursor-pointer pr-10" required>
                                         @foreach(['confirmed', 'completed', 'cancelled'] as $status)
                                             <option value="{{ $status }}" class="bg-white" {{ $booking->status == $status ? 'selected' : '' }}>
-                                                {{ ucfirst($status) }}
+                                                @if($status == 'confirmed') Dikonfirmasi @elseif($status == 'completed') Selesai @else Dibatalkan @endif
                                             </option>
                                         @endforeach
                                     </select>
@@ -96,7 +96,7 @@
                         <div class="flex flex-col sm:flex-row items-center gap-4 pt-4 md:pt-6">
                             <button type="submit" class="w-full sm:flex-[2] group relative px-8 py-4 bg-slate-900 text-white rounded-xl md:rounded-2xl text-[10px] md:text-[11px] font-black uppercase tracking-widest transition-all hover:bg-indigo-600 active:scale-95 overflow-hidden shadow-lg shadow-slate-200">
                                 <div class="absolute inset-0 bg-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-                                <span class="relative z-10 w-full text-center font-black">Commit Changes</span>
+                                <span class="relative z-10 w-full text-center font-black">Simpan Perubahan</span>
                             </button>
 
                             <a href="{{ route('admin.bookings.index') }}" class="w-full sm:w-auto px-10 py-4 bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl text-center text-[10px] md:text-[11px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-700 hover:bg-white transition-all shadow-sm">

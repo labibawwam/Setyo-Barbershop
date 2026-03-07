@@ -12,12 +12,12 @@
                 
                 <div class="mb-8 md:mb-10 text-center">
                     <h1 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight uppercase">
-                        Modify <span class="text-indigo-600 italic font-serif lowercase">identity</span>
+                        Ubah <span class="text-indigo-600 italic font-serif lowercase">Pengguna</span>
                     </h1>
                     <div class="flex items-center justify-center gap-3 mt-3">
                         <span class="h-px w-6 md:w-8 bg-indigo-200"></span>
                         <p class="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-slate-400 truncate px-2">
-                            Editing: {{ $user->name }}
+                            Mengedit: {{ $user->name }}
                         </p>
                         <span class="h-px w-6 md:w-8 bg-indigo-200"></span>
                     </div>
@@ -30,25 +30,25 @@
                         
                         <div class="group">
                             <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
-                                Full Name
+                                Nama Lengkap
                             </label>
                             <input type="text" name="name" value="{{ $user->name }}" class="w-full mt-2 bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 md:px-6 py-3.5 md:py-4 text-sm text-slate-900 font-semibold focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 transition-all duration-300" required>
                         </div>
 
                         <div class="group">
                             <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
-                                Email Address
+                                Alamat Email
                             </label>
                             <input type="email" name="email" value="{{ $user->email }}" class="w-full mt-2 bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 md:px-6 py-3.5 md:py-4 text-sm text-slate-900 font-semibold focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/5 transition-all duration-300" required>
                         </div>
 
                         <div class="group">
                             <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">
-                                Access Privilege
+                                Hak Akses
                             </label>
                             <div class="relative">
                                 <select name="role" class="w-full mt-2 bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 md:px-6 py-3.5 md:py-4 text-sm text-slate-900 font-bold focus:outline-none focus:border-indigo-500 transition-all appearance-none cursor-pointer pr-12">
-                                    <option value="user" {{ $user->role == 'user' ? 'selected' : '' }} class="bg-white">Standard User</option>
+                                    <option value="user" {{ $user->role == 'user' ? 'selected' : '' }} class="bg-white">Pengguna Biasa</option>
                                     <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }} class="bg-white">Administrator</option>
                                 </select>
                                 <div class="absolute right-5 md:right-6 top-1/2 translate-y-1 mt-1 pointer-events-none text-slate-400 group-focus-within:text-indigo-600">
@@ -59,10 +59,10 @@
 
                         <div class="pt-4 md:pt-6 flex flex-col sm:flex-row items-center gap-4">
                             <button type="submit" class="w-full sm:flex-1 group relative bg-indigo-600 text-white py-3.5 md:py-4 rounded-xl md:rounded-2xl text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] transition-all hover:bg-indigo-700 active:scale-95 shadow-lg shadow-indigo-100">
-                                Update Identity
+                                Perbarui Pengguna
                             </button>
                             <a href="{{ route('admin.users.index') }}" class="w-full sm:w-auto px-10 py-3.5 md:py-4 border border-slate-200 rounded-xl md:rounded-2xl text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-700 hover:bg-slate-50 transition-all text-center">
-                                Cancel
+                                Batal
                             </a>
                         </div>
                     </form>
@@ -71,7 +71,7 @@
                 <div class="mt-8 md:mt-10 text-center opacity-50">
                     <p class="text-[7px] md:text-[8px] font-bold text-slate-400 uppercase tracking-[0.5em] flex items-center justify-center gap-4">
                         <span class="hidden xs:block w-8 md:w-12 h-px bg-slate-200"></span>
-                        Authorized Node Access Only
+                        Hanya Akses Terotorisasi
                         <span class="hidden xs:block w-8 md:w-12 h-px bg-slate-200"></span>
                     </p>
                 </div>

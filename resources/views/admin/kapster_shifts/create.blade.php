@@ -11,10 +11,10 @@
                     
                     <div class="mb-8 md:mb-10 text-center shrink-0">
                         <h1 class="font-display text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight uppercase">
-                            Assign <span class="text-indigo-600 italic font-serif lowercase">Work Shift</span>
+                            Tetapkan <span class="text-indigo-600 italic font-serif lowercase">Shift Kerja</span>
                         </h1>
                         <p class="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.3em] md:tracking-[0.4em] text-slate-400 mt-3">
-                            Operational Schedule Configuration
+                            Konfigurasi Jadwal Operasional
                         </p>
                     </div>
 
@@ -24,7 +24,7 @@
                             
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
                                 <div class="space-y-2 group">
-                                    <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Select Artist</label>
+                                    <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Pilih Kapster</label>
                                     <div class="relative">
                                         <select name="kapster_id" class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 py-3.5 text-sm text-slate-900 font-bold appearance-none focus:outline-none focus:border-indigo-500 transition-all cursor-pointer pr-12" required>
                                             @foreach($kapsters as $kapster)
@@ -38,7 +38,7 @@
                                 </div>
 
                                 <div class="space-y-2 group">
-                                    <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Duty Day</label>
+                                    <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Hari Tugas</label>
                                     <div class="relative">
                                         <select name="hari" class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 py-3.5 text-sm text-slate-900 font-bold appearance-none focus:outline-none focus:border-indigo-500 transition-all cursor-pointer pr-12" required>
                                             @foreach(['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'] as $day)
@@ -54,34 +54,34 @@
 
                             <div id="time-inputs" class="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6 transition-all duration-500">
                                 <div class="space-y-2 group">
-                                    <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Start Time</label>
+                                    <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Jam Mulai</label>
                                     <input type="time" name="jam_mulai" value="10:00" class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 py-3.5 text-sm text-slate-900 font-semibold focus:outline-none focus:border-indigo-500 transition-all [color-scheme:light]">
                                 </div>
                                 <div class="space-y-2 group">
-                                    <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">End Time</label>
+                                    <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-600 transition-colors">Jam Selesai</label>
                                     <input type="time" name="jam_selesai" value="21:00" class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 py-3.5 text-sm text-slate-900 font-semibold focus:outline-none focus:border-indigo-500 transition-all [color-scheme:light]">
                                 </div>
                             </div>
 
                             <div class="flex items-center gap-3 px-1 py-1">
                                 <input type="checkbox" name="is_libur" value="1" id="is_libur" class="w-5 h-5 rounded border-slate-300 bg-slate-50 text-indigo-600 focus:ring-indigo-500/20 transition-all cursor-pointer" onchange="toggleTimeInputs(this)">
-                                <label for="is_libur" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-500 cursor-pointer select-none">Mark as Day Off / Closed</label>
+                                <label for="is_libur" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-500 cursor-pointer select-none">Tandai sebagai Libur / Tutup</label>
                             </div>
 
                             <div class="flex flex-col sm:flex-row items-center gap-4 pt-4">
                                 <button type="submit" class="w-full sm:flex-[2] group relative px-8 py-3.5 md:py-4 bg-slate-900 text-white rounded-xl md:rounded-2xl text-[10px] md:text-[11px] font-black uppercase tracking-widest transition-all hover:bg-indigo-600 hover:shadow-lg active:scale-95 overflow-hidden">
                                     <div class="absolute inset-0 bg-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-                                    <span class="relative z-10">Deploy Shift</span>
+                                    <span class="relative z-10">Terapkan Shift</span>
                                 </button>
-                                <a href="{{ route('admin.kapster_shifts.index') }}" class="w-full sm:flex-1 px-8 py-3.5 md:py-4 border border-slate-200 rounded-xl md:rounded-2xl text-center text-[10px] md:text-[11px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-700 hover:bg-slate-50 transition-all">Cancel</a>
+                                <a href="{{ route('admin.kapster_shifts.index') }}" class="w-full sm:flex-1 px-8 py-3.5 md:py-4 border border-slate-200 rounded-xl md:rounded-2xl text-center text-[10px] md:text-[11px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-700 hover:bg-slate-50 transition-all">Batal</a>
                             </div>
                         </form>
                     </div>
 
                     <div class="mt-8 md:mt-10 opacity-60 shrink-0 text-center mb-6">
-                        <p class="text-[7px] md:text-[8px] font-bold text-slate-400 uppercase tracking-[0.5em] flex items-center justify-center gap-4">
+                            <p class="text-[7px] md:text-[8px] font-bold text-slate-400 uppercase tracking-[0.5em] flex items-center justify-center gap-4">
                             <span class="hidden xs:block w-12 md:w-16 h-px bg-slate-200"></span>
-                            Internal Operational Protocol
+                            Protokol Operasional Internal
                             <span class="hidden xs:block w-12 md:w-16 h-px bg-slate-200"></span>
                         </p>
                     </div>

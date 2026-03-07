@@ -20,11 +20,11 @@
                         <div class="flex items-center gap-4 min-w-0">
                             <div class="min-w-0">
                                 <h1 class="text-2xl md:text-4xl font-black text-slate-900 tracking-tighter uppercase truncate">
-                                    <span class="text-indigo-600 italic font-serif lowercase tracking-normal">analytics</span>
+                                    <span class="text-indigo-600 italic font-serif lowercase tracking-normal">Analitik</span>
                                 </h1>
                                 <p class="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400 mt-1 md:mt-2 flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
-                                    Real-time Data Visualization
+                                    Visualisasi Data Real-time
                                 </p>
                             </div>
                         </div>
@@ -56,11 +56,11 @@
                             </div>
                             <button type="submit" class="sm:px-6 py-2.5 bg-slate-900 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-indigo-600 transition-all flex items-center justify-center gap-2">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-                                <span>Sync Data</span>
+                                <span>Sinkronkan Data</span>
                             </button>
                         </form>
                         <div class="flex items-center">
-                            <a href="{{ route('admin.reports.pdf', ['month' => $month, 'year' => $year]) }}" class="ml-3 sm:ml-4 px-4 py-2 text-[10px] font-black uppercase tracking-[0.2em] bg-indigo-600 text-white rounded-xl hover:bg-indigo-700">Download PDF</a>
+                            <a href="{{ route('admin.reports.pdf', ['month' => $month, 'year' => $year]) }}" class="ml-3 sm:ml-4 px-4 py-2 text-[10px] font-black uppercase tracking-[0.2em] bg-indigo-600 text-white rounded-xl hover:bg-indigo-700">Unduh PDF</a>
                         </div>
                     </div>
 
@@ -72,15 +72,15 @@
                                 <div>
                                     <h3 class="text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 mb-3">
                                         <div class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></div>
-                                        Daily Revenue Analysis
+                                        Analisis Pendapatan Harian
                                     </h3>
                                     <div class="flex flex-col text-left">
                                         <span class="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter italic font-serif">Rp{{ number_format($totalRevenue, 0, ',', '.') }}</span>
-                                        <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-2">Total Gross Revenue This Month</p>
+                                        <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-2">Total Pendapatan Kotor Bulan Ini</p>
                                     </div>
                                 </div>
                                 <div class="bg-slate-50 p-3 rounded-2xl border border-slate-100 text-left sm:text-right shrink-0">
-                                    <p class="text-[8px] text-slate-400 font-black uppercase mb-1">Timeline</p>
+                                    <p class="text-[8px] text-slate-400 font-black uppercase mb-1">Jangka Waktu</p>
                                     <p class="text-[11px] font-black text-indigo-600 italic font-serif">1 - {{ \Carbon\Carbon::create($year, $month)->endOfMonth()->day }} {{ date('F', mktime(0, 0, 0, $month, 1)) }}</p>
                                 </div>
                             </div>
@@ -91,7 +91,7 @@
                         </div>
 
                         <div class="lg:col-span-1 bg-white p-6 md:p-8 lg:p-10 rounded-[2rem] md:rounded-[3rem] border border-slate-200 shadow-sm flex flex-col">
-                            <h3 class="text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest mb-8 text-left">Booking Integrity</h3>
+                            <h3 class="text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest mb-8 text-left">Integritas Pemesanan</h3>
                             <div class="flex-1 flex items-center justify-center min-h-[250px]">
                                 <canvas id="statusChart"></canvas>
                             </div>
@@ -100,7 +100,7 @@
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 relative z-10">
                         <div class="bg-white p-6 md:p-8 lg:p-10 rounded-[2rem] md:rounded-[3rem] border border-slate-200 shadow-sm">
-                            <h3 class="text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest mb-8 text-left">Master Artists</h3>
+                            <h3 class="text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest mb-8 text-left">Kapster Unggulan</h3>
                             <div class="space-y-5">
                                 @forelse($kapsterPerformance ?? [] as $kapster)
                                 <div class="flex items-center justify-between group">
@@ -110,15 +110,15 @@
                                         </div>
                                         <div class="min-w-0 text-left">
                                             <p class="text-xs md:text-sm font-black text-slate-900 group-hover:text-indigo-600 transition-colors uppercase truncate tracking-tighter">{{ $kapster->nama }}</p>
-                                            <p class="text-[8px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">Top Performer</p>
+                                            <p class="text-[8px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">Performer Terbaik</p>
                                         </div>
                                     </div>
                                     <div class="text-right">
-                                        <p class="text-[11px] md:text-xs font-mono font-bold text-slate-900">{{ $kapster->bookings_count }} Sessions</p>
+                                        <p class="text-[11px] md:text-xs font-mono font-bold text-slate-900">{{ $kapster->bookings_count }} Sesi</p>
                                     </div>
                                 </div>
                                 @empty
-                                <p class="text-center text-[10px] text-slate-400 py-10 uppercase italic">No data collected</p>
+                                <p class="text-center text-[10px] text-slate-400 py-10 uppercase italic">Tidak ada data</p>
                                 @endforelse
                             </div>
                         </div>
@@ -130,7 +130,7 @@
                                 <div class="group text-left">
                                     <div class="flex justify-between items-end mb-2.5">
                                         <span class="text-[10px] md:text-xs font-black text-slate-700 uppercase group-hover:text-indigo-600 truncate pr-4">{{ $service->nama_service }}</span>
-                                        <span class="text-[9px] font-mono text-indigo-600 font-bold shrink-0">{{ $service->bookings_count }} Orders</span>
+                                        <span class="text-[9px] font-mono text-indigo-600 font-bold shrink-0">{{ $service->bookings_count }} Pesanan</span>
                                     </div>
                                     <div class="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
                                         @php $percentage = ($totalBookings > 0) ? ($service->bookings_count / $totalBookings) * 100 : 0; @endphp
@@ -138,7 +138,7 @@
                                     </div>
                                 </div>
                                 @empty
-                                <p class="text-center text-[10px] text-slate-400 py-10 uppercase italic">No data collected</p>
+                                <p class="text-center text-[10px] text-slate-400 py-10 uppercase italic">Tidak ada data</p>
                                 @endforelse
                             </div>
                         </div>
@@ -146,7 +146,7 @@
 
                     <div class="mt-12 md:mt-16 text-center opacity-40">
                         <p class="text-[7px] md:text-[8px] font-black text-slate-400 uppercase tracking-[0.5em] leading-relaxed">
-                            Internal Command Center Analytics — Setyo Barbershop Node
+                            Pusat Komando Analitik Internal — Setyo Barbershop Node
                         </p>
                     </div>
                 </div>

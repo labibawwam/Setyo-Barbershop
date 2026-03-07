@@ -15,7 +15,7 @@
                             </h1>
                             <p class="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-slate-400 mt-1 md:mt-2 flex items-center gap-2">
                                 <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)] animate-pulse"></span>
-                                <span class="truncate">Service Menu & Treatment Catalog</span>
+                                <span class="truncate">Menu Layanan & Katalog Perawatan</span>
                             </p>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                         <div class="absolute inset-0 bg-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                         <span class="relative z-10 flex items-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"/></svg>
-                            Add New <span class="hidden xs:inline">Service</span>
+                            Tambah <span class="hidden xs:inline">Layanan</span>
                         </span>
                     </a>
                 </div>
@@ -37,11 +37,11 @@
                         <thead class="sticky top-0 z-20 bg-[#f8fafc]/95 backdrop-blur-sm">
                             <tr class="text-[10px] font-black text-slate-400 uppercase tracking-[0.25em]">
                                 <th class="py-4 px-4 border-b border-slate-200 text-center w-[60px]">No</th>
-                                <th class="py-4 px-6 border-b border-slate-200 w-[30%]">Service Details</th>
-                                <th class="py-4 px-6 border-b border-slate-200 text-center">Category</th>
-                                <th class="py-4 px-6 border-b border-slate-200 text-center">Duration</th>
-                                <th class="py-4 px-6 border-b border-slate-200 text-center">Premium Price</th>
-                                <th class="py-4 px-6 border-b border-slate-200 text-right w-[120px]">Actions</th>
+                                <th class="py-4 px-6 border-b border-slate-200 w-[30%]">Detail Layanan</th>
+                                <th class="py-4 px-6 border-b border-slate-200 text-center">Kategori</th>
+                                <th class="py-4 px-6 border-b border-slate-200 text-center">Durasi</th>
+                                <th class="py-4 px-6 border-b border-slate-200 text-center">Harga</th>
+                                <th class="py-4 px-6 border-b border-slate-200 text-right w-[120px]">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-transparent">
@@ -59,7 +59,7 @@
                                                      class="w-10 h-10 md:w-12 md:h-12 rounded-xl object-cover border border-slate-100 shadow-md group-hover:border-indigo-400 transition-all">
                                             @else
                                                 <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-[8px] font-black text-slate-400 italic">
-                                                    NO IMG
+                                                    Tidak Ada Gambar
                                                 </div>
                                             @endif
                                         </div>
@@ -75,15 +75,15 @@
                                 </td>
 
                                 <td class="py-4 px-6 bg-white group-hover:bg-slate-50 border-y border-slate-200 text-center shadow-sm">
-                                    <span class="inline-block px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-[9px] font-black uppercase tracking-widest text-indigo-600">
-                                        {{ $service->category->nama_kategori ?? 'No Category' }}
+                                        <span class="inline-block px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-[9px] font-black uppercase tracking-widest text-indigo-600">
+                                        {{ $service->category->nama_kategori ?? 'Tanpa Kategori' }}
                                     </span>
                                 </td>
 
                                 <td class="py-4 px-6 bg-white group-hover:bg-slate-50 border-y border-slate-200 text-center text-xs font-bold text-slate-500 shadow-sm">
                                     <div class="flex items-center justify-center gap-2">
                                         <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                        {{ $service->durasi }}m
+                                        {{ $service->durasi }} menit
                                     </div>
                                 </td>
 
@@ -99,7 +99,7 @@
                                            class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center rounded-lg bg-indigo-50 border border-indigo-100 text-indigo-500 hover:bg-indigo-600 hover:text-white transition-all duration-300 shadow-sm active:scale-90" title="Edit">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         </a>
-                                        <form action="{{ route('admin.services.destroy', $service->id) }}" method="POST" class="inline m-0" onsubmit="return confirm('Secure Warning: Delete this entry?')">
+                                            <form action="{{ route('admin.services.destroy', $service->id) }}" method="POST" class="inline m-0" onsubmit="return confirm('Peringatan: Hapus entri ini?')">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center rounded-lg bg-rose-50 border border-rose-100 text-rose-500 hover:bg-rose-600 hover:text-white transition-all duration-300 shadow-sm active:scale-90" title="Delete">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M14.74 9l-.34 9m-4.72 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -113,7 +113,7 @@
                                 <td colspan="6" class="py-20 text-center">
                                     <div class="flex flex-col items-center gap-3 opacity-30">
                                         <svg class="w-12 h-12 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1.01 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1.01 0 00-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                        <p class="text-sm font-black uppercase tracking-[0.4em] text-slate-400">No services cataloged</p>
+                                        <p class="text-sm font-black uppercase tracking-[0.4em] text-slate-400">Tidak ada layanan terdaftar</p>
                                     </div>
                                 </td>
                             </tr>
