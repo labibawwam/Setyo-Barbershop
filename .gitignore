@@ -22,3 +22,8 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
