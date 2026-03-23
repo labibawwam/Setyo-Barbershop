@@ -1,211 +1,169 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Identity | Setyo Barbershop</title>
+    <title>Reset Password | STY Barber</title>
+
     @vite(['resources/css/app.css','resources/js/app.js'])
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:italic&display=swap');
-        
-        :root {
-            --primary-blue: #2563eb;
-            --primary-purple: #7c3aed;
-            --bg-deep: #020617;
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
         }
 
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: var(--bg-deep);
-            color: #e2e8f0;
-            overflow-x: hidden;
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
         }
 
-        .font-serif { font-family: 'Instrument Serif', serif; }
-
-        .glass-panel {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(40px) saturate(200%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+        .field {
+            position: relative;
         }
 
-        .input-cyber {
-            background: rgba(30, 41, 59, 0.3);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        .field input {
+            width: 100%;
+            border: 1px solid #e5e7eb;
+            padding: 16px 14px;
+            border-radius: 10px;
+            font-size: 14px;
+            background: white;
         }
 
-        .input-cyber:focus {
-            background: rgba(15, 23, 42, 0.9);
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 15px rgba(37, 99, 235, 0.3);
+        /* Khusus untuk email yang readonly */
+        .field input:read-only {
+            background: #f1f5f9;
+            color: #64748b;
+            cursor: not-allowed;
         }
 
-        .mesh-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            background: 
-                radial-gradient(circle at 10% 10%, rgba(37, 99, 235, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 90% 90%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 1) 0%, transparent 100%);
+        .field label {
+            position: absolute;
+            left: 14px;
+            top: 14px;
+            font-size: 13px;
+            color: #6b7280;
+            transition: .2s;
+            background: white;
+            padding: 0 4px;
         }
 
-        @keyframes floatLogo {
-            0%, 100% { transform: translateY(0px) rotate(12deg); filter: drop-shadow(0 0 10px rgba(37, 99, 235, 0.4)); }
-            50% { transform: translateY(-15px) rotate(14deg); filter: drop-shadow(0 0 25px rgba(124, 58, 237, 0.6)); }
-        }
-        .animate-float-luxury { animation: floatLogo 5s ease-in-out infinite; }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(15px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
+        /* Label floating effect */
+        .field input:focus+label,
+        .field input:not(:placeholder-shown)+label {
+            top: -8px;
+            font-size: 11px;
+            color: #2563eb;
         }
 
-        .btn-cyber-gradient {
-            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
-            box-shadow: 0 10px 25px -10px rgba(124, 58, 237, 0.5);
+        .field input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
         }
-        .btn-cyber-gradient:hover {
-            box-shadow: 0 15px 35px -5px rgba(37, 99, 235, 0.6);
-            transform: scale(1.02);
+
+        .btn {
+            background: #111827;
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            width: 100%;
+            transition: .2s;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: #2563eb;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            color: #6b7280;
         }
     </style>
 </head>
 
-<body class="min-h-screen flex items-center justify-center p-4 relative antialiased">
-    
-    <div class="mesh-bg"></div>
+<body class="min-h-screen flex items-center justify-center px-4 py-10">
 
-    <div class="w-full max-w-5xl flex flex-col md:flex-row overflow-hidden rounded-[3rem] glass-panel relative">
-        <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-blue-500 to-purple-500 opacity-50"></div>
+    <div class="w-full max-w-md">
 
-        <div class="md:w-[45%] flex flex-col justify-center items-center text-center p-12 relative overflow-hidden bg-black/40 border-b md:border-b-0 md:border-r border-white/5">
-            <div class="absolute top-[-50px] left-[-50px] w-64 h-64 bg-blue-600/10 blur-[80px] rounded-full"></div>
-            
-            <div class="relative z-10">
-                <div class="w-28 h-28 md:w-36 md:h-36 bg-black/50 rounded-[2.8rem] flex items-center justify-center shadow-2xl mb-12 mx-auto border border-blue-500/30 overflow-hidden animate-float-luxury p-1">
-                    <img src="{{ asset('gambar/setyo1.jpg') }}" 
-                         alt="Logo Setyo Barbershop" 
-                         class="-rotate-12 w-full h-full object-cover rounded-[2.3rem]">
+        <div class="text-center mb-8">
+            <img src="{{ asset('gambar/setyo1.jpg') }}" class="w-16 h-16 rounded-xl mx-auto shadow mb-5">
+            <h1 class="text-3xl font-bold text-gray-900">Set New Password</h1>
+            <p class="text-gray-500 text-sm mt-1">
+                Silakan buat password baru untuk akun Anda.
+            </p>
+        </div>
+
+        <div class="card p-6">
+            <form method="POST" action="{{ route('password.store') }}" class="space-y-5">
+                @csrf
+
+                <input type="hidden" name="token" value="{{ $request->route('token') }}">
+
+                <div class="field">
+                    <input id="email" type="email" name="email" value="{{ old('email', $request->email) }}" required readonly placeholder=" ">
+                    <label>Email Address</label>
+                    @error('email')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
-                
-                <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tighter leading-none reveal">
-                    Update<br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-serif italic py-2 block">
-                        Identity
+
+                <div class="field relative">
+                    <input id="password" type="password" name="password" required autofocus placeholder=" ">
+                    <label>New Password</label>
+                    <span class="toggle-password" onclick="toggleVisibility('password')">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12s3.75-7.5 9.75-7.5S21.75 12 21.75 12s-3.75 7.5-9.75 7.5S2.25 12 2.25 12z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
                     </span>
-                </h1>
-            </div>
-            <div class="mt-14 reveal">
-                <span class="px-6 py-2 bg-purple-500/10 rounded-full border border-purple-500/20 text-[10px] text-purple-300 font-bold tracking-widest backdrop-blur-md">SECURITY ENFORCED</span>
-            </div>
-        </div>
-
-        <div class="md:w-[55%] w-full p-10 md:p-16 lg:p-24 flex flex-col justify-center">
-            <div class="max-w-sm mx-auto w-full">
-                <div class="mb-10 text-center md:text-left">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight reveal">Set New Key</h2>
-                    <p class="text-slate-400 text-sm font-medium reveal">Amankan kembali ritual ketampanan Anda.</p>
+                    @error('password')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
-                <form method="POST" action="{{ route('password.store') }}" class="space-y-6">
-                    @csrf
+                <div class="field relative">
+                    <input id="password_confirmation" type="password" name="password_confirmation" required placeholder=" ">
+                    <label>Confirm Password</label>
+                    <span class="toggle-password" onclick="toggleVisibility('password_confirmation')">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12s3.75-7.5 9.75-7.5S21.75 12 21.75 12s-3.75 7.5-9.75 7.5S2.25 12 2.25 12z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                    </span>
+                </div>
 
-                    <input type="hidden" name="token" value="{{ $request->route('token') }}">
-                    
-                    <div class="reveal">
-                        <label class="block text-[10px] font-bold text-blue-400 uppercase tracking-[0.25em] mb-3 ml-1">Identity Verification</label>
-                        <input id="email" type="email" name="email" value="{{ old('email', $request->email) }}" required readonly
-                            class="input-cyber block w-full text-slate-400 rounded-2xl p-4 outline-none text-sm cursor-not-allowed opacity-70">
-                        <x-input-error :messages="$errors->get('email')" class="mt-2 text-[10px] text-red-400 font-bold uppercase" />
-                    </div>
-
-                    <div class="reveal">
-                        <label class="block text-[10px] font-bold text-blue-400 uppercase tracking-[0.25em] mb-3 ml-1">New Secret Key</label>
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            </span>
-                            <input id="password" type="password" name="password" required autofocus
-                                class="input-cyber block w-full text-white rounded-2xl p-4 pl-12 pr-12 outline-none placeholder:text-slate-600 text-sm"
-                                placeholder="••••••••">
-                            <button type="button" onclick="togglePassword('password', 'eye-1')" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-500 hover:text-blue-400 transition-all focus:outline-none">
-                                <svg id="eye-1" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-                                    <path d="M2.036 12.322a1.012 1.012 0 010-.644C3.67 8.5 7.652 6 12 6c4.348 0 8.332 2.5 9.964 5.678a1.012 1.012 0 010 .644C20.33 15.5 16.348 18 12 18c-4.348 0-8.332-2.5-9.964-5.678z" />
-                                    <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                            </button>
-                        </div>
-                        <x-input-error :messages="$errors->get('password')" class="mt-2 text-[10px] text-red-400 font-bold uppercase" />
-                    </div>
-
-                    <div class="reveal">
-                        <label class="block text-[10px] font-bold text-blue-400 uppercase tracking-[0.25em] mb-3 ml-1">Confirm Secret Key</label>
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            </span>
-                            <input id="password_confirmation" type="password" name="password_confirmation" required
-                                class="input-cyber block w-full text-white rounded-2xl p-4 pl-12 pr-12 outline-none placeholder:text-slate-600 text-sm"
-                                placeholder="••••••••">
-                            <button type="button" onclick="togglePassword('password_confirmation', 'eye-2')" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-500 hover:text-blue-400 transition-all focus:outline-none">
-                                <svg id="eye-2" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-                                    <path d="M2.036 12.322a1.012 1.012 0 010-.644C3.67 8.5 7.652 6 12 6c4.348 0 8.332 2.5 9.964 5.678a1.012 1.012 0 010 .644C20.33 15.5 16.348 18 12 18c-4.348 0-8.332-2.5-9.964-5.678z" />
-                                    <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                            </button>
-                        </div>
-                        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-[10px] text-red-400 font-bold uppercase" />
-                    </div>
-
-                    <div class="pt-4 reveal">
-                        <button type="submit"
-                            class="btn-cyber-gradient w-full text-white text-xs font-black uppercase tracking-[0.3em] rounded-2xl py-5 transition-all duration-500 flex items-center justify-center gap-3">
-                            <span>Update Access</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </button>
-                    </div>
-                </form>
-            </div>
+                <button type="submit" class="btn mt-2">
+                    Update Password
+                </button>
+            </form>
         </div>
+
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const elements = document.querySelectorAll('.reveal');
-            elements.forEach((el, index) => {
-                setTimeout(() => {
-                    el.classList.add('active');
-                }, 100 * index);
-            });
-        });
-
-        function togglePassword(inputId, iconId) {
-            const passwordInput = document.getElementById(inputId);
-            const eyeIcon = document.getElementById(iconId);
-
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                // Ikon Mata Tertutup (Eye Slash)
-                eyeIcon.innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
-                `;
+        function toggleVisibility(id) {
+            const input = document.getElementById(id);
+            if (input.type === "password") {
+                input.type = "text";
             } else {
-                passwordInput.type = 'password';
-                // Ikon Mata Terbuka (Eye)
-                eyeIcon.innerHTML = `
-                    <path d="M2.036 12.322a1.012 1.012 0 010-.644C3.67 8.5 7.652 6 12 6c4.348 0 8.332 2.5 9.964 5.678a1.012 1.012 0 010 .644C20.33 15.5 16.348 18 12 18c-4.348 0-8.332-2.5-9.964-5.678z" />
-                    <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                `;
+                input.type = "password";
             }
         }
     </script>
 </body>
+
 </html>

@@ -75,7 +75,9 @@
 
                             <div class="space-y-2 group">
                                 <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Waktu Mulai</label>
-                                <input type="time" name="jam_mulai" value="{{ substr($booking->jam_mulai, 0, 5) }}" class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-4 py-3 text-sm text-slate-900 font-semibold focus:outline-none focus:border-indigo-500 transition-all [color-scheme:light]" required>
+                                <select name="jam_mulai" id="jam_mulai" class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-4 py-3 text-sm text-slate-900 font-semibold focus:outline-none focus:border-indigo-500 transition-all appearance-none" required>
+                                    <option value="">Pilih waktu</option>
+                                </select>
                             </div>
 
                             <div class="space-y-2 group sm:col-span-2 md:col-span-1">
@@ -143,4 +145,39 @@
         
         button, a, select, input { -webkit-tap-highlight-color: transparent; }
     </style>
+    <script>
+        const kapstersData = @json($kapsters ?? []);
+        const allBookings = @json($allBookings ?? []);
+
+        function pad2(n){ return n<10? '0'+n : ''+n }
+        function timeStringToMinutes(t){ if(!t) return 0; const parts = t.split(':'); return parseInt(parts[0],10)*60 + parseInt(parts[1],10); }
+        function minutesToTimeString(m){ const h = Math.floor(m/60); const mm = m%60; return pad2(h)+":"+pad2(mm); }
+        function getDayNameFromDate(dateStr){ const d = new Date(dateStr + 'T00:00:00'); const names = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu']; return names[d.getDay()]; }
+
+        // populate times on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const kapSelect = document.querySelector('select[name="kapster_id"]');
+            const dateInput = document.querySelector('input[name="tgl_booking"]');
+            const jamSelect = document.getElementById('jam_mulai');
+            function update(){
+                const ds = dateInput.value;
+                const kapId = kapSelect.value;
+                jamSelect.innerHTML = '<option value="">Pilih waktu</option>';
+                if(!ds || !kapId) return;
+                const kap = kapstersData.find(k => String(k.id) === String(kapId));
+                if(!kap) return;
+                const dayName = getDayNameFromDate(ds);
+                const shift = (kap.shifts || []).find(s => s.hari === dayName && !s.is_libur);
+                if(!shift){ jamSelect.innerHTML = '<option value="">Kapster libur</option>'; return; }
+                const interval = parseInt(shift.slot_interval ?? 30, 10);
+                const startMin = timeStringToMinutes(shift.jam_mulai);
+                const endMin = timeStringToMinutes(shift.jam_selesai);
+                const booked = allBookings.filter(b => String(b.kapster_id) === String(kapId) && b.tgl_booking === ds && b.status !== 'cancelled' && String(b.id) !== String({{ $booking->id }})).map(b => b.jam_mulai.substring(0,5));
+                for(let t = startMin; t < endMin; t += interval){ const ts = minutesToTimeString(t); const opt = document.createElement('option'); opt.value = ts; opt.innerText = ts; if(booked.includes(ts)) { opt.disabled = true; opt.innerText = ts + ' (Terisi)'; } if(ts == '{{ substr($booking->jam_mulai, 0, 5) }}') opt.selected = true; jamSelect.appendChild(opt); }
+            }
+            kapSelect.addEventListener('change', update);
+            dateInput.addEventListener('change', update);
+            update();
+        });
+    </script>
 </x-app-layout>

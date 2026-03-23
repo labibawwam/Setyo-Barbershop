@@ -58,10 +58,11 @@ if ($request->filled('search')) {
     public function create()
     {
         $users = User::where('role', 'customer')->orderBy('name')->get();
-        $kapsters = Kapster::orderBy('nama')->get();
+        $kapsters = Kapster::with('shifts')->orderBy('nama')->get();
         $services = Service::orderBy('nama_service')->get();
+        $allBookings = Booking::where('status', '!=', 'cancelled')->get();
 
-        return view('admin.bookings.create', compact('users', 'kapsters', 'services'));
+        return view('admin.bookings.create', compact('users', 'kapsters', 'services', 'allBookings'));
     }
 
     public function show($id)
@@ -131,9 +132,10 @@ if ($request->filled('search')) {
 
     public function edit(Booking $booking)
     {
-        $kapsters = Kapster::all();
+        $kapsters = Kapster::with('shifts')->get();
         $services = Service::all();
-        return view('admin.bookings.edit', compact('booking', 'kapsters', 'services'));
+        $allBookings = Booking::where('status', '!=', 'cancelled')->get();
+        return view('admin.bookings.edit', compact('booking', 'kapsters', 'services', 'allBookings'));
     }
 
     public function update(Request $request, Booking $booking)

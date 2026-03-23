@@ -39,6 +39,7 @@ class KapsterShiftController extends Controller
             'hari'       => 'required|string',
             'jam_mulai'  => 'required_if:is_libur,0',
             'jam_selesai' => 'required_if:is_libur,0',
+            'slot_interval' => 'nullable|integer',
         ]);
 
         // Cek apakah kapster sudah punya jadwal di hari tersebut
@@ -55,6 +56,7 @@ class KapsterShiftController extends Controller
             'hari'        => $request->hari,
             'jam_mulai'   => $request->jam_mulai ?? '00:00',
             'jam_selesai' => $request->jam_selesai ?? '00:00',
+            'slot_interval' => $request->input('slot_interval') ?? 30,
             'is_libur'    => $request->has('is_libur'),
         ]);
 
@@ -75,12 +77,14 @@ class KapsterShiftController extends Controller
             'hari'       => 'required',
             'jam_mulai'  => 'required_if:is_libur,0',
             'jam_selesai' => 'required_if:is_libur,0',
+            'slot_interval' => 'nullable|integer',
         ]);
 
         $kapsterShift->update([
             'hari'        => $request->hari,
             'jam_mulai'   => $request->jam_mulai,
             'jam_selesai' => $request->jam_selesai,
+            'slot_interval' => $request->input('slot_interval') ?? 30,
             'is_libur'    => $request->has('is_libur'),
         ]);
 

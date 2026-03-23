@@ -22,18 +22,48 @@
             font-family: 'Playfair Display', serif;
         }
 
-        /* Glass card disesuaikan untuk background terang */
+        /* Theme tokens */
+        :root {
+            --brand-500: #6366f1;
+            --brand-600: #4f46e5;
+            --muted: #64748b;
+            --card-bg: rgba(255,255,255,0.88);
+        }
+
+        /* Glass card adjusted for better contrast */
         .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(2,6,23,0.06);
+            box-shadow: 0 8px 30px rgba(2,6,23,0.06);
         }
 
         .text-gradient {
-            background: linear-gradient(to right, #4f46e5, #9333ea);
+            background: linear-gradient(90deg, var(--brand-600), #f59e0b);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
+        /* Hero text contrast helpers */
+        .hero-heading {
+            text-shadow: 0 6px 18px rgba(0,0,0,0.55), 0 1px 2px rgba(0,0,0,0.45);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .hero-subtext {
+            text-shadow: 0 4px 14px rgba(0,0,0,0.45);
+        }
+
+        /* Add faint outline for gradient text where supported */
+        .text-gradient {
+            -webkit-text-stroke: 0.6px rgba(0,0,0,0.45);
+        }
+
+        /* Hero CTA */
+        .hero-cta { display:inline-flex; gap:0.75rem; align-items:center; padding:0.9rem 1.25rem; border-radius:12px; font-weight:800; }
+        .hero-cta.primary { background: linear-gradient(90deg,var(--brand-600),var(--brand-500)); color:#fff; box-shadow: 0 12px 30px rgba(79,70,229,0.18); }
+        .hero-cta.ghost { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color:#fff; }
     </style>
 </head>
 
@@ -43,25 +73,25 @@
 
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <img src="{{ asset('gambar/mainbg.jpeg') }}"
-                class="w-full h-full object-cover opacity-10 scale-105 motion-safe:animate-[pulse_8s_ease-in-out_infinite]">
-            <div class="absolute inset-0 bg-gradient-to-b from-white via-white/40 to-slate-50"></div>
+            <img src="{{ asset('gambar/banner2.png') }}"
+                class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/60 md:from-black/45 via-black/30 to-black/20"></div>
         </div>
 
-        <div class="relative z-10 max-w-5xl px-6 text-center">
+        <!-- <div class="relative z-10 max-w-5xl px-6 text-center">
             <span class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-[0.2em] uppercase bg-indigo-100 text-indigo-600 border border-indigo-200 rounded-full">
                 The Gentleman's Choice
             </span>
 
-            <h1 class="font-display text-5xl md:text-8xl font-bold text-slate-900 leading-[1.1] mb-8">
-                Classic Style for<br>
-                <span class="text-gradient italic">Modern Man</span>
+            <h1 class="font-display hero-heading text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
+                Classic Style for <span class="text-gradient italic">Modern Man</span>
             </h1>
 
-            <p class="mt-6 text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed">
-                Lebih dari sekadar potong rambut. Kami memberikan rasa percaya diri melalui sentuhan tangan kapster profesional dan atmosfer yang eksklusif.
+            <p class="hero-subtext mt-4 text-base md:text-lg text-white/90 max-w-2xl mx-auto leading-relaxed">
+                Lebih dari sekadar potong rambut — kami menyempurnakan gaya Anda dengan kapster berpengalaman, lingkungan bersih, dan detail profesional.
             </p>
-        </div>
+
+        </div> -->
     </section>
 
     <section id="kapster" class="py-24 relative bg-white overflow-hidden">
@@ -86,12 +116,12 @@
 
                     @foreach ($kapsters as $kps)
                     <div class="flex-none w-[200px] md:w-[240px]">
-                        <div class="group relative overflow-hidden rounded-[2.5rem] aspect-[4/5] border border-slate-200 bg-white transition-all duration-700 hover:border-indigo-400/40 hover:-translate-y-2 shadow-lg hover:shadow-2xl">
+                        <div class="group relative overflow-hidden rounded-[2.5rem] aspect-[4/5] border border-slate-100 bg-white transition-all duration-700 hover:border-indigo-400/40 hover:-translate-y-2 shadow-lg hover:shadow-2xl">
                             <img src="{{ asset('storage/' . ($kps->photo)) }}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="{{ $kps->nama }}">
-                            <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-60"></div>
-                            <div class="absolute bottom-8 left-0 right-0 px-6 text-center">
-                                <p class="text-indigo-600 font-black uppercase tracking-[0.3em] text-[8px] mb-2">Professional Artist</p>
-                                <h3 class="text-xl font-bold text-slate-900 tracking-tight leading-none group-hover:text-indigo-600">{{ $kps->nama }}</h3>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-6 left-4 right-4 px-4 text-center">
+                                <p class="text-xs text-white font-bold uppercase tracking-[0.25em] mb-1">Professional Artist</p>
+                                <h3 class="text-lg font-bold text-white tracking-tight leading-none group-hover:text-white">{{ $kps->nama }}</h3>
                             </div>
                         </div>
                     </div>
@@ -151,34 +181,35 @@
 
             @media (max-width: 768px) {
                 .loop-track {
-                    animation: scroll-triple 15s linear infinite;
+                    animation: scro221ll-triple 15s linear infinite;
                 }
             }
         </style>
     </section>
 
-    <section id="services" class="py-32 bg-slate-50 relative overflow-hidden">
+    <section id="services" class="py-32 relative overflow-hidden services-bg bg-cover bg-center" style="background-image: url('{{ asset('gambar/gra2.png') }}');">
         <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-500/5 blur-[150px] pointer-events-none"></div>
+        <div class="absolute inset-0 bg-black/55 services-overlay pointer-events-none"></div>
 
         <div class="max-w-[1440px] mx-auto px-6 relative z-10">
             <div class="flex flex-col items-center text-center mb-16">
                 <div class="inline-block">
-                    <p class="text-indigo-600 font-black uppercase tracking-[0.4em] text-[10px] mb-4">
+                    <p class="text-white/90 font-black uppercase tracking-[0.4em] text-[10px] mb-4">
                         The Art of Grooming
                     </p>
                     <div class="h-[1px] w-full bg-gradient-to-r from-transparent via-indigo-500 to-transparent mb-6"></div>
                 </div>
-                <h2 class="font-display text-4xl md:text-6xl font-bold text-slate-900 leading-tight tracking-tight">
-                    Layanan <span class="text-indigo-600 italic font-serif font-light">Exclusive</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold text-white leading-tight tracking-tight" style="text-shadow:0 10px 30px rgba(0,0,0,0.6);">
+                    Layanan <span class="text-indigo-200 italic font-serif font-light">Exclusive</span>
                 </h2>
             </div>
 
             <div class="flex flex-wrap justify-center gap-6 md:gap-12 mb-20">
                 @foreach ($categories as $index => $category)
-                <button onclick="filterCategory('{{ $category->id }}', this)"
+                    <button onclick="filterCategory('{{ $category->id }}', this)"
                     class="category-tab group flex flex-col items-center gap-2 transition-all duration-500 {{ $index == 0 ? 'active-tab' : 'opacity-40 hover:opacity-100' }}">
 
-                    <span class="text-[11px] md:text-xs font-black uppercase tracking-[0.3em] text-slate-900 group-[.active-tab]:text-indigo-600 transition-colors duration-300">
+                    <span class="text-[11px] md:text-xs font-black uppercase tracking-[0.3em] text-white/90 group-[.active-tab]:text-indigo-200 transition-colors duration-300">
                         {{ $category->nama_kategori }}
                     </span>
 
@@ -202,9 +233,9 @@
                                 <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent opacity-60"></div>
 
                                 <div class="absolute bottom-4 left-4 right-4 flex justify-center">
-                                    <div class="backdrop-blur-md bg-white/80 border border-slate-200 px-4 py-2 rounded-xl transition-all duration-500 group-hover:bg-indigo-600 group-hover:text-white">
-                                        <span class="text-sm font-black text-slate-900 group-hover:text-white tracking-tighter transition-colors">Rp {{ number_format($srv->harga, 0, ',', '.') }}</span>
-                                    </div>
+                                    <div class="price-badge">
+                                            <span class="text-sm font-black tracking-tighter">Rp {{ number_format($srv->harga, 0, ',', '.') }}</span>
+                                        </div>
                                 </div>
                             </div>
 
@@ -272,38 +303,52 @@
         }
     </style>
 
-    <section id="about" class="py-32 bg-white relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            <div class="relative">
-                <div class="absolute -top-10 -left-10 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl"></div>
-                <img src="{{ asset('gambar/bg1.jpeg') }}"
-                    alt="Background Barbershop"
-                    class="relative z-10 rounded-3xl shadow-xl transition-all duration-700 object-cover">
-            </div>
+    <style>
+        .price-badge{
+            background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(250,250,250,0.95));
+            border: 1px solid rgba(2,6,23,0.06);
+            padding: 0.5rem 0.9rem;
+            border-radius: 12px;
+            display: inline-block;
+            transition: all .28s ease;
+            box-shadow: 0 6px 20px rgba(2,6,23,0.04);
+        }
+        .group:hover .price-badge{ background: linear-gradient(90deg,var(--brand-600),var(--brand-500)); color: #fff; box-shadow: 0 12px 30px rgba(79,70,229,0.12); transform: translateY(-6px); }
+    </style>
+
+    <section id="about" class="py-32 relative overflow-hidden about-bg bg-cover bg-center" style="background-image: url('{{ asset('gambar/gra3.png') }}');">
+        <div class="absolute inset-0 bg-black/56 about-overlay pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center relative z-10">
+           <div class="relative group flex justify-center"> 
+    <div class="absolute -top-10 -left-10 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl"></div>
+    <img src="{{ asset('gambar/bg1.jpeg') }}"
+        alt="Background Barbershop"
+        class="relative z-10 rounded-3xl shadow-2xl transition-transform duration-500 hover:scale-105 object-cover w-full max-w-sm">
+</div>
 
             <div>
-                <h4 class="text-indigo-600 font-bold tracking-[0.3em] uppercase text-sm mb-4">Legacy & Quality</h4>
-                <h2 class="font-display text-4xl md:text-5xl font-bold text-slate-900 mb-8 leading-tight">Membangun Karakter Melalui Potongan Rambut</h2>
-                <p class="text-slate-500 text-lg leading-relaxed mb-8">
+                <h4 class="text-white/85 font-bold tracking-[0.3em] uppercase text-sm mb-4">Legacy & Quality</h4>
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-8 leading-tight">Membangun Karakter Melalui Potongan Rambut</h2>
+                <p class="text-white/80 text-lg leading-relaxed mb-8">
                     Setyo Barbershop lahir dari semangat untuk menghadirkan standar baru dalam dunia grooming pria di Klaten. Kami percaya bahwa setiap pria berhak mendapatkan perawatan terbaik dengan detail yang presisi.
                 </p>
 
                 <div class="grid grid-cols-2 gap-6">
                     <div class="flex items-start space-x-3">
-                        <span class="text-indigo-600 font-bold">01.</span>
-                        <span class="text-slate-700 font-medium">Kapster Berpengalaman</span>
+                        <span class="text-white/90 font-bold">01.</span>
+                        <span class="text-white/80 font-medium">Kapster Berpengalaman</span>
                     </div>
                     <div class="flex items-start space-x-3">
-                        <span class="text-indigo-600 font-bold">02.</span>
-                        <span class="text-slate-700 font-medium">Alat Steril & Higienis</span>
+                        <span class="text-white/90 font-bold">02.</span>
+                        <span class="text-white/80 font-medium">Alat Steril & Higienis</span>
                     </div>
                     <div class="flex items-start space-x-3">
-                        <span class="text-indigo-600 font-bold">03.</span>
-                        <span class="text-slate-700 font-medium">Layanan Profesional</span>
+                        <span class="text-white/90 font-bold">03.</span>
+                        <span class="text-white/80 font-medium">Layanan Profesional</span>
                     </div>
                     <div class="flex items-start space-x-3">
-                        <span class="text-indigo-600 font-bold">04.</span>
-                        <span class="text-slate-700 font-medium">Suasana Eksklusif</span>
+                        <span class="text-white/90 font-bold">04.</span>
+                        <span class="text-white/80 font-medium">Suasana Eksklusif</span>
                     </div>
                 </div>
             </div>
@@ -401,7 +446,7 @@
                             <div class="flex items-center space-x-4">
                                 <div class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_#22c55e]"></div>
                                 <div>
-                                    <p class="text-slate-900 font-bold text-sm uppercase tracking-widest">Studio Open Now</p>
+                                    <!-- <p class="text-slate-900 font-bold text-sm uppercase tracking-widest">Studio Open Now</p> -->
                                     <p class="text-[9px] text-slate-500 font-medium">Ready for your transformation</p>
                                 </div>
                             </div>
@@ -414,27 +459,29 @@
         </div>
     </section>
 
-    <footer class="bg-white pt-24 pb-12 border-t border-slate-100 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6">
+    <footer class="pt-24 pb-12 relative overflow-hidden footer-bg bg-cover bg-center" style="background-image: url('{{ asset('gambar/gra1.png') }}');">
+        <div class="absolute inset-0 bg-black/56 footer-overlay pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="flex flex-col items-center text-center">
-                <h2 class="font-display text-4xl font-bold text-slate-900 mb-4 tracking-tighter">Setyo<span class="text-indigo-600">.</span></h2>
-                <div class="h-[1px] w-20 bg-gradient-to-r from-transparent via-indigo-600 to-transparent mb-8"></div>
-                <p class="text-slate-500 max-w-md leading-relaxed text-sm mb-12">
+                <h2 class="font-display text-4xl font-bold text-white mb-4 tracking-tighter">Setyo<span class="text-indigo-300">.</span></h2>
+                <div class="h-[1px] w-20 bg-gradient-to-r from-transparent via-indigo-300 to-transparent mb-8 opacity-50"></div>
+                <p class="text-white/85 max-w-md leading-relaxed text-sm mb-12">
                     Elevating your grooming experience with professional touch and timeless style. Since 2017.
                 </p>
                 <div class="flex justify-center space-x-8 mb-16">
                     <a href="https://www.instagram.com/stybarber.std/" target="_blank" class="group relative">
-                        <span class="text-slate-400 text-xs font-black uppercase tracking-[0.2em] group-hover:text-slate-900 transition-colors">Instagram</span>
-                        <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-indigo-600 transition-all duration-500 group-hover:w-full"></span>
+                        <span class="text-white/80 text-xs font-black uppercase tracking-[0.2em] group-hover:text-white transition-colors">Instagram</span>
+                        <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-indigo-300 transition-all duration-500 group-hover:w-full"></span>
                     </a>
                     <a href="https://wa.me/6285641728429" target="_blank" class="group relative">
-                        <span class="text-slate-400 text-xs font-black uppercase tracking-[0.2em] group-hover:text-slate-900 transition-colors">WhatsApp</span>
-                        <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-indigo-600 transition-all duration-500 group-hover:w-full"></span>
+                        <span class="text-white/80 text-xs font-black uppercase tracking-[0.2em] group-hover:text-white transition-colors">WhatsApp</span>
+                        <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-indigo-300 transition-all duration-500 group-hover:w-full"></span>
                     </a>
                 </div>
-                <div class="pt-12 border-t border-slate-100 w-full flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p class="text-slate-400 text-[9px] tracking-[0.3em] uppercase font-bold italic">Designed for Excellence — Setyo Barbershop</p>
-                    <p class="text-slate-400 text-[9px] tracking-[0.3em] uppercase font-black">© {{ date('Y') }} All Rights Reserved.</p>
+                <div class="pt-12 border-t border-white/10 w-full flex flex-col md:flex-row justify-between items-center gap-6">
+                    <p class="text-white/60 text-[9px] tracking-[0.3em] uppercase font-bold italic">Designed for Excellence — Setyo Barbershop</p>
+                    <p class="text-white/60 text-[9px] tracking-[0.3em] uppercase font-black">© {{ date('Y') }} All Rights Reserved.</p>
                 </div>
             </div>
         </div>

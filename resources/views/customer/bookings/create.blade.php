@@ -119,6 +119,14 @@
             filter: invert(0) !important;
             cursor: pointer;
         }
+        /* Slot grid styles */
+        #slot_grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 0.75rem; align-items: stretch; }
+        @media (min-width: 768px) { #slot_grid { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+        @media (min-width: 1024px) { #slot_grid { grid-template-columns: repeat(4, minmax(0,1fr)); } }
+        .slot-btn { padding: 0.9rem 0.6rem; border-radius: 12px; border: 1px solid rgba(15,23,42,0.06); background: white; font-weight: 800; font-size: 1rem; color: #0f172a; display: inline-flex; align-items: center; justify-content: center; width: 100%; height: 56px; transition: transform .12s ease, box-shadow .12s ease; }
+        .slot-btn:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(2,6,23,0.06); }
+        .slot-btn.disabled { background: #fff5f5; color: #b91c1c; border-color: #fecaca; transform: none; box-shadow: none; cursor: not-allowed; }
+        .slot-btn.item-selected { background: linear-gradient(90deg, #6366f1, #f59e0b); color: white !important; border-color: transparent; box-shadow: 0 10px 30px rgba(99,102,241,0.18); }
     </style>
 </head>
 
@@ -236,20 +244,55 @@
                                                 return array_search($shift->hari, $urutanHari);
                                             });
                                         @endphp
-                                        @forelse($sortedShifts as $shift)
-                                            @if($shift->is_libur)
-                                            <div class="px-3 py-1.5 rounded-xl bg-red-500/10 border border-red-500/20 text-[9px] text-red-400 font-bold">
-                                                <span class="opacity-60">{{ substr($shift->hari, 0, 3) }}:</span> LIBUR
-                                            </div>
-                                            @else
-                                            <div class="px-3 py-1.5 rounded-xl bg-gray-50 border border-gray-200/30 text-[9px] text-slate-700 font-bold">
-                                                <span class="text-indigo-400 mr-1">{{ substr($shift->hari, 0, 3) }}:</span>
-                                                {{ \Carbon\Carbon::parse($shift->jam_mulai)->format('H:i') }}
-                                            </div>
-                                            @endif
-                                        @empty
+                                        @php
+                                            $groups = [];
+                                            foreach($sortedShifts as $shift) {
+                                                if($shift->is_libur) {
+                                                    // treat libur as its own group
+                                                    $groups[] = ['type' => 'libur', 'days' => [$shift->hari]];
+                                                } else {
+                                                    $key = ($shift->jam_mulai ?? '') . '|' . ($shift->jam_selesai ?? '') . '|' . ($shift->slot_interval ?? '');
+                                                    $count = count($groups);
+                                                    if($count > 0 && $groups[$count-1]['type'] === 'shift' && $groups[$count-1]['key'] === $key) {
+                                                        $groups[$count-1]['days'][] = $shift->hari;
+                                                    } else {
+                                                        $groups[] = [
+                                                            'type' => 'shift',
+                                                            'key' => $key,
+                                                            'jam_mulai' => $shift->jam_mulai,
+                                                            'jam_selesai' => $shift->jam_selesai,
+                                                            'slot_interval' => $shift->slot_interval ?? null,
+                                                            'days' => [$shift->hari]
+                                                        ];
+                                                    }
+                                                }
+                                            }
+                                        @endphp
+
+                                        @if(count($groups) === 0)
                                             <div class="text-[10px] text-slate-600 italic tracking-widest">Tidak ada jadwal</div>
-                                        @endforelse
+                                        @else
+                                            @foreach($groups as $g)
+                                                @if($g['type'] === 'libur')
+                                                    <div class="px-3 py-1.5 rounded-xl bg-red-500/10 border border-red-500/20 text-[9px] text-red-400 font-bold">
+                                                        <span class="opacity-60">{{ substr($g['days'][0], 0, 3) }}:</span> LIBUR
+                                                    </div>
+                                                @else
+                                                    @php
+                                                        $startDay = $g['days'][0];
+                                                        $endDay = end($g['days']);
+                                                        $dayLabel = count($g['days']) > 1 ? substr($startDay,0,3) . ' - ' . substr($endDay,0,3) : substr($startDay,0,3);
+                                                    @endphp
+                                                    <div class="px-3 py-1.5 rounded-xl bg-gray-50 border border-gray-200/30 text-[9px] text-slate-700 font-bold flex items-center gap-2">
+                                                        <span class="text-indigo-400 mr-1">{{ $dayLabel }}:</span>
+                                                        <span>{{ \Carbon\Carbon::parse($g['jam_mulai'])->format('H:i') }} — {{ \Carbon\Carbon::parse($g['jam_selesai'])->format('H:i') }}</span>
+                                                        @if(!empty($g['slot_interval']))
+                                                            <span class="ml-2 text-[10px] text-slate-400 font-mono">• {{ $g['slot_interval'] }}m</span>
+                                                        @endif
+                                                    </div>
+                                                @endif
+                                            @endforeach
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -295,7 +338,8 @@
                                 <div class="glass p-8 lg:p-10 rounded-[3rem] text-center flex flex-col justify-center min-h-[300px]">
                                     <p class="text-[11px] text-indigo-400 font-black uppercase tracking-[0.3em] mb-6">Jam Kedatangan</p>
                                     <div class="relative w-full overflow-hidden px-2">
-                                        <input type="time" name="jam_mulai" id="jam_mulai" onclick="this.showPicker()" class="w-full bg-transparent border-none text-5xl lg:text-6xl font-black text-gray-900 text-center focus:ring-0 appearance-none cursor-pointer tracking-tighter" required>
+                                        <input type="hidden" name="jam_mulai" id="jam_mulai" required>
+                                        <div id="slot_grid" class="grid grid-cols-3 gap-3 text-center mt-2"></div>
                                     </div>
                                     <p class="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-4">Ketuk angka untuk mengatur</p>
                                 </div>
@@ -517,6 +561,12 @@
             el.classList.add('item-selected');
             document.getElementById('input_kapster').value = id;
             setTimeout(() => showStep(2), 500);
+            // update available times if date already chosen
+            const ds = document.getElementById('tgl_booking').value;
+            if(ds) {
+                updateBookedSlots(ds);
+                updateAvailableTimes(ds);
+            }
         }
 
         function toggleService(el, id, name, harga) {
@@ -622,8 +672,81 @@
             onChange: (sd, ds) => {
                 document.getElementById('tgl_booking').value = ds;
                 updateBookedSlots(ds);
+                updateAvailableTimes(ds);
             }
         });
+
+        const kapstersData = @json($kapsters ?? []);
+
+        function pad2(n){ return n<10? '0'+n : ''+n }
+
+        function timeStringToMinutes(t){ // t = 'HH:MM' or 'HH:MM:SS'
+            if(!t) return 0;
+            const parts = t.split(':');
+            return parseInt(parts[0],10)*60 + parseInt(parts[1],10);
+        }
+
+        function minutesToTimeString(m){
+            const h = Math.floor(m/60);
+            const mm = m%60;
+            return pad2(h) + ':' + pad2(mm);
+        }
+
+        function getDayNameFromDate(dateStr){ // 'YYYY-MM-DD' -> Indonesian day name
+            const d = new Date(dateStr + 'T00:00:00');
+            const dayIdx = d.getDay(); // 0 = Sun
+            const names = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+            return names[dayIdx];
+        }
+
+        function updateAvailableTimes(dateStr){
+            const grid = document.getElementById('slot_grid');
+            const input = document.getElementById('jam_mulai');
+            grid.innerHTML = '';
+            input.value = '';
+            if(!selectedKapsterId || selectedKapsterId === 'random' || !dateStr) return;
+
+            const kap = kapstersData.find(k => String(k.id) === String(selectedKapsterId));
+            if(!kap) return;
+
+            const dayName = getDayNameFromDate(dateStr);
+            const shift = (kap.shifts || []).find(s => s.hari === dayName && !s.is_libur);
+            if(!shift){
+                grid.innerHTML = '<div class="col-span-3 text-sm text-slate-500">Tidak ada slot (kapster libur)</div>';
+                return;
+            }
+
+            const interval = parseInt(shift.slot_interval ?? 30, 10);
+            const startMin = timeStringToMinutes(shift.jam_mulai);
+            const endMin = timeStringToMinutes(shift.jam_selesai);
+
+            // gather booked start times for this kapster and date
+            const booked = allBookings.filter(b => String(b.kapster_id) === String(selectedKapsterId) && b.tgl_booking === dateStr && b.status !== 'cancelled')
+                .map(b => b.jam_mulai.substring(0,5));
+
+            for(let t = startMin; t < endMin; t += interval){
+                const ts = minutesToTimeString(t);
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'slot-btn';
+                btn.innerText = ts;
+                btn.dataset.time = ts;
+                if(booked.includes(ts)){
+                    btn.disabled = true;
+                    btn.classList.add('disabled');
+                    btn.innerText = ts + ' (Terisi)';
+                } else {
+                    btn.addEventListener('click', function(){
+                        // clear previous selection
+                        grid.querySelectorAll('button').forEach(b => b.classList.remove('item-selected'));
+                        this.classList.add('item-selected');
+                        input.value = this.dataset.time;
+                        updateReview();
+                    });
+                }
+                grid.appendChild(btn);
+            }
+        }
     </script>
 </body>
 </html>

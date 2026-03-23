@@ -48,6 +48,14 @@
                                 <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-400 transition-colors">Jam Selesai</label>
                                 <input type="time" name="jam_selesai" value="{{ \Carbon\Carbon::parse($kapsterShift->jam_selesai)->format('H:i') }}" class="w-full bg-[#f8fafc] border border-slate-200 rounded-xl md:rounded-2xl px-5 py-3.5 md:py-4 text-sm text-slate-900 font-semibold focus:outline-none focus:border-indigo-500 transition-all [color-scheme:light]">
                             </div>
+                            <div class="space-y-2 group sm:col-span-2">
+                                <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 group-focus-within:text-indigo-400 transition-colors">Interval Slot</label>
+                                <select name="slot_interval" class="mt-2 w-40 bg-[#f8fafc] border border-slate-200 rounded-xl px-4 py-2 text-sm text-slate-900">
+                                    @foreach([15,20,25,30,35,40,45,50,55,60] as $i)
+                                        <option value="{{ $i }}" {{ (isset($kapsterShift->slot_interval) && $kapsterShift->slot_interval == $i) ? 'selected' : ($i==30 && !isset($kapsterShift->slot_interval) ? 'selected' : '') }}>{{ $i }} menit</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
 
                         <div class="flex items-center gap-3 px-1 py-1">

@@ -11,6 +11,7 @@ class KapsterShift extends Model
         'hari',
         'jam_mulai',
         'jam_selesai',
+        'slot_interval',
         'is_libur'
     ];
 

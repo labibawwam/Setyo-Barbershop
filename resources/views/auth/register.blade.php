@@ -3,502 +3,512 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Register | STY Barber</title>
+    <title>Register | STY Barber</title>
 
-@vite(['resources/css/app.css','resources/js/app.js'])
+    @vite(['resources/css/app.css','resources/js/app.js'])
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<style>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+        }
 
-body{
-font-family:'Inter',sans-serif;
-background:#f8fafc;
-}
+        /* card */
 
-/* card */
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        }
 
-.card{
-background:white;
-border:1px solid #e5e7eb;
-border-radius:16px;
-box-shadow:0 20px 40px rgba(0,0,0,0.05);
-}
+        /* floating input */
 
-/* floating input */
+        .field {
+            position: relative;
+        }
 
-.field{
-position:relative;
-}
+        .field input {
+            width: 100%;
+            border: 1px solid #e5e7eb;
+            padding: 16px 14px;
+            border-radius: 10px;
+            font-size: 14px;
+            background: white;
+        }
 
-.field input{
-width:100%;
-border:1px solid #e5e7eb;
-padding:16px 14px;
-border-radius:10px;
-font-size:14px;
-background:white;
-}
+        .field label {
+            position: absolute;
+            left: 14px;
+            top: 14px;
+            font-size: 13px;
+            color: #6b7280;
+            transition: .2s;
+            background: white;
+            padding: 0 4px;
+        }
 
-.field label{
-position:absolute;
-left:14px;
-top:14px;
-font-size:13px;
-color:#6b7280;
-transition:.2s;
-background:white;
-padding:0 4px;
-}
+        .field input:focus+label,
+        .field input:not(:placeholder-shown)+label {
+            top: -8px;
+            font-size: 11px;
+            color: #2563eb;
+        }
 
-.field input:focus+label,
-.field input:not(:placeholder-shown)+label{
-top:-8px;
-font-size:11px;
-color:#2563eb;
-}
+        .field input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+        }
 
-.field input:focus{
-outline:none;
-border-color:#2563eb;
-box-shadow:0 0 0 3px rgba(37,99,235,.15);
-}
+        /* password */
 
-/* password */
+        .password-wrapper {
+            position: relative;
+        }
 
-.password-wrapper{
-position:relative;
-}
+        .password-wrapper input {
+            padding-right: 44px;
+        }
 
-.password-wrapper input{
-padding-right:44px;
-}
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            color: #6b7280;
+        }
 
-.toggle-password{
-position:absolute;
-right:12px;
-top:50%;
-transform:translateY(-50%);
-width:22px;
-height:22px;
-cursor:pointer;
-color:#6b7280;
-}
+        .toggle-password:hover {
+            color: #2563eb;
+        }
 
-.toggle-password:hover{
-color:#2563eb;
-}
+        /* otp */
 
-/* otp */
+        .otp {
+            display: flex;
+            gap: 8px;
+            justify-content: space-between;
+        }
 
-.otp{
-display:flex;
-gap:8px;
-justify-content:space-between;
-}
+        .otp input {
+            width: 48px;
+            height: 52px;
+            text-align: center;
+            font-size: 20px;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+        }
 
-.otp input{
-width:48px;
-height:52px;
-text-align:center;
-font-size:20px;
-border-radius:10px;
-border:1px solid #e5e7eb;
-}
+        .otp input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+        }
 
-.otp input:focus{
-outline:none;
-border-color:#2563eb;
-box-shadow:0 0 0 3px rgba(37,99,235,.15);
-}
+        /* button */
 
-/* button */
+        .btn {
+            background: #111827;
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            width: 100%;
+            transition: .2s;
+        }
 
-.btn{
-background:#111827;
-color:white;
-padding:12px;
-border-radius:10px;
-font-weight:600;
-width:100%;
-transition:.2s;
-}
+        .btn:hover {
+            background: #2563eb;
+        }
 
-.btn:hover{
-background:#2563eb;
-}
+        /* spinner */
 
-/* spinner */
+        .spinner {
+            border: 2px solid rgba(255, 255, 255, .3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin .8s linear infinite;
+        }
 
-.spinner{
-border:2px solid rgba(255,255,255,.3);
-border-top:2px solid white;
-border-radius:50%;
-width:16px;
-height:16px;
-animation:spin .8s linear infinite;
-}
+        @keyframes spin {
+            0% {
+                transform: rotate(0)
+            }
 
-@keyframes spin{
-0%{transform:rotate(0)}
-100%{transform:rotate(360deg)}
-}
+            100% {
+                transform: rotate(360deg)
+            }
+        }
 
-/* toast */
+        /* toast */
 
-.toast{
-position:fixed;
-top:20px;
-right:20px;
-background:#111827;
-color:white;
-padding:12px 18px;
-border-radius:8px;
-opacity:0;
-transform:translateY(-10px);
-transition:.3s;
-z-index:100;
-}
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #111827;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: .3s;
+            z-index: 100;
+        }
 
-.toast.show{
-opacity:1;
-transform:translateY(0);
-}
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-/* progress */
+        /* progress */
 
-.progress{
-height:6px;
-background:#e5e7eb;
-border-radius:999px;
-overflow:hidden;
-}
+        .progress {
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 999px;
+            overflow: hidden;
+        }
 
-.progress-bar{
-height:100%;
-width:0%;
-background:#2563eb;
-transition:.4s;
-}
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #2563eb;
+            transition: .4s;
+        }
 
-/* responsive */
+        /* responsive */
 
-@media(max-width:640px){
+        @media(max-width:640px) {
 
-.otp input{
-width:40px;
-height:48px;
-font-size:18px;
-}
+            .otp input {
+                width: 40px;
+                height: 48px;
+                font-size: 18px;
+            }
 
-#sendOtpBtn{
-font-size:12px;
-padding:0 10px;
-}
+            #sendOtpBtn {
+                font-size: 12px;
+                padding: 0 10px;
+            }
 
-}
-
-</style>
+        }
+    </style>
 
 </head>
 
 <body class="min-h-screen flex items-center justify-center px-4 py-10">
 
-<div id="toast" class="toast"></div>
+    <div id="toast" class="toast"></div>
 
-<div class="w-full max-w-md">
+    <div class="w-full max-w-md">
 
-<div class="text-center mb-8">
+        <div class="text-center mb-8">
 
-<img src="{{ asset('gambar/setyo1.jpg') }}" class="w-16 h-16 rounded-xl mx-auto shadow mb-5">
+            <img src="{{ asset('gambar/setyo1.jpg') }}" class="w-16 h-16 rounded-xl mx-auto shadow mb-5">
 
-<h1 class="text-3xl font-bold text-gray-900">
-Create your account
-</h1>
+            <h1 class="text-3xl font-bold text-gray-900">
+                Create your account
+            </h1>
 
-<p class="text-gray-500 text-sm mt-1">
-Join Setyo Barbershop membership
-</p>
+            <p class="text-gray-500 text-sm mt-1">
+                Join Setyo Barbershop membership
+            </p>
 
-</div>
+        </div>
 
-<div class="progress mb-6">
-<div id="progressBar" class="progress-bar"></div>
-</div>
+        <div class="progress mb-6">
+            <div id="progressBar" class="progress-bar"></div>
+        </div>
 
-<div class="card p-6">
+        <div class="card p-6">
 
-<form id="registerForm" method="POST" action="{{ route('register') }}" class="space-y-5">
+            <form id="registerForm" method="POST" action="{{ route('register') }}" class="space-y-5">
 
-@csrf
+                @csrf
 
-<div class="field">
-<input type="text" name="name" required placeholder=" ">
-<label>Full name</label>
-</div>
+                <div class="field">
+                    <input type="text" name="name" required placeholder=" ">
+                    <label>Full name</label>
+                </div>
 
-<div class="field">
-<input type="email" name="email" required placeholder=" ">
-<label>Email</label>
-</div>
+                <div class="field">
+                    <input type="email" name="email" required placeholder=" ">
+                    <label>Email</label>
+                </div>
 
-<div>
+                <div>
 
-<label class="text-sm font-medium text-gray-700 block mb-2">
-WhatsApp number
-</label>
+                    <label class="text-sm font-medium text-gray-700 block mb-2">
+                        WhatsApp number
+                    </label>
 
-<div class="flex gap-2">
+                    <div class="flex gap-2">
 
-<div class="flex items-center px-3 border rounded-lg text-sm bg-gray-50">
-+62
-</div>
+                        <div class="flex items-center px-3 border rounded-lg text-sm bg-gray-50">
+                            +62
+                        </div>
 
-<input id="wa_number" type="text" name="wa_number" required
-class="flex-1 border rounded-lg px-4 py-3 text-sm">
+                        <input id="wa_number" type="text" name="wa_number" required
+                            class="flex-1 border rounded-lg px-4 py-3 text-sm">
 
-<button
-type="button"
-id="sendOtpBtn"
-class="bg-gray-900 text-white text-xs px-4 rounded-lg flex items-center gap-2 justify-center">
+                        <button
+                            type="button"
+                            id="sendOtpBtn"
+                            class="bg-gray-900 text-white text-xs px-4 rounded-lg flex items-center gap-2 justify-center">
 
-<span id="otpText">Send OTP</span>
+                            <span id="otpText">Send OTP</span>
 
-<div id="spinner" class="spinner hidden"></div>
+                            <div id="spinner" class="spinner hidden"></div>
 
-</button>
+                        </button>
 
-</div>
+                    </div>
 
-<p id="countdown" class="text-xs text-gray-500 mt-2"></p>
+                    <p id="countdown" class="text-xs text-gray-500 mt-2"></p>
 
-</div>
+                </div>
 
-<div>
+                <div>
 
-<label class="text-sm font-medium text-gray-700 block mb-2">
-OTP Code
-</label>
+                    <label class="text-sm font-medium text-gray-700 block mb-2">
+                        OTP Code
+                    </label>
 
-<div class="otp">
+                    <div class="otp">
 
-<input maxlength="1">
-<input maxlength="1">
-<input maxlength="1">
-<input maxlength="1">
-<input maxlength="1">
-<input maxlength="1">
+                        <input maxlength="1">
+                        <input maxlength="1">
+                        <input maxlength="1">
+                        <input maxlength="1">
+                        <input maxlength="1">
+                        <input maxlength="1">
 
-</div>
+                    </div>
 
-<input type="hidden" name="otp" id="otp">
+                    <input type="hidden" name="otp" id="otp">
 
-</div>
+                </div>
 
-<div class="field password-wrapper">
+                <div class="field password-wrapper">
 
-<input type="password" id="password" name="password" required placeholder=" ">
+                    <input type="password" id="password" name="password" required placeholder=" ">
 
-<label>Password</label>
+                    <label>Password</label>
 
-<span class="toggle-password" onclick="togglePassword('password')">
+                    <span class="toggle-password" onclick="togglePassword('password')">
 
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-stroke-width="1.8" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="1.8" stroke="currentColor">
 
-<path stroke-linecap="round" stroke-linejoin="round"
-d="M2.25 12s3.75-7.5 9.75-7.5S21.75 12 21.75 12s-3.75 7.5-9.75 7.5S2.25 12 2.25 12z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M2.25 12s3.75-7.5 9.75-7.5S21.75 12 21.75 12s-3.75 7.5-9.75 7.5S2.25 12 2.25 12z" />
 
-<circle cx="12" cy="12" r="3"/>
+                            <circle cx="12" cy="12" r="3" />
 
-</svg>
+                        </svg>
 
-</span>
+                    </span>
 
-</div>
+                </div>
 
-<div class="field password-wrapper">
+                <div class="field password-wrapper">
 
-<input type="password" id="confirmPassword" name="password_confirmation" required placeholder=" ">
+                    <input type="password" id="confirmPassword" name="password_confirmation" required placeholder=" ">
 
-<label>Confirm password</label>
+                    <label>Confirm password</label>
 
-<span class="toggle-password" onclick="togglePassword('confirmPassword')">
+                    <span class="toggle-password" onclick="togglePassword('confirmPassword')">
 
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-stroke-width="1.8" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="1.8" stroke="currentColor">
 
-<path stroke-linecap="round" stroke-linejoin="round"
-d="M2.25 12s3.75-7.5 9.75-7.5S21.75 12 21.75 12s-3.75 7.5-9.75 7.5S2.25 12 2.25 12z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M2.25 12s3.75-7.5 9.75-7.5S21.75 12 21.75 12s-3.75 7.5-9.75 7.5S2.25 12 2.25 12z" />
 
-<circle cx="12" cy="12" r="3"/>
+                            <circle cx="12" cy="12" r="3" />
 
-</svg>
+                        </svg>
 
-</span>
+                    </span>
 
-</div>
+                </div>
 
-<button type="submit" class="btn">
-Create account
-</button>
+                <button type="submit" class="btn">
+                    Create account
+                </button>
 
-</form>
+            </form>
 
-</div>
+        </div>
+ <p class="text-center text-sm text-gray-500 mt-6">
 
-</div>
+            Already have an account?
 
-<script>
+            <a href="{{ route('login') }}" class="text-blue-600 font-medium">
+                Login
+            </a>
 
-/* toggle password */
+        </p>
+    </div>
 
-function togglePassword(id){
-const input=document.getElementById(id)
-input.type=input.type==="password"?"text":"password"
-}
+    <script>
+        /* toggle password */
 
-/* toast */
+        function togglePassword(id) {
+            const input = document.getElementById(id)
+            input.type = input.type === "password" ? "text" : "password"
+        }
 
-function toast(msg){
-const t=document.getElementById("toast")
-t.textContent=msg
-t.classList.add("show")
-setTimeout(()=>t.classList.remove("show"),3000)
-}
+        /* toast */
 
-/* OTP auto focus */
+        function toast(msg) {
+            const t = document.getElementById("toast")
+            t.textContent = msg
+            t.classList.add("show")
+            setTimeout(() => t.classList.remove("show"), 3000)
+        }
 
-const inputs=document.querySelectorAll(".otp input")
-const hidden=document.getElementById("otp")
+        /* OTP auto focus */
 
-inputs.forEach((input,i)=>{
+        const inputs = document.querySelectorAll(".otp input")
+        const hidden = document.getElementById("otp")
 
-input.addEventListener("input",()=>{
+        inputs.forEach((input, i) => {
 
-if(input.value && i<5){
-inputs[i+1].focus()
-}
+            input.addEventListener("input", () => {
 
-updateOtp()
+                if (input.value && i < 5) {
+                    inputs[i + 1].focus()
+                }
 
-})
+                updateOtp()
 
-input.addEventListener("keydown",e=>{
+            })
 
-if(e.key==="Backspace" && !input.value && i>0){
-inputs[i-1].focus()
-}
+            input.addEventListener("keydown", e => {
 
-})
+                if (e.key === "Backspace" && !input.value && i > 0) {
+                    inputs[i - 1].focus()
+                }
 
-})
+            })
 
-function updateOtp(){
-hidden.value=[...inputs].map(i=>i.value).join("")
-}
+        })
 
-/* paste OTP */
+        function updateOtp() {
+            hidden.value = [...inputs].map(i => i.value).join("")
+        }
 
-document.addEventListener("paste",e=>{
+        /* paste OTP */
 
-const text=(e.clipboardData||window.clipboardData).getData("text")
+        document.addEventListener("paste", e => {
 
-if(text.length===6){
+            const text = (e.clipboardData || window.clipboardData).getData("text")
 
-inputs.forEach((input,i)=>input.value=text[i])
-updateOtp()
+            if (text.length === 6) {
 
-}
+                inputs.forEach((input, i) => input.value = text[i])
+                updateOtp()
 
-})
+            }
 
-/* send OTP */
+        })
 
-let countdown=0
+        /* send OTP */
 
-document.getElementById("sendOtpBtn").onclick=()=>{
+        let countdown = 0
 
-if(countdown>0)return
+        document.getElementById("sendOtpBtn").onclick = () => {
 
-const wa=document.getElementById("wa_number").value.trim()
-const email=document.querySelector('[name="email"]').value.trim()
+            if (countdown > 0) return
 
-if(!wa){
-toast("Masukkan nomor WhatsApp")
-return
-}
+            const wa = document.getElementById("wa_number").value.trim()
+            const email = document.querySelector('[name="email"]').value.trim()
 
-if(!email){
-toast("Masukkan email terlebih dahulu")
-return
-}
+            if (!wa) {
+                toast("Masukkan nomor WhatsApp")
+                return
+            }
 
-const spinner=document.getElementById("spinner")
-const text=document.getElementById("otpText")
+            if (!email) {
+                toast("Masukkan email terlebih dahulu")
+                return
+            }
 
-spinner.classList.remove("hidden")
-text.textContent="Sending..."
+            const spinner = document.getElementById("spinner")
+            const text = document.getElementById("otpText")
 
-fetch("{{ route('wa.send_otp') }}",{
+            spinner.classList.remove("hidden")
+            text.textContent = "Sending..."
 
-method:"POST",
+            fetch("{{ route('wa.send_otp') }}", {
 
-headers:{
-"Content-Type":"application/json",
-"X-CSRF-TOKEN":"{{ csrf_token() }}"
-},
+                    method: "POST",
 
-body:JSON.stringify({
-wa_number:wa,
-email:email
-})
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
 
-})
+                    body: JSON.stringify({
+                        wa_number: wa,
+                        email: email
+                    })
 
-.then(res=>res.json())
-.then(data=>{
+                })
 
-toast(data.message || "OTP sent to WhatsApp & Email")
-startCountdown()
+                .then(res => res.json())
+                .then(data => {
 
-})
-.catch(()=>toast("Failed sending OTP"))
+                    toast(data.message || "OTP sent to WhatsApp & Email")
+                    startCountdown()
 
-.finally(()=>{
+                })
+                .catch(() => toast("Failed sending OTP"))
 
-spinner.classList.add("hidden")
-text.textContent="Send OTP"
+                .finally(() => {
 
-})
+                    spinner.classList.add("hidden")
+                    text.textContent = "Send OTP"
 
-}
+                })
 
-function startCountdown(){
+        }
 
-const el=document.getElementById("countdown")
+        function startCountdown() {
 
-countdown=30
+            const el = document.getElementById("countdown")
 
-const timer=setInterval(()=>{
+            countdown = 30
 
-countdown--
+            const timer = setInterval(() => {
 
-el.textContent="Resend OTP in "+countdown+"s"
+                countdown--
 
-if(countdown<=0){
-clearInterval(timer)
-el.textContent="You can resend OTP"
-}
+                el.textContent = "Resend OTP in " + countdown + "s"
 
-},1000)
+                if (countdown <= 0) {
+                    clearInterval(timer)
+                    el.textContent = "You can resend OTP"
+                }
 
-}
+            }, 1000)
 
-</script>
+        }
+    </script>
 
 </body>
+
 </html>
